@@ -1,18 +1,18 @@
 <resources>
-  <string name="app_name">GEEM</string>
-  <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">GEEM</string>
+    <!-- TODO: Remove or change this placeholder text -->
 
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="hello_add_item">Hello Add Items</string>
-  <string name="fragment_hello_add_item">Complete Add Items Here</string>
-  <string name="fragment_hello_feeds">Complete Feeds Here\n\n
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_add_item">Hello Add Items</string>
+    <string name="fragment_hello_add_item">Complete Add Items Here</string>
+    <string name="fragment_hello_feeds">Complete Feeds Here\n\n
   Please respect other persons codes, always follow OOP.\n
   Please do not touch someone\'s code, you can make changes in your own code only.\n
   Try to do in API manner, try to avoid globals.\n
   Any global variables must be stored in Variable class with correct naming convention, also specify its purpose
   Each component must be placed in respective directory with proper name\n</string>
-  <string name="fragment_hello_history">Complete History Here</string>
-  <string name="fragment_hello_messages">Complete Msgs here</string>
-  <string name="fragment_hello_notifications">Complete Notifications Here</string>
-  <string name="fragment_hello_profile">Complete Profile Here</string>
+    <string name="fragment_hello_history">Complete History Here</string>
+    <string name="fragment_hello_messages">Complete Msgs here</string>
+    <string name="fragment_hello_notifications">Complete Notifications Here</string>
+    <string name="fragment_hello_profile">Complete Profile Here</string>
 </resources>
