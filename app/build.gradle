@@ -2,6 +2,8 @@ plugins {
   id 'com.android.application'
 }
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
   compileSdkVersion 30
   buildToolsVersion "30.0.3"
@@ -12,6 +14,9 @@ android {
     targetSdkVersion 30
     versionCode 1
     versionName "1.0"
+
+    //Cannot fit requested classes wali error solve krne k liye
+    multiDexEnabled true
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -38,4 +43,16 @@ dependencies {
   testImplementation 'junit:junit:4.+'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+  //Google Firebase
+  implementation platform('com.google.firebase:firebase-bom:26.6.0')
+  implementation 'com.google.firebase:firebase-analytics'
+  implementation 'com.google.firebase:firebase-firestore'
+  implementation 'com.google.firebase:firebase-storage'
+
+  implementation "com.firebaseui:firebase-ui-auth:3.0.0"
+ // implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
+  implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
+
+  implementation 'androidx.multidex:multidex:2.0.1'
 }

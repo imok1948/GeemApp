@@ -15,4 +15,12 @@
   <string name="fragment_hello_messages">Complete Msgs here</string>
   <string name="fragment_hello_notifications">Complete Notifications Here</string>
   <string name="fragment_hello_profile">Complete Profile Here</string>
+
+  <string-array name="str2">
+    <item>Books</item>
+    <item>Phone</item>
+    <item>Calculator</item>
+    <item>Speaker</item>
+    <item>Pens</item>
+  </string-array>
 </resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".RahulStartActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="293dp"
+    android:orientation="vertical">
+
+    <EditText
+      android:id="@+id/editTextUserName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName"
+      android:text="Name" />
+
+    <Spinner
+      android:id="@+id/spinnerCategory"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:entries="@array/str2" />
+
+    <EditText
+      android:id="@+id/editTextPlace"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName"
+      android:text="Place" />
+
+    <EditText
+      android:id="@+id/editTextTakerName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName"
+      android:text="Taker Name" />
+
+    <Button
+      android:id="@+id/buttonSaveData"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:onClick="saveData"
+      android:text="Save" />
+
+    <Button
+      android:id="@+id/buttonGetData"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:onClick="getAndTestData"
+      android:text="Get" />
+
+    <Button
+      android:id="@+id/button"
+      android:onClick="uploadImage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Button" />
+  </LinearLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/fragmentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" />
+</LinearLayout>
+
