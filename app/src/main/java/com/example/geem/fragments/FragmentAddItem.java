@@ -34,6 +34,7 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
+ String category, description, title;
 
 
  @Override
@@ -99,7 +100,8 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String category = parent.getItemAtPosition(position).toString();
+     category = parent.getItemAtPosition(position).toString();
+
 
     }
 
