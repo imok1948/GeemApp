@@ -15,4 +15,15 @@
   <string name="fragment_hello_messages">Complete Msgs here</string>
   <string name="fragment_hello_notifications">Complete Notifications Here</string>
   <string name="fragment_hello_profile">Complete Profile Here</string>
+  <string name="capture_image_button">CAPTURE IMAGE</string>
+
+  <string-array name="spinner_items">
+    <item>Clothes</item>
+    <item>Furniture</item>
+    <item>Books or Stationary</item>
+    <item>Decorations</item>
+    <item>Household items</item>
+    <item>Groceries</item>
+    <item>Other</item>
+  </string-array>
 </resources>
