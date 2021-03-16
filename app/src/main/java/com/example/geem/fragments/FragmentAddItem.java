@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,7 +25,13 @@ import android.widget.Toast;
 
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FragmentAddItem extends Fragment
@@ -74,8 +80,41 @@ public class FragmentAddItem extends Fragment
   saveBtn.setOnClickListener(new View.OnClickListener() {
    @Override
    public void onClick(View v) {
-    
+
+    String userName, itemTitle, itemDescription, 
+
+    historyId = String.valueOf(System.currentTimeMillis());
+    userName = editTextUserName.getText().toString();
+    categoryType = spinnerCategory.getSelectedItem().toString();
+    place = editTextPlace.getText().toString();
+    takerName = editTextTakerName.getText().toString();
+    Timestamp timestamp = Timestamp.now();
+
+    Log.d(TAG, "Before uploading : " + historyId + " : " + userName + " : " + categoryType + " : " + place + " : " + takerName);
+
+
+    Map<String, Object> dataMap = new HashMap<>();
+    dataMap.put("name", userName);
+
+    historyDocumentReference.set(dataMap).addOnCompleteListener(new OnCompleteListener<Void>()
+    {
+     @Override
+     public void onComplete(@NonNull Task<Void> task)
+     {
+      if(task.isSuccessful())
+      {
+       Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+      }
+      else
+      {
+       Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+      }
+     }
+    });
+
    }
+
+
   });
 
   return view;
