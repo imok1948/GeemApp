@@ -242,7 +242,7 @@ public class FragmentAddItem extends Fragment
                userItems.put("latitude", lat);
                userItems.put("longitude", lng);
                userItems.put("Image", url.toString());
-               userItems.put("isAvaialble",isAvailable);
+               userItems.put("isAvailble",isAvailable);
                userItems.put("Timestamp",timestamp);
 
 
