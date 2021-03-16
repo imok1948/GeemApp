@@ -101,6 +101,7 @@ public class FragmentAddItem extends Fragment
      if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
       ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},CAM_REQUEST_CODE);
      }else{
+      //launch the implicit intent
       dispatchTakePictureIntent();
      }
    }
@@ -111,7 +112,7 @@ public class FragmentAddItem extends Fragment
   saveBtn.setOnClickListener(new View.OnClickListener() {
    @Override
    public void onClick(View v) {
-
+   // this function uploads to database
     uploadData();
 
    }
@@ -125,7 +126,7 @@ public class FragmentAddItem extends Fragment
 
 
 
-
+// this code corresponds to getting result from the camera intent
  @Override
  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
   if(requestCode == CAM_INTENT_REQUEST_CODE){
@@ -139,10 +140,9 @@ public class FragmentAddItem extends Fragment
 
 
 
- //----------------------------------------------
 
 
-
+//this code generates the image file for the clicked picture
  private File createImageFile() throws IOException {
   // Create an image file name
   File dirname = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -154,7 +154,7 @@ public class FragmentAddItem extends Fragment
 
 
 
-
+// this code launches the intent to take picture from camera and generate URI of that image
  private void dispatchTakePictureIntent() {
   Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
   // Ensure that there's a camera activity to handle the intent
