@@ -186,14 +186,14 @@
     </EditText>
 
     <EditText
-        android:id="@+id/registerAge"
+        android:id="@+id/registerBirthYear"
         android:layout_width="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Age"
+        android:hint="Birth Year"
         android:inputType="number"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +217,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerAge">
+        app:layout_constraintTop_toBottomOf="@+id/registerBirthYear">
 
     </EditText>
 
@@ -261,13 +261,13 @@
     <Button
         android:id="@+id/registerGoBackToLogin"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#0ED6B9"
         android:text="Go Back to Login"
         android:textColor="#ffffff"
-        android:textSize="26sp"
+        android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -388,7 +388,7 @@
     </Button>
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/passwordProgressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -402,4 +402,104 @@
 
     </ProgressBar>
   </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/userProfile"
+      android:visibility="gone"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+      <TextView
+          android:id="@+id/userProfileFullNameText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Name"
+          android:textSize="25sp"
+          android:layout_marginTop="20dp"
+          android:gravity="center">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/userProfileFullName"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text=""
+          android:textSize="40sp"
+          android:textColor="@color/purple_700"
+          android:gravity="center">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/userProfileEmailText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Email"
+          android:textSize="25sp"
+          android:layout_marginTop="20dp"
+          android:gravity="center">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/userProfileEmail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text=""
+          android:textSize="40sp"
+          android:textColor="@color/purple_700"
+          android:gravity="center">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/userProfileBirthYearText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Birth Year"
+          android:textSize="25sp"
+          android:layout_marginTop="20dp"
+          android:gravity="center">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/userProfileBirthYear"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text=""
+          android:textSize="40dp"
+          android:textColor="@color/purple_700"
+          android:gravity="center">
+
+      </TextView>
+
+
+
+      <Button
+          android:id="@+id/userProfileSignOut"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#0ED6B9"
+        android:text="Signout"
+        android:textColor="#ffffff"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+      </Button>
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>
