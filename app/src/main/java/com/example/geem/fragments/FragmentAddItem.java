@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelectedListener
 {
@@ -35,6 +37,8 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
  Button captureImgBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
  String category, description, title;
+
+ FirebaseFirestore db;
 
 
  @Override
