@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="Choose Image:"
+        android:text="Image:"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:typeface="serif" />
@@ -102,12 +102,7 @@
             android:text="Open Camera"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/open_gallery"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:text="Open Gallery"
-            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <ImageView

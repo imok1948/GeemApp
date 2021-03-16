@@ -25,9 +25,12 @@ import android.widget.Toast;
 
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -81,36 +84,52 @@ public class FragmentAddItem extends Fragment
    @Override
    public void onClick(View v) {
 
-    String userName, itemTitle, itemDescription, 
+    uploadImage();
 
-    historyId = String.valueOf(System.currentTimeMillis());
+    String itemTitle, itemDescription, itemCategory, donorPlace;
+    Boolean isAvailable = true;
+    // Compute the GeoHash for a lat/lng point
+    double lat = 51.5074;
+    double lng = 0.1278;
+    String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
+
+// Add the hash and the lat/lng to the document. We will use the hash
+
+    Map<String, Object> updates = new HashMap<>();
+    updates.put("geohash", hash);
+    updates.put("lat", lat);
+    updates.put("lng", lng);
+
+    DocumentReference londonRef = db.collection("cities").document("LON");
+    londonRef.update(updates)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+             @Override
+             public void onComplete(@NonNull Task<Void> task) {
+              if(task.isSuccessful())
+              {
+               Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+              }
+              else
+              {
+               Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+              }
+             }
+            });
+
+
+
+
     userName = editTextUserName.getText().toString();
     categoryType = spinnerCategory.getSelectedItem().toString();
     place = editTextPlace.getText().toString();
     takerName = editTextTakerName.getText().toString();
     Timestamp timestamp = Timestamp.now();
 
-    Log.d(TAG, "Before uploading : " + historyId + " : " + userName + " : " + categoryType + " : " + place + " : " + takerName);
 
 
-    Map<String, Object> dataMap = new HashMap<>();
-    dataMap.put("name", userName);
+    //Map<String, Object> dataMap = new HashMap<>();
+   // dataMap.put("name", userName);
 
-    historyDocumentReference.set(dataMap).addOnCompleteListener(new OnCompleteListener<Void>()
-    {
-     @Override
-     public void onComplete(@NonNull Task<Void> task)
-     {
-      if(task.isSuccessful())
-      {
-       Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-      }
-      else
-      {
-       Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-      }
-     }
-    });
 
    }
 
@@ -118,6 +137,11 @@ public class FragmentAddItem extends Fragment
   });
 
   return view;
+ }
+
+
+ // this method uploads the captured image to Firebase storage
+ private void uploadImage() {
  }
 
 
@@ -133,9 +157,7 @@ public class FragmentAddItem extends Fragment
   if(requestCode == CAM_INTENT_REQUEST_CODE){
    Bitmap img = (Bitmap) data.getExtras().get("data");
    imgView.setImageBitmap(img);
-
   }
-
  }
 
 
@@ -151,6 +173,5 @@ public class FragmentAddItem extends Fragment
    }
 
  }
-
 
 }
