@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class FragmentAddItem extends Fragment
 {
-
+ String currentPhotoPath;
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
  ImageView imgView;  //this imageView is for displaying the captured image
@@ -81,7 +81,7 @@ public class FragmentAddItem extends Fragment
      if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
       ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},CAM_REQUEST_CODE);
      }else{
-      cameraLaunch();
+      dispatchTakePictureIntent();
      }
    }
   });
@@ -154,18 +154,15 @@ public class FragmentAddItem extends Fragment
  }
 
 
- // this method launches the implicit intent to start the default camera app
- private void cameraLaunch() {
-  Intent cam = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-  startActivityForResult(cam,CAM_INTENT_REQUEST_CODE);
- }
 
 
  @Override
  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
   if(requestCode == CAM_INTENT_REQUEST_CODE){
-   Bitmap img = (Bitmap) data.getExtras().get("data");
-   imgView.setImageBitmap(img);
+   if(resultCode == getActivity().RESULT_OK){
+        File newFile = new File(currentPhotoPath);
+        imgView.setImageURI(Uri.fromFile(newFile));
+   }
   }
  }
 
@@ -173,7 +170,7 @@ public class FragmentAddItem extends Fragment
 
  //----------------------------------------------
 
- String currentPhotoPath;
+
 
  private File createImageFile() throws IOException {
   // Create an image file name
@@ -188,9 +185,9 @@ public class FragmentAddItem extends Fragment
 
 
  private void dispatchTakePictureIntent() {
-  Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
   // Ensure that there's a camera activity to handle the intent
-  if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+  if (camIntent.resolveActivity(getActivity().getPackageManager()) != null) {
    // Create the File where the photo should go
    File photoFile = null;
    try {
@@ -201,11 +198,9 @@ public class FragmentAddItem extends Fragment
    }
    // Continue only if the File was successfully created
    if (photoFile != null) {
-    Uri photoURI = FileProvider.getUriForFile(getActivity(),
-            "com.example.android.fileprovider",
-            photoFile);
-    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-    startActivityForResult(takePictureIntent, CAM_INTENT_REQUEST_CODE);
+    Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.example.android.fileprovider", photoFile);
+    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+    startActivityForResult(camIntent, CAM_INTENT_REQUEST_CODE);
    }
   }
  }
@@ -217,7 +212,7 @@ public class FragmentAddItem extends Fragment
  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
    if(requestCode == CAM_REQUEST_CODE){
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length>0){
-         cameraLaunch();
+         dispatchTakePictureIntent();
         }
         else{
          Toast.makeText(getActivity(),"Please grant the Camera permission to use this feature",Toast.LENGTH_SHORT).show();
