@@ -22,8 +22,9 @@ import com.example.geem.extra.Variables;
 public class FragmentProfile extends Fragment
 {
  ConstraintLayout loginFragment, registerFragment, passwordFragment;
- TextView loginRegister, loginForgotPassword;
+ TextView loginRegister, loginForgotPassword, Rishabh;
  Button backToLoginFragment, password, registerGoBackToLogin, passwordGoBackToLogin;
+
 
  public final String TAG = "FragmentProfile";
 
