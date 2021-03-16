@@ -126,7 +126,6 @@ public class FragmentAddItem extends Fragment
 
 
 
-
  @Override
  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
   if(requestCode == CAM_INTENT_REQUEST_CODE){
@@ -198,7 +197,7 @@ public class FragmentAddItem extends Fragment
   if (imageUri != null){
 
 
-   StorageReference imgPath = storageRef.child("user_img").child(user_id+".jpeg");
+   StorageReference imgPath = storageRef.child("user_img").child(Timestamp.now().toString()+".jpeg");
 
 
    imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -236,7 +235,7 @@ public class FragmentAddItem extends Fragment
       userItems.put("Timestamp",timestamp);
 
 
-      firebaseFireStore.collection("User_Items").document(user_id).set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
+      firebaseFireStore.collection("User_Items").document().set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
        @Override
        public void onComplete(@NonNull Task<Void> task) {
         if(task.isSuccessful()){
