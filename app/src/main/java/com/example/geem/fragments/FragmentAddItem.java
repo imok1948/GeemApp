@@ -28,13 +28,13 @@ import com.example.geem.extra.Variables;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
-public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelectedListener
+public class FragmentAddItem extends Fragment
 {
 
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
  ImageView imgView;  //this imageView is for displaying the captured image
- Button captureImgBtn;  //this button enables user to use camera to capture image
+ Button captureImgBtn, saveBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
  String category, description, title;
 
@@ -48,12 +48,13 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
   View view = inflater.inflate(R.layout.fragment_add_item, container, false);
   imgView = view.findViewById(R.id.imageView);
   captureImgBtn = view.findViewById(R.id.capture_image);
+  saveBtn =  view.findViewById(R.id.save_btn);
 
   spinnerMenu = view.findViewById(R.id.spinner);
      ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(getActivity(),R.array.spinner_items,android.R.layout.simple_spinner_item);
      mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
      spinnerMenu.setAdapter(mAdapter);
-     spinnerMenu.setOnItemSelectedListener(this);
+
 
 
   captureImgBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,16 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
      }
    }
   });
+
+
+
+  saveBtn.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View v) {
+    
+   }
+  });
+
   return view;
  }
 
@@ -102,15 +113,5 @@ public class FragmentAddItem extends Fragment implements AdapterView.OnItemSelec
 
  }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-     category = parent.getItemAtPosition(position).toString();
 
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
