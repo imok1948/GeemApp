@@ -65,16 +65,16 @@ public class FragmentAddItem extends Fragment
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id;
- private FirebaseAuth firebaseAuth;
+ //String user_id;
+ //private FirebaseAuth firebaseAuth;
 
 
 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
-  firebaseAuth = FirebaseAuth.getInstance();
-  user_id = firebaseAuth.getCurrentUser().getUid();
+  //firebaseAuth = FirebaseAuth.getInstance();
+  //user_id = firebaseAuth.getCurrentUser().getUid();
   firebaseFireStore = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -217,12 +217,12 @@ public class FragmentAddItem extends Fragment
 
       Boolean isAvailable = true;
       // ------------------------------------------call function that returns address, lat and long)----------------------------------------
-      double lat = 51.5074;
-      double lng = 0.1278;
-      String address = "None";
+      double lat = 28.5355;
+      double lng = 77.3910;
+      String address = "Noida";
       String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
       Map<String , Object> userItems = new HashMap<>();
-      userItems.put("UserId",user_id);
+      userItems.put("UserId","User 2");
       userItems.put("Category" ,spinnerMenu.getSelectedItem().toString());
       userItems.put("Title", mTitle.getText().toString());
       userItems.put("Description", mDescription.getText().toString());
