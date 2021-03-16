@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,11 +32,15 @@ import com.example.geem.extra.Variables;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,19 +58,33 @@ public class FragmentAddItem extends Fragment
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn, saveBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
- String category, description, title;
+ EditText mTitle, mDescription;
+ Uri imageUri;
+ Uri url;
 
- FirebaseFirestore db;
+ private FirebaseFirestore firebaseFireStore;
+ private StorageReference storageRef;
+ String user_id;
+ private FirebaseAuth firebaseAuth;
+
 
 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
+  firebaseAuth = FirebaseAuth.getInstance();
+  user_id = firebaseAuth.getCurrentUser().getUid();
+  firebaseFireStore = FirebaseFirestore.getInstance();
+  storageRef = FirebaseStorage.getInstance().getReference();
+
+
   //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
   View view = inflater.inflate(R.layout.fragment_add_item, container, false);
   imgView = view.findViewById(R.id.imageView);
   captureImgBtn = view.findViewById(R.id.capture_image);
   saveBtn =  view.findViewById(R.id.save_btn);
+  mTitle = view.findViewById(R.id.editTitle);
+  mDescription = view.findViewById(R.id.editDescription);
 
   spinnerMenu = view.findViewById(R.id.spinner);
      ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(getActivity(),R.array.spinner_items,android.R.layout.simple_spinner_item);
@@ -92,37 +111,9 @@ public class FragmentAddItem extends Fragment
    @Override
    public void onClick(View v) {
 
-    uploadImage();
+    uploadData();
 
-    String itemTitle, itemDescription, itemCategory, donorPlace;
-    Boolean isAvailable = true;
-    // Compute the GeoHash for a lat/lng point
-    double lat = 51.5074;
-    double lng = 0.1278;
-    String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
 
-// Add the hash and the lat/lng to the document. We will use the hash
-
-    Map<String, Object> updates = new HashMap<>();
-    updates.put("geohash", hash);
-    updates.put("lat", lat);
-    updates.put("lng", lng);
-
-    DocumentReference londonRef = db.collection("cities").document("LON");
-    londonRef.update(updates)
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-             @Override
-             public void onComplete(@NonNull Task<Void> task) {
-              if(task.isSuccessful())
-              {
-               Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
-              }
-              else
-              {
-               Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
-              }
-             }
-            });
 
 
 
@@ -148,10 +139,6 @@ public class FragmentAddItem extends Fragment
  }
 
 
- // this method uploads the captured image to Firebase storage
- private void uploadImage() {
-
- }
 
 
 
@@ -161,7 +148,8 @@ public class FragmentAddItem extends Fragment
   if(requestCode == CAM_INTENT_REQUEST_CODE){
    if(resultCode == getActivity().RESULT_OK){
         File newFile = new File(currentPhotoPath);
-        imgView.setImageURI(Uri.fromFile(newFile));
+        imageUri = Uri.fromFile(newFile);
+        imgView.setImageURI(imageUri);
    }
   }
  }
@@ -218,6 +206,62 @@ public class FragmentAddItem extends Fragment
          Toast.makeText(getActivity(),"Please grant the Camera permission to use this feature",Toast.LENGTH_SHORT).show();
         }
    }
+
+ }
+
+ public void  uploadData (){
+
+  if (imageUri != null){
+
+
+   StorageReference imgPath = storageRef.child("user_img").child(user_id+".jpj");
+
+
+   imgPath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+              @Override
+              public void onSuccess(Uri uri) {
+               url = uri;
+
+               Boolean isAvailable = true;
+               // ------------------------------------------call function that returns address, lat and long)----------------------------------------
+               double lat = 51.5074;
+               double lng = 0.1278;
+               String address = "None";
+               String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
+               Map<String , Object> userItems = new HashMap<>();
+               userItems.put("UserId",user_id);
+               userItems.put("Title", mTitle.getText().toString());
+               userItems.put("Description", mDescription.getText().toString());
+               userItems.put("Address", address);
+               userItems.put("geohash", hash);
+               userItems.put("latitude", lat);
+               userItems.put("longitude", lng);
+               userItems.put("Image", url.toString());
+               userItems.put("isAvaialble",isAvailable);
+
+
+               firebaseFireStore.collection("User_Items").document(user_id).set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                 if(task.isSuccessful()){
+                        Toast.makeText(getActivity(),"Item has been added successfully",Toast.LENGTH_SHORT).show();
+                 }
+                 else{
+                  Toast.makeText(getActivity(),"Error, please try again",Toast.LENGTH_SHORT).show();
+                 }
+
+
+                }
+               });
+
+              }
+             });
+            }
+           });
+  }
 
  }
 
