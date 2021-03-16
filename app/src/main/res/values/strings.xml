@@ -24,6 +24,8 @@
     <item>Decorations</item>
     <item>Household items</item>
     <item>Groceries</item>
+    <item>Toys</item>
+    <item>Electronics</item>
     <item>Other</item>
   </string-array>
 </resources>
