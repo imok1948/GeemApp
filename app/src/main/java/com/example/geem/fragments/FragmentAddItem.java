@@ -4,14 +4,17 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +35,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,13 +126,13 @@ public class FragmentAddItem extends Fragment
 
 
 
-
+/*
     userName = editTextUserName.getText().toString();
     categoryType = spinnerCategory.getSelectedItem().toString();
     place = editTextPlace.getText().toString();
     takerName = editTextTakerName.getText().toString();
     Timestamp timestamp = Timestamp.now();
-
+*/
 
 
     //Map<String, Object> dataMap = new HashMap<>();
@@ -142,6 +150,7 @@ public class FragmentAddItem extends Fragment
 
  // this method uploads the captured image to Firebase storage
  private void uploadImage() {
+
  }
 
 
@@ -159,6 +168,49 @@ public class FragmentAddItem extends Fragment
    imgView.setImageBitmap(img);
   }
  }
+
+
+
+ //----------------------------------------------
+
+ String currentPhotoPath;
+
+ private File createImageFile() throws IOException {
+  // Create an image file name
+  File dirname = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+  File img = File.createTempFile("User_image", ".jpg", dirname );
+  // Save a file: path for use with ACTION_VIEW intents
+  currentPhotoPath = img.getAbsolutePath();
+  return img;
+ }
+
+
+
+
+ private void dispatchTakePictureIntent() {
+  Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  // Ensure that there's a camera activity to handle the intent
+  if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+   // Create the File where the photo should go
+   File photoFile = null;
+   try {
+    photoFile = createImageFile();
+   } catch (IOException ex) {
+    // Error occurred while creating the File
+
+   }
+   // Continue only if the File was successfully created
+   if (photoFile != null) {
+    Uri photoURI = FileProvider.getUriForFile(getActivity(),
+            "com.example.android.fileprovider",
+            photoFile);
+    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+    startActivityForResult(takePictureIntent, CAM_INTENT_REQUEST_CODE);
+   }
+  }
+ }
+
+
 
 
  @Override
