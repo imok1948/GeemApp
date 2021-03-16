@@ -31,6 +31,7 @@ import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,7 +61,7 @@ public class FragmentAddItem extends Fragment
  Spinner spinnerMenu;
  EditText mTitle, mDescription;
  Uri imageUri;
- Uri url;
+
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
@@ -112,23 +113,6 @@ public class FragmentAddItem extends Fragment
    public void onClick(View v) {
 
     uploadData();
-
-
-
-
-
-/*
-    userName = editTextUserName.getText().toString();
-
-    place = editTextPlace.getText().toString();
-    takerName = editTextTakerName.getText().toString();
-    Timestamp timestamp = Timestamp.now();
-*/
-
-
-    //Map<String, Object> dataMap = new HashMap<>();
-   // dataMap.put("name", userName);
-
 
    }
 
@@ -214,58 +198,61 @@ public class FragmentAddItem extends Fragment
   if (imageUri != null){
 
 
-   StorageReference imgPath = storageRef.child("user_img").child(user_id+".jpj");
+   StorageReference imgPath = storageRef.child("user_img").child(user_id+".jpeg");
 
 
-   imgPath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-              @Override
-              public void onSuccess(Uri uri) {
-               url = uri;
-               Timestamp timestamp = Timestamp.now();
+   imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+    @Override
+    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+     if (!task.isSuccessful()) {
+      throw task.getException();
+     }
+     return imgPath.getDownloadUrl();
+    }
+   }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+    @Override
+    public void onComplete(@NonNull Task<Uri> task) {
+     if (task.isSuccessful()) {
+      Uri url = task.getResult();
+      Timestamp timestamp = Timestamp.now();
 
-               Boolean isAvailable = true;
-               // ------------------------------------------call function that returns address, lat and long)----------------------------------------
-               double lat = 51.5074;
-               double lng = 0.1278;
-               String address = "None";
-               String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
-               Map<String , Object> userItems = new HashMap<>();
-               userItems.put("UserId",user_id);
-               userItems.put("Category" ,spinnerMenu.getSelectedItem().toString());
-               userItems.put("Title", mTitle.getText().toString());
-               userItems.put("Description", mDescription.getText().toString());
-               userItems.put("Address", address);
-               userItems.put("geohash", hash);
-               userItems.put("latitude", lat);
-               userItems.put("longitude", lng);
-               userItems.put("Image", url.toString());
-               userItems.put("isAvailble",isAvailable);
-               userItems.put("Timestamp",timestamp);
-
-
-               firebaseFireStore.collection("User_Items").document(user_id).set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                 if(task.isSuccessful()){
-                        Toast.makeText(getActivity(),"Item has been added successfully",Toast.LENGTH_SHORT).show();
-                 }
-                 else{
-                  Toast.makeText(getActivity(),"Error, please try again",Toast.LENGTH_SHORT).show();
-                 }
+      Boolean isAvailable = true;
+      // ------------------------------------------call function that returns address, lat and long)----------------------------------------
+      double lat = 51.5074;
+      double lng = 0.1278;
+      String address = "None";
+      String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
+      Map<String , Object> userItems = new HashMap<>();
+      userItems.put("UserId",user_id);
+      userItems.put("Category" ,spinnerMenu.getSelectedItem().toString());
+      userItems.put("Title", mTitle.getText().toString());
+      userItems.put("Description", mDescription.getText().toString());
+      userItems.put("Address", address);
+      userItems.put("geohash", hash);
+      userItems.put("latitude", lat);
+      userItems.put("longitude", lng);
+      userItems.put("Image", url.toString());
+      userItems.put("isAvailable",isAvailable);
+      userItems.put("Timestamp",timestamp);
 
 
-                }
-               });
+      firebaseFireStore.collection("User_Items").document(user_id).set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
+       @Override
+       public void onComplete(@NonNull Task<Void> task) {
+        if(task.isSuccessful()){
+         Toast.makeText(getActivity(),"Item has been added successfully",Toast.LENGTH_SHORT).show();
+        }
+        else{
+         Toast.makeText(getActivity(),"Error, please try again",Toast.LENGTH_SHORT).show();
+        }
+       }
+      });
+     }
+     }
 
-              }
-             });
-            }
-           });
+   });
+
   }
-
  }
 
 }
