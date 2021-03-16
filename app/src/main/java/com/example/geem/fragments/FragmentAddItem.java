@@ -119,7 +119,7 @@ public class FragmentAddItem extends Fragment
 
 /*
     userName = editTextUserName.getText().toString();
-    categoryType = spinnerCategory.getSelectedItem().toString();
+
     place = editTextPlace.getText().toString();
     takerName = editTextTakerName.getText().toString();
     Timestamp timestamp = Timestamp.now();
@@ -224,6 +224,7 @@ public class FragmentAddItem extends Fragment
               @Override
               public void onSuccess(Uri uri) {
                url = uri;
+               Timestamp timestamp = Timestamp.now();
 
                Boolean isAvailable = true;
                // ------------------------------------------call function that returns address, lat and long)----------------------------------------
@@ -233,6 +234,7 @@ public class FragmentAddItem extends Fragment
                String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
                Map<String , Object> userItems = new HashMap<>();
                userItems.put("UserId",user_id);
+               userItems.put("Category" ,spinnerMenu.getSelectedItem().toString());
                userItems.put("Title", mTitle.getText().toString());
                userItems.put("Description", mDescription.getText().toString());
                userItems.put("Address", address);
@@ -241,6 +243,7 @@ public class FragmentAddItem extends Fragment
                userItems.put("longitude", lng);
                userItems.put("Image", url.toString());
                userItems.put("isAvaialble",isAvailable);
+               userItems.put("Timestamp",timestamp);
 
 
                firebaseFireStore.collection("User_Items").document(user_id).set(userItems).addOnCompleteListener(new OnCompleteListener<Void>() {
