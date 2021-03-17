@@ -2,12 +2,14 @@ package com.example.geem.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,7 +72,7 @@ public class FragmentAddItem extends Fragment implements LocationListener
  String currentPhotoPath;
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
-  public static final int GPS_REQUEST_CODE = 101;
+ public static final int GPS_REQUEST_CODE = 101;
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn, saveBtn, locationBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
@@ -79,7 +81,7 @@ public class FragmentAddItem extends Fragment implements LocationListener
  double lat;
  double lng;
  String address;
- 
+ LocationManager locationManager;
  
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
@@ -160,10 +162,13 @@ public class FragmentAddItem extends Fragment implements LocationListener
  }
 
  private void getUserLocation() {
-
+   locationManager = (LocationManager)getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
  }
 
+
+
+ 
  // this code corresponds to getting result from the camera intent
  @Override
  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
@@ -274,7 +279,6 @@ public class FragmentAddItem extends Fragment implements LocationListener
     Toast.makeText(getActivity(), "Please grant the Camera permission to use this feature", Toast.LENGTH_SHORT).show();
    }
   }
-  
  }
 
 
@@ -283,14 +287,11 @@ public class FragmentAddItem extends Fragment implements LocationListener
  // this code uploads data to firebase
  public void uploadData()
  {
-  
   if(downloadUri != null)
   {
-   
-   
+
    StorageReference imgPath = storageRef.child("fetch_images").child(Timestamp.now().toString() + ".jpeg");
-   
-   
+   //setting up progressDialog
    ProgressDialog progressDialog = new ProgressDialog(getActivity());
    progressDialog.setMessage("Uploading the item...");
    progressDialog.setCancelable(false);
