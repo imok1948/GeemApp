@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,7 @@ public class FragmentAddItem extends Fragment {
  Uri imageUri, downloadUri;
  double lat;
  double lng;
- String address;
+
  LocationManager locationManager;
 
  private FirebaseFirestore firebaseFireStore;
@@ -132,7 +133,12 @@ public class FragmentAddItem extends Fragment {
 
      //checking for network
      if (netInfo != null && netInfo.isConnected()) {
-      uploadData();
+
+      if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null) {
+       uploadData();
+      } else{
+       Toast.makeText(getActivity(), "Please complete all the details first", Toast.LENGTH_LONG).show();
+      }
 
      } else {
       Toast.makeText(getActivity(), "Network Connection is not Available", Toast.LENGTH_LONG).show();
