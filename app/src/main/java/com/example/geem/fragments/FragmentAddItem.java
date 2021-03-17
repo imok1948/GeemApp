@@ -11,6 +11,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.ExifInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -125,9 +127,18 @@ public class FragmentAddItem extends Fragment {
    @Override
    public void onClick(View v) {
     // this function uploads to database
+    ConnectivityManager connMan = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo netInfo = connMan.getActiveNetworkInfo();
 
-    uploadData();
-   }
+     //checking for network
+     if (netInfo != null && netInfo.isConnected()) {
+      uploadData();
+
+     } else {
+      Toast.makeText(getActivity(), "Network Connection is not Available", Toast.LENGTH_LONG).show();
+     }
+    }
+
   });
 
 
