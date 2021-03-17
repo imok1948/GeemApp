@@ -183,7 +183,7 @@ public class FragmentAddItem extends Fragment
     }
     catch (Throwable t) {
      Log.e("ERROR", "Error compressing file." + t.toString ());
-     Log.e("Error",e.toString());
+
     }
    }
   }
