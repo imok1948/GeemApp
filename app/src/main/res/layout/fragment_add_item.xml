@@ -147,7 +147,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-      android:text="Your location will not be displayed publicly, it will be used to fetch nearby items for you."
+      android:text="Your location will not be displayed publicly, it will be used to personalize your feeds."
        android:layout_marginLeft="10dp"/>
 
 
