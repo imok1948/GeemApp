@@ -151,6 +151,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     loginFragment.setVisibility(View.VISIBLE);
     registerFragment.setVisibility(View.GONE);
     passwordFragment.setVisibility(View.GONE);
+    passwordEmail.setText(temp);
+    passwordProgressBar.setVisibility(View.GONE);
    }
   });
 
@@ -259,8 +261,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       registerFragment.setVisibility(View.GONE);
       passwordFragment.setVisibility(View.GONE);
       userProfileEmail.setText(loginEmail.getText().toString());
-
-
       userProfile.setVisibility(View.VISIBLE);
      }else{
       user.sendEmailVerification();

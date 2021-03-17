@@ -376,7 +376,7 @@
         android:backgroundTint="#0ED6B9"
         android:text="Go Back to Login"
         android:textColor="#ffffff"
-        android:textSize="26sp"
+        android:textSize="10sp"
         android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -421,8 +421,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Name"
-          android:textSize="25sp"
-          android:layout_marginTop="20dp"
+          android:textSize="13sp"
+          android:layout_marginTop="10dp"
           android:gravity="center">
 
       </TextView>
@@ -432,7 +432,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text=""
-          android:textSize="40sp"
+          android:textSize="20sp"
           android:textColor="@color/purple_700"
           android:gravity="center">
 
@@ -443,8 +443,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Email"
-          android:textSize="25sp"
-          android:layout_marginTop="20dp"
+          android:textSize="13sp"
+          android:layout_marginTop="10dp"
           android:gravity="center">
 
       </TextView>
@@ -454,7 +454,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text=""
-          android:textSize="40sp"
+          android:textSize="20sp"
           android:textColor="@color/purple_700"
           android:gravity="center">
 
@@ -465,8 +465,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Birth Year"
-          android:textSize="25sp"
-          android:layout_marginTop="20dp"
+          android:textSize="13sp"
+          android:layout_marginTop="10dp"
           android:gravity="center">
 
       </TextView>
@@ -476,7 +476,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text=""
-          android:textSize="40dp"
+          android:textSize="20sp"
           android:textColor="@color/purple_700"
           android:gravity="center">
 
@@ -488,11 +488,11 @@
           android:id="@+id/userProfileSignOut"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
         android:backgroundTint="#0ED6B9"
         android:text="Signout"
         android:textColor="#ffffff"
-        android:textSize="26sp"
+        android:textSize="10sp"
         android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
