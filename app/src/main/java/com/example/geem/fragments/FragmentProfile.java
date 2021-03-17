@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.solver.state.State;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -25,16 +26,23 @@ import com.example.geem.MainActivity;
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 
 public class FragmentProfile extends Fragment implements View.OnClickListener
@@ -69,6 +77,9 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  TextView userProfileFullName, userProfileEmail, userProfileBirthYear;
  Button userProfileSignOut;
 
+ //Related to User ID
+ String currentUserID;
+ 
  //String for EditText Purpose
  private String temp;
 
@@ -89,7 +100,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   loginForgotPassword = view.findViewById(R.id.loginForgotPassword);
   registerBannerDescription = view.findViewById(R.id.registerBannerDescription);
   passwordBanner = view.findViewById(R.id.passwordBanner);
-  passwordBannerDescription = view.findViewById(R.id.registerBannerDescription);
+  passwordBannerDescription = view.findViewById(R.id.passwordBannerDescription);
   userProfileFullName = view.findViewById(R.id.userProfileFullName);
   userProfileEmail = view.findViewById(R.id.userProfileEmail);
   userProfileBirthYear = view.findViewById(R.id.userProfileBirthYear);
@@ -260,7 +271,20 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       loginFragment.setVisibility(View.GONE);
       registerFragment.setVisibility(View.GONE);
       passwordFragment.setVisibility(View.GONE);
-      userProfileEmail.setText(loginEmail.getText().toString());
+
+      //Retrieve the logged in user information from the Cloud FireStore
+      currentUserID = mAuth.getCurrentUser().getUid();
+      DocumentReference documentReference = db.collection("profile1").document(currentUserID);
+      documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+       @Override
+       public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+        userProfileFullName.setText(value.getString("name"));
+        userProfileEmail.setText(value.getString("email"));
+        userProfileBirthYear.setText(value.getString("birthYear"));
+       }
+      });
+      //Data Retrieval Completed
+
       userProfile.setVisibility(View.VISIBLE);
      }else{
       user.sendEmailVerification();
@@ -324,6 +348,11 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     if(task.isSuccessful()){
      loginEmail.setText(temp);
      loginPassword.setText(temp);
+     Toast.makeText(getActivity(), "User has been registered successfully!", Toast.LENGTH_LONG).show();
+     //Get userID of current user
+     currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+     //currentUserID = mAuth.getCurrentUser().getUid();
+     //DocumentReference documentReference = db.collection("profile1").document(currentUserID);
      insertData();
      registerProgressBar.setVisibility(View.GONE);
      loginFragment.setVisibility(View.VISIBLE);
@@ -333,27 +362,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      registerBirthYear.setText(temp);
      registerEmail.setText(temp);
      registerPassword.setText(temp);
-
-     /*
-     User user = new User(fullName, birthYear, email);
-
-     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener((new OnCompleteListener<Void>() {
-      @Override
-      public void onComplete(@NonNull Task<Void> task) {
-
-       if(task.isSuccessful()){
-        Toast.makeText(getActivity(), "User has been registered successfully!", Toast.LENGTH_LONG).show();
-        registerProgressBar.setVisibility(View.GONE);
-
-        //redirect to login layout!
-       }else{
-        Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-        registerProgressBar.setVisibility(View.GONE);
-       }
-      }
-     }));
-     */
-
     }else{
      Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
      registerProgressBar.setVisibility(View.GONE);
@@ -404,12 +412,25 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   items.put("name", registerFullName.getText().toString().trim());
   items.put("email", registerEmail.getText().toString().trim());
   items.put("birthYear", registerBirthYear.getText().toString());
-  db.collection("profile1").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-   @Override
-   public void onComplete(@NonNull Task<DocumentReference> task) {
-    Toast.makeText(getActivity(), "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
-   }
-  });
+
+  db.collection("profile1").document(currentUserID)
+          .set(items)
+          .addOnSuccessListener(new OnSuccessListener<Void>() {
+           @Override
+           public void onSuccess(Void aVoid) {
+            Log.d(TAG, "DocumentSnapshot for user successfully written!");
+            registerProgressBar.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
+           }
+          })
+          .addOnFailureListener(new OnFailureListener() {
+           @Override
+           public void onFailure(@NonNull Exception e) {
+            Log.w(TAG, "Error writing document for user", e);
+            Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+            registerProgressBar.setVisibility(View.GONE);
+           }
+          });
  }
  //insertData() ends
 
