@@ -132,9 +132,7 @@ public class FragmentAddItem extends Fragment
     
     uploadData();
    }
-   
   });
-  
   return view;
  }
 
@@ -149,6 +147,8 @@ public class FragmentAddItem extends Fragment
    if(resultCode == getActivity().RESULT_OK)
    {
     File newFile = new File(currentPhotoPath);
+
+    //save the orientation metadata of image
     ExifInterface oldExif = null;
     try {
      oldExif = new ExifInterface(currentPhotoPath);
@@ -164,24 +164,26 @@ public class FragmentAddItem extends Fragment
      Bitmap bitmap = BitmapFactory.decodeFile (file.getPath ());
      bitmap.compress (Bitmap.CompressFormat.JPEG,60, new FileOutputStream(file));
      downloadUri = Uri.fromFile(file);
+
+     //add the metadata of orientation to compressed image
      if (exifOrientation != null) {
       ExifInterface newExif = null;
       try {
        newExif = new ExifInterface(currentPhotoPath);
       } catch (IOException e) {
-       e.printStackTrace();
+       Log.e("Error",e.toString());
       }
       newExif.setAttribute(ExifInterface.TAG_ORIENTATION, exifOrientation);
       try {
        newExif.saveAttributes();
       } catch (IOException e) {
-       e.printStackTrace();
+       Log.e("Error",e.toString());;
       }
      }
     }
     catch (Throwable t) {
      Log.e("ERROR", "Error compressing file." + t.toString ());
-     t.printStackTrace ();
+     Log.e("Error",e.toString());
     }
    }
   }
@@ -201,6 +203,7 @@ public class FragmentAddItem extends Fragment
   return img;
  }
  
+
 
 
  // this code launches the intent to take picture from camera and generate URI of that image
@@ -253,8 +256,7 @@ public class FragmentAddItem extends Fragment
 
 
 
-
- 
+ // this code uploads data to firebase
  public void uploadData()
  {
   
