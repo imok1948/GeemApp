@@ -102,7 +102,7 @@ public class FragmentAddItem extends Fragment {
   saveBtn = view.findViewById(R.id.save_btn);
   locationBtn = view.findViewById(R.id.usrLocation);
   mTitle = view.findViewById(R.id.editTitle);
-  mAddress = view.findViewById(R.id.editaddress);
+  mAddress = view.findViewById(R.id.editAddress);
   mDescription = view.findViewById(R.id.editDescription);
 
   spinnerMenu = view.findViewById(R.id.spinner);
