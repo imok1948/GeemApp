@@ -158,11 +158,11 @@ public class FragmentAddItem extends Fragment
     String exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
     imageUri = Uri.fromFile(newFile);
     imgView.setImageURI(imageUri);
-    int compressionRatio = 1; //1 == originalImage, 2 = 50% compression, 4=25% compress
+
     File file = new File (currentPhotoPath);
     try {
      Bitmap bitmap = BitmapFactory.decodeFile (file.getPath ());
-     bitmap.compress (Bitmap.CompressFormat.JPEG,70, new FileOutputStream(file));
+     bitmap.compress (Bitmap.CompressFormat.JPEG,60, new FileOutputStream(file));
      downloadUri = Uri.fromFile(file);
      if (exifOrientation != null) {
       ExifInterface newExif = null;
@@ -189,7 +189,7 @@ public class FragmentAddItem extends Fragment
 
 
 
- 
+
  
  
  //this code generates the image file for the clicked picture
