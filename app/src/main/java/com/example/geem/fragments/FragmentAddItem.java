@@ -81,7 +81,7 @@ public class FragmentAddItem extends Fragment {
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id ;
+ String user_id  ;
  private FirebaseAuth firebaseAuth;
 
 
