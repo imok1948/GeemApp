@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.geem.MainActivity;
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.firebase.geofire.GeoFireUtils;
@@ -221,7 +222,7 @@ public class FragmentAddItem extends Fragment
    
    
    ProgressDialog progressDialog = new ProgressDialog(getActivity());
-   progressDialog.setMessage("Uploading image...");
+   progressDialog.setMessage("Uploading the item...");
    progressDialog.setCancelable(false);
    progressDialog.show();
    imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
@@ -240,7 +241,7 @@ public class FragmentAddItem extends Fragment
     @Override
     public void onComplete(@NonNull Task<Uri> task)
     {
-     progressDialog.cancel();
+
      if(task.isSuccessful())
      {
       Uri url = task.getResult();
@@ -294,8 +295,12 @@ public class FragmentAddItem extends Fragment
        {
         if(task.isSuccessful())
         {
-         Snackbar.make(getView(), "Document uploaded", Snackbar.LENGTH_SHORT).show();
-         Toast.makeText(getActivity(), "Item has been added successfully", Toast.LENGTH_SHORT).show();
+         progressDialog.cancel();
+        
+         Toast.makeText(getActivity(), "Item uploaded successfully in feeds", Toast.LENGTH_LONG).show();
+         Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
+         getActivity().startActivity(i);
+
         }
         else
         {
