@@ -360,20 +360,18 @@ public class FragmentAddItem extends Fragment {
   }
  }
 
- private final LocationListener mLocationListener = new LocationListener() {
 
+
+ private final LocationListener mLocationListener = new LocationListener() {
 
   @Override
   public void onLocationChanged(@NonNull Location location) {
       lat = location.getLatitude();
       lng = location.getLongitude();
-
-
   }
 
   @Override
   public void onStatusChanged(String provider, int status, Bundle extras) {
-
   }
 
   @Override
