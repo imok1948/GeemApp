@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -47,6 +49,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,7 +72,7 @@ public class FragmentAddItem extends Fragment
  Button captureImgBtn, saveBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
  EditText mTitle, mDescription;
- Uri imageUri;
+ Uri imageUri, downloadUri;
  
  
  private FirebaseFirestore firebaseFireStore;
@@ -146,11 +149,47 @@ public class FragmentAddItem extends Fragment
    if(resultCode == getActivity().RESULT_OK)
    {
     File newFile = new File(currentPhotoPath);
+    ExifInterface oldExif = null;
+    try {
+     oldExif = new ExifInterface(currentPhotoPath);
+    } catch (IOException e) {
+     e.printStackTrace();
+    }
+    String exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
     imageUri = Uri.fromFile(newFile);
     imgView.setImageURI(imageUri);
+    int compressionRatio = 1; //1 == originalImage, 2 = 50% compression, 4=25% compress
+    File file = new File (currentPhotoPath);
+    try {
+     Bitmap bitmap = BitmapFactory.decodeFile (file.getPath ());
+     bitmap.compress (Bitmap.CompressFormat.JPEG,70, new FileOutputStream(file));
+     downloadUri = Uri.fromFile(file);
+     if (exifOrientation != null) {
+      ExifInterface newExif = null;
+      try {
+       newExif = new ExifInterface(currentPhotoPath);
+      } catch (IOException e) {
+       e.printStackTrace();
+      }
+      newExif.setAttribute(ExifInterface.TAG_ORIENTATION, exifOrientation);
+      try {
+       newExif.saveAttributes();
+      } catch (IOException e) {
+       e.printStackTrace();
+      }
+     }
+    }
+    catch (Throwable t) {
+     Log.e("ERROR", "Error compressing file." + t.toString ());
+     t.printStackTrace ();
+    }
    }
   }
  }
+
+
+
+ 
  
  
  //this code generates the image file for the clicked picture
@@ -162,7 +201,8 @@ public class FragmentAddItem extends Fragment
   return img;
  }
  
- 
+
+
  // this code launches the intent to take picture from camera and generate URI of that image
  private void cameraImplicitIntent()
  {
@@ -188,7 +228,10 @@ public class FragmentAddItem extends Fragment
    }
   }
  }
- 
+
+
+
+
  
  @Override
  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -206,11 +249,16 @@ public class FragmentAddItem extends Fragment
   }
   
  }
+
+
+
+
+
  
  public void uploadData()
  {
   
-  if(imageUri != null)
+  if(downloadUri != null)
   {
    
    
@@ -221,7 +269,7 @@ public class FragmentAddItem extends Fragment
    progressDialog.setMessage("Uploading the item...");
    progressDialog.setCancelable(false);
    progressDialog.show();
-   imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+   imgPath.putFile(downloadUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
    {
     @Override
     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
