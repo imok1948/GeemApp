@@ -130,7 +130,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="10dp"
           android:layout_marginTop="10dp"
-          android:text="Location:"
+          android:text="Giver Location:"
           android:textColor="@color/black"
           android:textSize="18dp"
           android:typeface="serif" />
@@ -140,11 +140,28 @@
           android:layout_width="wrap_content"
           android:text="get location"
           android:layout_marginTop="10dp"
-          android:layout_marginLeft="100dp"
+          android:layout_marginLeft="70dp"
           android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="Pickup Address:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editaddress"
+        android:layout_margin="10dp"
+        android:hint="Enter title"/>
+
 
     <View
         android:layout_width="wrap_content"

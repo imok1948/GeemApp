@@ -76,7 +76,7 @@ public class FragmentAddItem extends Fragment {
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn, saveBtn, locationBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
- EditText mTitle, mDescription;
+ EditText mTitle, mDescription, mAddress;
  Uri imageUri, downloadUri;
  double lat;
  double lng;
@@ -85,14 +85,14 @@ public class FragmentAddItem extends Fragment {
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- //String user_id;
- //private FirebaseAuth firebaseAuth;
+ String user_id;
+ private FirebaseAuth firebaseAuth;
 
 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-  //firebaseAuth = FirebaseAuth.getInstance();
-  //user_id = firebaseAuth.getCurrentUser().getUid();
+  firebaseAuth = FirebaseAuth.getInstance();
+  user_id = firebaseAuth.getCurrentUser().getUid();
   firebaseFireStore = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -102,6 +102,7 @@ public class FragmentAddItem extends Fragment {
   saveBtn = view.findViewById(R.id.save_btn);
   locationBtn = view.findViewById(R.id.usrLocation);
   mTitle = view.findViewById(R.id.editTitle);
+  mAddress = view.findViewById(R.id.editaddress);
   mDescription = view.findViewById(R.id.editDescription);
 
   spinnerMenu = view.findViewById(R.id.spinner);
@@ -319,37 +320,18 @@ public class FragmentAddItem extends Fragment {
      {
       Uri url = task.getResult();
       Timestamp timestamp = Timestamp.now();
-      
+
+
+
+
       Boolean isAvailable = true;
-      // ------------------------------------------call function that returns address, lat and long)----------------------------------------
-      
-
-      String username = "user2";
-      
-
-      /*
-      Random random = new Random();
-      int gpsRand = (int) random.nextInt(randomGPScoordinates.length);
-      int userRand = (int) random.nextInt(randomUsernames.length);
-      int addressRand = (int) random.nextInt(randomAddresses.length);
-      
-      lat = randomGPScoordinates[gpsRand][0];
-      lng = randomGPScoordinates[gpsRand][1];
-      address = randomAddresses[addressRand];
-      username = randomUsernames[userRand];
-      
-      Log.i("RANDOM GPS :", lat + " , " + lng);
-      Log.i("RANDOM USER :", username);
-      Log.i("RANDOM ADDRESS :", address);
-        */
-      
       String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat,lng));
       Map<String, Object> userItems = new HashMap<>();
-      userItems.put("userid", username);
+      userItems.put("userid", user_id);
       userItems.put("category", spinnerMenu.getSelectedItem().toString());
       userItems.put("title", mTitle.getText().toString());
       userItems.put("description", mDescription.getText().toString());
-      userItems.put("address", address);
+      userItems.put("address", mAddress.getText().toString());
       userItems.put("geohash", hash);
       userItems.put("latitude", lat);
       userItems.put("longitude", lng);
