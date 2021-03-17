@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,7 +60,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class FragmentAddItem extends Fragment
+public class FragmentAddItem extends Fragment implements LocationListener
 {
  
  //private String[] randomUsernames = new String[]{"aman", "vinay", "shubham", "sujeet", "bramha", "vishnu", "mahesh", "narad", "shani", "shiv", "tanmoy", "dev", "akhil", "pragya", "binod", "hitesh", "danish"};
@@ -68,6 +70,7 @@ public class FragmentAddItem extends Fragment
  String currentPhotoPath;
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
+  public static final int GPS_REQUEST_CODE = 101;
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn, saveBtn, locationBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
@@ -91,9 +94,7 @@ public class FragmentAddItem extends Fragment
   //user_id = firebaseAuth.getCurrentUser().getUid();
   firebaseFireStore = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();
-  
-  
-  //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
+
   View view = inflater.inflate(R.layout.fragment_add_item, container, false);
   imgView = view.findViewById(R.id.imageView);
   captureImgBtn = view.findViewById(R.id.capture_image);
@@ -145,18 +146,24 @@ public class FragmentAddItem extends Fragment
    @Override
    public void onClick(View v)
    {
-    // this function uploads to database
-
-    uploadData();
+       if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+       }
+       else{
+          getUserLocation();
    }
-  });
+    }
+ } );
 
 
-  return view;
+   return view;
  }
 
+ private void getUserLocation() {
 
- 
+
+ }
+
  // this code corresponds to getting result from the camera intent
  @Override
  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
@@ -212,7 +219,6 @@ public class FragmentAddItem extends Fragment
 
 
  
- 
  //this code generates the image file for the clicked picture
  private File createImageFile() throws IOException
  {
@@ -250,7 +256,6 @@ public class FragmentAddItem extends Fragment
    }
   }
  }
-
 
 
 
@@ -316,10 +321,7 @@ public class FragmentAddItem extends Fragment
       Boolean isAvailable = true;
       // ------------------------------------------call function that returns address, lat and long)----------------------------------------
       
-      
-      double lat = 28.5355;
-      double lng = 77.3910;
-      String address = "Noida";
+
       String username = "user2";
       
 
@@ -381,5 +383,25 @@ public class FragmentAddItem extends Fragment
    
   }
  }
- 
+
+
+ @Override
+ public void onLocationChanged(@NonNull Location location) {
+
+ }
+
+ @Override
+ public void onStatusChanged(String provider, int status, Bundle extras) {
+
+ }
+
+ @Override
+ public void onProviderEnabled(@NonNull String provider) {
+
+ }
+
+ @Override
+ public void onProviderDisabled(@NonNull String provider) {
+
+ }
 }
