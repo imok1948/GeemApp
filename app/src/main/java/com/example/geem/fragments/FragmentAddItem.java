@@ -62,7 +62,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class FragmentAddItem extends Fragment implements LocationListener {
+public class FragmentAddItem extends Fragment {
 
  //private String[] randomUsernames = new String[]{"aman", "vinay", "shubham", "sujeet", "bramha", "vishnu", "mahesh", "narad", "shani", "shiv", "tanmoy", "dev", "akhil", "pragya", "binod", "hitesh", "danish"};
  //private String[] randomAddresses = new String[]{"A,37/1, Midc Indl Area, Bhnd Bhangar Kata, Taloja, Navi Mumbai", "1, Agarwal Nagar, 1 Marol Chimatpada, J.b.nagar\n" + "\n" + "City:   Mumbai", "484/71 \" Laxmi Vilas \", Mitramandal Colony", "138, Bapu Khote Street, Mandvi", "Shop No 4, Vishnu Apt, L T Rd, Babhi Naka, Borivli (w)", "Shop No 46, United Bldg, Bhd Hotel Ambasador, Paradise", "86, Appaavu Garamani Street Mount Road", "330,1st Floor, Sampige Road, Opp Food World, Malleswaram", "74, Ibrahim Manzil, I Rehem - Tulla Road, Bhendi Bazar, Mandvi", "3/3, 4 A Main K R Road, Near Garadi Apts/tata Silk Farm Cir, Yediyur", "1604, 14, Amba Deep Building, K G Marg, Connaught Place", "radha-swami \", Opp Yesh Complex, Gotri", "2, Lily Apt, Agiary Lane, Thane (west)", "Bahadur Shah Zafar Marg", "1. Vms Shpg Centre, New Sama Road, New Sama Road", "Paldi Char Rasta Paldi, Nr Udipi Hote, Paldi", "4/27, Kirti Nagar Indl Area"};
@@ -72,6 +72,7 @@ public class FragmentAddItem extends Fragment implements LocationListener {
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
  public static final int GPS_REQUEST_CODE = 101;
+  public static final int NET_REQUEST_CODE = 102;
  ImageView imgView;  //this imageView is for displaying the captured image
  Button captureImgBtn, saveBtn, locationBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
@@ -149,11 +150,19 @@ public class FragmentAddItem extends Fragment implements LocationListener {
  }
 
  private void getUserLocation() {
-  locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+  locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+
   if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, (android.location.LocationListener) this);
+  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+  if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
+  }
+  locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
 
 
  }
@@ -377,27 +386,30 @@ public class FragmentAddItem extends Fragment implements LocationListener {
   }
  }
 
+ private final LocationListener mLocationListener = new LocationListener() {
 
- @Override
- public void onLocationChanged(@NonNull Location location) {
-     lat = location.getLatitude();
-     lng = location.getLongitude();
-     Toast.makeText(getActivity(), "Location Received", Toast.LENGTH_SHORT).show();
 
- }
+  @Override
+  public void onLocationChanged(@NonNull Location location) {
+      lat = location.getLatitude();
+      lng = location.getLongitude();
 
- @Override
- public void onStatusChanged(String provider, int status, Bundle extras) {
 
- }
+  }
 
- @Override
- public void onProviderEnabled(@NonNull String provider) {
+  @Override
+  public void onStatusChanged(String provider, int status, Bundle extras) {
 
- }
+  }
 
- @Override
- public void onProviderDisabled(@NonNull String provider) {
+  @Override
+  public void onProviderEnabled(@NonNull String provider) {
 
- }
+  }
+
+  @Override
+  public void onProviderDisabled(@NonNull String provider) {
+
+  }
+ };
 }
