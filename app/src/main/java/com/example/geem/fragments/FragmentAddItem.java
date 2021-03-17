@@ -114,7 +114,7 @@ public class FragmentAddItem extends Fragment
     else
     {
      //launch the implicit intent
-     dispatchTakePictureIntent();
+     cameraImplicitIntent();
     }
    }
   });
@@ -130,12 +130,12 @@ public class FragmentAddItem extends Fragment
     uploadData();
    }
    
-   
   });
   
   return view;
  }
- 
+
+
  
  // this code corresponds to getting result from the camera intent
  @Override
@@ -156,38 +156,34 @@ public class FragmentAddItem extends Fragment
  //this code generates the image file for the clicked picture
  private File createImageFile() throws IOException
  {
-  // Create an image file name
   File dirname = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
   File img = File.createTempFile("User_image", ".jpg", dirname);
-  // Save a file: path for use with ACTION_VIEW intents
   currentPhotoPath = img.getAbsolutePath();
   return img;
  }
  
  
  // this code launches the intent to take picture from camera and generate URI of that image
- private void dispatchTakePictureIntent()
+ private void cameraImplicitIntent()
  {
   Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
   // Ensure that there's a camera activity to handle the intent
   if(camIntent.resolveActivity(getActivity().getPackageManager()) != null)
   {
-   // Create the File where the photo should go
-   File photoFile = null;
+   File myFile = null;
    try
    {
-    photoFile = createImageFile();
+    myFile = createImageFile();
    }
-   catch(IOException ex)
+   catch(IOException e)
    {
-    // Error occurred while creating the File
-    
+    Log.e("Error", e.toString());
    }
-   // Continue only if the File was successfully created
-   if(photoFile != null)
+
+   if(myFile != null)
    {
-    Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.example.android.fileprovider", photoFile);
-    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+    Uri fileUri = FileProvider.getUriForFile(getActivity(), "com.example.android.fileprovider", myFile);
+    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
     startActivityForResult(camIntent, CAM_INTENT_REQUEST_CODE);
    }
   }
@@ -201,7 +197,7 @@ public class FragmentAddItem extends Fragment
   {
    if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0)
    {
-    dispatchTakePictureIntent();
+    cameraImplicitIntent();
    }
    else
    {
@@ -233,6 +229,7 @@ public class FragmentAddItem extends Fragment
      if(!task.isSuccessful())
      {
       throw task.getException();
+
      }
      return imgPath.getDownloadUrl();
     }
@@ -296,7 +293,7 @@ public class FragmentAddItem extends Fragment
         if(task.isSuccessful())
         {
          progressDialog.cancel();
-        
+
          Toast.makeText(getActivity(), "Item uploaded successfully in feeds", Toast.LENGTH_LONG).show();
          Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
          getActivity().startActivity(i);
