@@ -69,7 +69,7 @@ public class FragmentAddItem extends Fragment
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
  ImageView imgView;  //this imageView is for displaying the captured image
- Button captureImgBtn, saveBtn;  //this button enables user to use camera to capture image
+ Button captureImgBtn, saveBtn, locationBtn;  //this button enables user to use camera to capture image
  Spinner spinnerMenu;
  EditText mTitle, mDescription;
  Uri imageUri, downloadUri;
@@ -98,6 +98,7 @@ public class FragmentAddItem extends Fragment
   imgView = view.findViewById(R.id.imageView);
   captureImgBtn = view.findViewById(R.id.capture_image);
   saveBtn = view.findViewById(R.id.save_btn);
+  locationBtn = view.findViewById(R.id.usrLocation);
   mTitle = view.findViewById(R.id.editTitle);
   mDescription = view.findViewById(R.id.editDescription);
   
@@ -136,6 +137,21 @@ public class FragmentAddItem extends Fragment
     uploadData();
    }
   });
+
+
+
+  locationBtn.setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View v)
+   {
+    // this function uploads to database
+
+    uploadData();
+   }
+  });
+
+
   return view;
  }
 
