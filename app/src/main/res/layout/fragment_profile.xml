@@ -13,137 +13,149 @@
       android:id="@+id/loginFragment"
       android:visibility="visible">
 
-
-    <TextView
-        android:id="@+id/loginBanner"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_horizontal"
-        android:text="GEEM"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </TextView>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/loginBannerDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giveaway Extras - Embrace Minimalism"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginBanner"
-        android:gravity="center_horizontal">
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
-    </TextView>
+        <TextView
+            android:id="@+id/loginBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_horizontal"
+            android:text="GEEM"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
 
-    <EditText
-        android:id="@+id/loginEmail"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginBannerDescription">
+        <TextView
+            android:id="@+id/loginBannerDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giveaway Extras - Embrace Minimalism"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginBanner"
+            android:gravity="center_horizontal">
 
-    </EditText>
+        </TextView>
 
-    <EditText
-        android:id="@+id/loginPassword"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        android:hint="Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEmail">
+        <EditText
+            android:id="@+id/loginEmail"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginBannerDescription">
 
-    </EditText>
+        </EditText>
 
-    <Button
-        android:id="@+id/loginSignIn"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="24dp"
-        android:text="Login"
-        android:textSize="26sp"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:backgroundTint="#0ED6B9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPassword">
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textSize="24sp"
+            android:hint="Password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginEmail">
 
-    </Button>
+        </EditText>
 
-    <TextView
-        android:id="@+id/loginForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="25dp"
-        android:text="Forgot Password?"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
+        <Button
+            android:id="@+id/loginSignIn"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+            android:text="Login"
+            android:textSize="26sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:backgroundTint="#0ED6B9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword">
 
-    </TextView>
+        </Button>
 
-    <TextView
-        android:id="@+id/loginRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
-        android:text="Register"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
-    </TextView>
+        <TextView
+            android:id="@+id/loginForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:text="Forgot Password?"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
 
-    <ProgressBar
-        android:id="@+id/loginProgressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        </TextView>
 
-    </ProgressBar>
+        <TextView
+            android:id="@+id/loginRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"
+            android:text="Register"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
+        </TextView>
+
+        <ProgressBar
+            android:id="@+id/loginProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+        </ProgressBar>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -152,143 +164,156 @@
       android:id="@+id/registerFragment"
       android:visibility="gone">
 
-    <TextView
-        android:id="@+id/registerBannerDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Giveaway Extras - Embrace Minimalism"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
-
-    <EditText
-        android:id="@+id/registerFullName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Full Name"
-        android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBannerDescription">
+        android:layout_height="match_parent">
 
-    </EditText>
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/registerBirthYear"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Birth Year"
-        android:inputType="number"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerFullName">
 
-    </EditText>
+        <TextView
+            android:id="@+id/registerBannerDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Giveaway Extras - Embrace Minimalism"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/registerEmail"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBirthYear">
+        </TextView>
 
-    </EditText>
+        <EditText
+            android:id="@+id/registerFullName"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="Full Name"
+            android:inputType="text"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerBannerDescription">
 
-    <EditText
-        android:id="@+id/registerPassword"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmail">
+        </EditText>
 
-    </EditText>
+        <EditText
+            android:id="@+id/registerBirthYear"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Birth Year"
+            android:inputType="number"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerFullName">
 
-    <Button
-        android:id="@+id/registerRegisterUser"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="24dp"
-        android:text="Register"
-        android:textSize="26sp"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:backgroundTint="#0ED6B9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword">
+        </EditText>
 
-    </Button>
+        <EditText
+            android:id="@+id/registerEmail"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerBirthYear">
 
-    <Button
-        android:id="@+id/registerGoBackToLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:backgroundTint="#0ED6B9"
-        android:text="Go Back to Login"
-        android:textColor="#ffffff"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerRegisterUser">
+        </EditText>
 
-    </Button>
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerEmail">
 
-    <ProgressBar
-        android:id="@+id/registerProgressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        </EditText>
 
-    </ProgressBar>
+        <Button
+            android:id="@+id/registerRegisterUser"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+            android:text="Register"
+            android:textSize="26sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:backgroundTint="#0ED6B9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPassword">
+
+        </Button>
+
+        <Button
+            android:id="@+id/registerGoBackToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#0ED6B9"
+            android:text="Go Back to Login"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerRegisterUser">
+
+        </Button>
+
+        <ProgressBar
+            android:id="@+id/registerProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+        </ProgressBar>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -298,111 +323,126 @@
       android:layout_height="match_parent"
       android:visibility="gone">
 
-    <TextView
-        android:id="@+id/passwordBanner"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_horizontal"
-        android:text="GEEM"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-    </TextView>
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/passwordBannerDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giveaway Extras - Embrace Minimalism"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordBanner"
-        android:gravity="center_horizontal">
 
-    </TextView>
+        <TextView
+            android:id="@+id/passwordBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_horizontal"
+            android:text="GEEM"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/passwordEmail"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Enter Your Email"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordBannerDescription">
+        </TextView>
 
-    </EditText>
+        <TextView
+            android:id="@+id/passwordBannerDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giveaway Extras - Embrace Minimalism"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordBanner"
+            android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/passwordResetPassword"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Reset Password"
-        android:textSize="26sp"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:backgroundTint="#0ED6B9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEmail">
+        </TextView>
 
-    </Button>
+        <EditText
+            android:id="@+id/passwordEmail"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Enter Your Email"
+            android:inputType="textEmailAddress"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordBannerDescription">
 
-    <Button
-        android:id="@+id/passwordGoBackToLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#0ED6B9"
-        android:text="Go Back to Login"
-        android:textColor="#ffffff"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordResetPassword">
+        </EditText>
 
-    </Button>
+        <Button
+            android:id="@+id/passwordResetPassword"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Reset Password"
+            android:textSize="26sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:backgroundTint="#0ED6B9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEmail">
 
-    <ProgressBar
-        android:id="@+id/passwordProgressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        </Button>
 
-    </ProgressBar>
+        <Button
+            android:id="@+id/passwordGoBackToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#0ED6B9"
+            android:text="Go Back to Login"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordResetPassword">
+
+        </Button>
+
+        <ProgressBar
+            android:id="@+id/passwordProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+        </ProgressBar>
+
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
   </androidx.constraintlayout.widget.ConstraintLayout>
-
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/userProfile"
@@ -410,96 +450,110 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-      <TextView
-          android:id="@+id/userProfileFullNameText"
+      <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Name"
-          android:textSize="13sp"
-          android:layout_marginTop="10dp"
-          android:gravity="center">
-
-      </TextView>
-
-      <TextView
-          android:id="@+id/userProfileFullName"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text=""
-          android:textSize="20sp"
-          android:textColor="@color/purple_700"
-          android:gravity="center">
-
-      </TextView>
-
-      <TextView
-          android:id="@+id/userProfileEmailText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Email"
-          android:textSize="13sp"
-          android:layout_marginTop="10dp"
-          android:gravity="center">
-
-      </TextView>
-
-      <TextView
-          android:id="@+id/userProfileEmail"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text=""
-          android:textSize="20sp"
-          android:textColor="@color/purple_700"
-          android:gravity="center">
-
-      </TextView>
-
-      <TextView
-          android:id="@+id/userProfileBirthYearText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Birth Year"
-          android:textSize="13sp"
-          android:layout_marginTop="10dp"
-          android:gravity="center">
-
-      </TextView>
-
-      <TextView
-          android:id="@+id/userProfileBirthYear"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text=""
-          android:textSize="20sp"
-          android:textColor="@color/purple_700"
-          android:gravity="center">
-
-      </TextView>
+          android:layout_height="match_parent">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-      <Button
-          android:id="@+id/userProfileSignOut"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:backgroundTint="#0ED6B9"
-        android:text="Signout"
-        android:textColor="#ffffff"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-      </Button>
 
-    </LinearLayout>
+          <TextView
+              android:id="@+id/userProfileFullNameText"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Name"
+              android:textSize="13sp"
+              android:layout_marginTop="10dp"
+              android:gravity="center">
+
+          </TextView>
+
+          <TextView
+              android:id="@+id/userProfileFullName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text=""
+              android:textSize="20sp"
+              android:textColor="@color/purple_700"
+              android:gravity="center">
+
+          </TextView>
+
+          <TextView
+              android:id="@+id/userProfileEmailText"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Email"
+              android:textSize="13sp"
+              android:layout_marginTop="10dp"
+              android:gravity="center">
+
+          </TextView>
+
+          <TextView
+              android:id="@+id/userProfileEmail"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text=""
+              android:textSize="20sp"
+              android:textColor="@color/purple_700"
+              android:gravity="center">
+
+          </TextView>
+
+          <TextView
+              android:id="@+id/userProfileBirthYearText"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Birth Year"
+              android:textSize="13sp"
+              android:layout_marginTop="10dp"
+              android:gravity="center">
+
+          </TextView>
+
+          <TextView
+              android:id="@+id/userProfileBirthYear"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text=""
+              android:textSize="20sp"
+              android:textColor="@color/purple_700"
+              android:gravity="center">
+
+          </TextView>
+
+
+
+          <Button
+              android:id="@+id/userProfileSignOut"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="7dp"
+              android:backgroundTint="#0ED6B9"
+              android:text="Signout"
+              android:textColor="#ffffff"
+              android:textSize="10sp"
+              android:textStyle="bold"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp">
+          </Button>
+
+        </LinearLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>
