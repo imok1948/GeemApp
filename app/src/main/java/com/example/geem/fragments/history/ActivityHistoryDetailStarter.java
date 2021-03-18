@@ -17,7 +17,7 @@ public class ActivityHistoryDetailStarter extends AppCompatActivity
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_history_detail_starter);
   
-  Toast.makeText(this, "Hist : " + getIntent().getExtras().getString(Variables.HISTORY_KEY_TO_DETAIL_FRAGMENT), Toast.LENGTH_SHORT).show();
+  //Toast.makeText(this, "Hist : " + getIntent().getExtras().getString(Variables.HISTORY_KEY_TO_DETAIL_FRAGMENT), Toast.LENGTH_SHORT).show();
   //Toast.makeText(this, "Hist : " + getIntent().getStringExtra(Variables.HISTORY_KEY_TO_DETAIL_FRAGMENT), Toast.LENGTH_SHORT).show();
   
   FragmentHistoryDetail fragmentHistoryDetail = new FragmentHistoryDetail();
