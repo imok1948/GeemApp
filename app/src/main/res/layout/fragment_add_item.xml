@@ -15,6 +15,12 @@
       android:orientation="vertical">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: All fields are required"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
         android:layout_width = "wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -80,26 +86,30 @@
           android:layout_height="1dp"
           android:background="@color/silver"/>/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Image:"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        android:typeface="serif" />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+
 
         android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="10dp"
+          android:text="Item Image:"
+          android:textColor="@color/black"
+          android:textSize="18dp"
+          android:typeface="serif" />
+
         <Button
             android:id="@+id/capture_image"
             android:layout_width="wrap_content"
-            android:text="Open Camera"
+            android:text="open camera"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="80dp"
             android:layout_height="wrap_content"/>
 
 
@@ -115,11 +125,65 @@
           android:layout_height="1dp"
           android:background="@color/silver"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="10dp"
+          android:text="Giver Location:"
+          android:textColor="@color/black"
+          android:textSize="18dp"
+          android:typeface="serif" />
+
+      <Button
+          android:id="@+id/usrLocation"
+          android:layout_width="wrap_content"
+          android:text="get location"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="55dp"
+          android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:text="Your location will not be displayed publicly"
+       android:layout_marginLeft="10dp"/>
+
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="Pickup Address:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editAddress"
+        android:layout_margin="10dp"
+        android:hint="Enter pickup address"/>
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/silver"/>
+
     <Button
         android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:text="Add Item"/>
 
 
