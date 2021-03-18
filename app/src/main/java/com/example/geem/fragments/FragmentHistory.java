@@ -98,6 +98,7 @@ public class FragmentHistory extends Fragment
   
   if(!netAvailable())
   {
+   
    Log.i("FIRE : ", HistoryStructure.OWNER_USER_ID + ", " + "User : " + userName);
    feedsCollectionReference.orderBy(HistoryStructure.POST_UPLOADING_TIME).whereEqualTo(HistoryStructure.OWNER_USER_ID, userName).limit(LOAD_ITEMS_AT_ONCE).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
    {
