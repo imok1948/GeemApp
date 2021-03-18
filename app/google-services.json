@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "624861964421",
+    "project_id": "iiitd-geemapp",
+    "storage_bucket": "iiitd-geemapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624861964421:android:90b6652925b11604daa1ec",
+        "android_client_info": {
+          "package_name": "com.example.geem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624861964421-d11df177l8vgjoq84qaveltt52s5dpek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCekl-nNevXS8LkjCSfIYv-hyh4quqGZW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624861964421-d11df177l8vgjoq84qaveltt52s5dpek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624861964421:android:9d3e3ae5e863b5d9daa1ec",
+        "android_client_info": {
+          "package_name": "com.example.geemapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624861964421-d11df177l8vgjoq84qaveltt52s5dpek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCekl-nNevXS8LkjCSfIYv-hyh4quqGZW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624861964421-d11df177l8vgjoq84qaveltt52s5dpek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
