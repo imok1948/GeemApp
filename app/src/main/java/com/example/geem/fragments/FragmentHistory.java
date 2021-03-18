@@ -95,6 +95,7 @@ public class FragmentHistory extends Fragment
   progressDialog.show();
   progressDialog.setCancelable(true);
   
+  
   if(!netAvailable())
   {
    Log.i("FIRE : ", HistoryStructure.OWNER_USER_ID + ", " + "User : " + userName);
