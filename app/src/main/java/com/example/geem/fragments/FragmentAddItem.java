@@ -84,7 +84,7 @@ public class FragmentAddItem extends Fragment {
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id ;
+ String user_id  ;
  private FirebaseAuth firebaseAuth;
 
 
@@ -392,8 +392,10 @@ public class FragmentAddItem extends Fragment {
   @Override
   public void onLocationChanged(@NonNull Location location) {
     if(location != null) {
+
      lat = location.getLatitude();
      lng = location.getLongitude();
+
 
     }
 
