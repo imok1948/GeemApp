@@ -1,9 +1,16 @@
 package com.example.geem.fragments;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +41,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +54,18 @@ public class FragmentFeeds extends Fragment
  RecyclerView feedsRecyclerView;
  ItemsAdapter itemsAdapter;
  FirestoreRecyclerOptions<ShivankUserItems> options;
-
+ LocationManager locationManager;
+ Location currentLocation;
+ public static final int GPS_REQUEST_CODE = 101;
+ public static final int NET_REQUEST_CODE = 102;
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
+
   View view = inflater.inflate(R.layout.fragment_feeds, container, false);
   FirebaseFirestore db = FirebaseFirestore.getInstance();
+  currentLocation = new Location("");
+  getUserLocation();
   db.collection("user_items")
           .get()
           .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -71,7 +85,7 @@ public class FragmentFeeds extends Fragment
   feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
   options =
           new FirestoreRecyclerOptions.Builder<ShivankUserItems>()
-                  .setQuery(FirebaseFirestore.getInstance().collection("items").orderBy("timestamp", Query.Direction.DESCENDING)
+                  .setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING)
                           .limit(50), ShivankUserItems.class)
                   .build();
 
@@ -85,7 +99,6 @@ public class FragmentFeeds extends Fragment
   feedsRecyclerView.setAdapter(itemsAdapter);
   itemsAdapter.startListening();
   Log.i("INFO","New Adapter Generated");
-
   //}
 
   //else{
@@ -130,30 +143,77 @@ public class FragmentFeeds extends Fragment
   protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull ShivankUserItems model) {
    holder.itemTitle.setText(model.getTitle());
    Glide.with(holder.itemImage.getContext()).load(model.getImage()).into(holder.itemImage);
+   double itemLatitude =  model.getLatitude();
+   double itemLongitude = model.getLongitude();
+   Location itemLocation = new Location("");
+   itemLocation.setLatitude(itemLatitude);
+   itemLocation.setLongitude(itemLongitude);
+   float distanceInKM = currentLocation.distanceTo(itemLocation)/1000;
+   holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " km");
+
   }
 
  }
 
  //View Holder Class
  private class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-  TextView itemTitle;
+  TextView itemTitle,distance;
   ImageView itemImage;
   public CardViewHolder(LayoutInflater inflater, ViewGroup parent){
    super(inflater.inflate(R.layout.card_view_item,parent,false));
    itemView.setOnClickListener(this);
    itemTitle = itemView.findViewById(R.id.item_title);
    itemImage = itemView.findViewById(R.id.item_image);
+   distance = itemView.findViewById(R.id.distance);
   }
 
 
   @Override
   public void onClick(View v) {
-   Toast.makeText(getActivity() , "Clicked", Toast.LENGTH_SHORT).show();
+   Toast.makeText(getActivity() , "Coming Soon", Toast.LENGTH_SHORT).show();
    //Intent intent = StudentDetails.newIntent(getActivity(),rollNo.getText().toString());
    //startActivity(intent);
   }
 
  }
+ private void getUserLocation() {
+  locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
 
+  if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
+  }
+  locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+
+  if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+  }
+  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+
+ }
+
+ private final LocationListener mLocationListener = new LocationListener() {
+
+  @Override
+  public void onLocationChanged(@NonNull Location location) {
+   currentLocation = location;
+  }
+
+  @Override
+  public void onStatusChanged(String provider, int status, Bundle extras) {
+  }
+
+  @Override
+  public void onProviderEnabled(@NonNull String provider) {
+
+  }
+
+  @Override
+  public void onProviderDisabled(@NonNull String provider) {
+
+  }
+ };
 }
+
