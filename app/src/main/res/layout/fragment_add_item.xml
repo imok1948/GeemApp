@@ -15,6 +15,12 @@
       android:orientation="vertical">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: All fields are required"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
         android:layout_width = "wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -147,7 +153,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-      android:text="Your location will not be displayed publicly, it will be used to personalize your feeds."
+      android:text="Your location will not be displayed publicly"
        android:layout_marginLeft="10dp"/>
 
 

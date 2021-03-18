@@ -84,14 +84,14 @@ public class FragmentAddItem extends Fragment {
 
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id  ;
+ String user_id ;
  private FirebaseAuth firebaseAuth;
 
 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-  firebaseAuth = FirebaseAuth.getInstance();
-  user_id = firebaseAuth.getCurrentUser().getUid();
+ firebaseAuth = FirebaseAuth.getInstance();
+ user_id = firebaseAuth.getCurrentUser().getUid();
   firebaseFireStore = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -134,7 +134,7 @@ public class FragmentAddItem extends Fragment {
      //checking for network
      if (netInfo != null && netInfo.isConnected()) {
 
-      if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null) {
+      if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && lat!=0 && lng!=0 && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null) {
        uploadData();
       } else{
        Toast.makeText(getActivity(), "Please complete all the details first", Toast.LENGTH_LONG).show();
