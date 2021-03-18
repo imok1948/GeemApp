@@ -171,12 +171,20 @@ public class FragmentAddItem extends Fragment {
 
    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
+
   locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+  boolean isGPS = locationManager.isProviderEnabled (LocationManager.GPS_PROVIDER);
+  if(!isGPS)
+  {
+   Toast.makeText(getActivity(), "Please Start GPS to get more Accurate location", Toast.LENGTH_SHORT) .show();
+  }
+
   if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
   }
   locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+
 
 
  }
@@ -383,8 +391,12 @@ public class FragmentAddItem extends Fragment {
 
   @Override
   public void onLocationChanged(@NonNull Location location) {
-      lat = location.getLatitude();
-      lng = location.getLongitude();
+    if(location != null) {
+     lat = location.getLatitude();
+     lng = location.getLongitude();
+
+    }
+
   }
 
   @Override
