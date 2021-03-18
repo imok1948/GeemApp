@@ -1,14 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".fragments.FragmentAddItem">
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="@string/fragment_hello_add_item" />
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".fragments.FragmentAddItem">
 
-</FrameLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: All fields are required"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Choose Type of GiveAway:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+    <Spinner
+
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:layout_margin="10dp"/>
+
+      <View
+          android:layout_width="wrap_content"
+          android:layout_height="1dp"
+          android:background="@color/silver"/>/>
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="GiveAway Title:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTitle"
+        android:layout_margin="10dp"
+        android:hint="Enter title"/>
+
+
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="GiveAway Item Description:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editDescription"
+        android:layout_margin="10dp"
+        android:minLines="1"
+        android:gravity="top|left"
+        android:maxLines="6"
+        android:inputType="textMultiLine|textCapSentences"
+        android:hint="Enter description"/>
+
+      <View
+          android:layout_width="wrap_content"
+          android:layout_height="1dp"
+          android:background="@color/silver"/>/>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="10dp"
+          android:text="Item Image:"
+          android:textColor="@color/black"
+          android:textSize="18dp"
+          android:typeface="serif" />
+
+        <Button
+            android:id="@+id/capture_image"
+            android:layout_width="wrap_content"
+            android:text="open camera"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="80dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        android:id="@+id/imageView"/>
+      <View
+          android:layout_width="wrap_content"
+          android:layout_height="1dp"
+          android:background="@color/silver"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="10dp"
+          android:text="Giver Location:"
+          android:textColor="@color/black"
+          android:textSize="18dp"
+          android:typeface="serif" />
+
+      <Button
+          android:id="@+id/usrLocation"
+          android:layout_width="wrap_content"
+          android:text="get location"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="55dp"
+          android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:text="Your location will not be displayed publicly"
+       android:layout_marginLeft="10dp"/>
+
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="Pickup Address:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:typeface="serif"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editAddress"
+        android:layout_margin="10dp"
+        android:hint="Enter pickup address"/>
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/silver"/>
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Add Item"/>
+
+
+
+  </LinearLayout>
+
+</ScrollView>
+
+
+
+
+
