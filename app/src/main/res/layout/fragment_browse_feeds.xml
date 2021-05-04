@@ -18,15 +18,8 @@
       android:layout_height="wrap_content"
       android:background="@color/pink_500">
 
-      <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:contentInsetStartWithNavigation="0dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-      <LinearLayout
+      <!--<LinearLayout
         android:id="@+id/lyt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +39,7 @@
           android:textColor="@android:color/white" />
 
       </LinearLayout>
-
+-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
@@ -54,13 +47,13 @@
       android:layout_height="match_parent">
 
       <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id = "@+id/feeds_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:scrollingCache="true" />
 
-      <LinearLayout
+ <!--     <LinearLayout
         android:id="@+id/lyt_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,24 +65,11 @@
           android:layout_width="50dp"
           android:layout_height="40dp"
           android:background="@color/pink_300" />
-      </LinearLayout>
+      </LinearLayout>-->
 
     </RelativeLayout>
 
   </LinearLayout>
-
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_large"
-    android:clickable="true"
-    android:tint="@android:color/white"
-    app:backgroundTint="@color/yellow_700"
-    app:fabSize="mini"
-    app:layout_anchor="@id/lyt_title"
-    app:layout_anchorGravity="start|left|bottom"
-    app:rippleColor="@android:color/white"
-    app:srcCompat="@drawable/fui_done_check_mark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

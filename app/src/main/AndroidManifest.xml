@@ -28,6 +28,7 @@
       android:name=".temp.ui.ui.testing.tablayout.TempActivityForTestingTablayout"
       android:label="@string/title_activity_temp_for_testing_tablayout"
       android:theme="@style/Theme.GEEM.NoActionBar"></activity>
+
     <activity
       android:name=".temp.ui.NavigationDrawerTempActivity"
       android:label="@string/title_activity_navigation_drawer_temp"
@@ -38,6 +39,8 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+
     <activity android:name=".fragments.history.ActivityHistoryDetailStarter" />
 
     <meta-data
@@ -52,6 +55,15 @@
       </intent-filter>
     </activity>
 
+    <provider
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="com.example.android.fileprovider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths"></meta-data>
+    </provider>
   </application>
 
 </manifest>
