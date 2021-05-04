@@ -18,7 +18,7 @@ public class FragmentNotifications extends Fragment
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
-  //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
+  Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
   return inflater.inflate(R.layout.fragment_notifications, container, false);
  }
 }

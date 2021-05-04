@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity
  private ViewPager viewPager;
  private ViewPagerAdapter viewPagerAdapter;
  
- 
  @Override
  protected void onCreate(Bundle savedInstanceState)
  {

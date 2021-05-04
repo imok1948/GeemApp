@@ -1,2 +1,3 @@
+include ':materialxg'
 include ':app'
 rootProject.name = "GEEM"

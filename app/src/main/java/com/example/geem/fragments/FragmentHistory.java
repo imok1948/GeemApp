@@ -73,9 +73,8 @@ public class FragmentHistory extends Fragment
   Log.i("AUTH : ", firebaseAuth + "");
   if(firebaseAuth.getCurrentUser() != null)
   {
-   // userName = firebaseAuth.getCurrentUser().getUid();
+   userName = firebaseAuth.getCurrentUser().getUid();
   }
-  
   Log.i("USER : ", userName);
   firebaseFirestore = FirebaseFirestore.getInstance();
   feedsCollectionReference = firebaseFirestore.collection(FEEDS_COLLECTION_NAME);
