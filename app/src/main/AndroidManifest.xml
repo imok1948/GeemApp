@@ -41,7 +41,7 @@
     </activity>
 
 
-    <activity android:name=".fragments.history.ActivityHistoryDetailStarter" />
+    <activity android:name=".temp.ui.ui.browse2.history2.history.ActivityHistoryDetailStarter" />
 
     <meta-data
       android:name="com.google.android.geo.API_KEY"

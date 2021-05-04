@@ -18,28 +18,6 @@
       android:layout_height="wrap_content"
       android:background="@color/pink_500">
 
-
-      <!--<LinearLayout
-        android:id="@+id/lyt_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:minHeight="70dp"
-        android:orientation="horizontal">
-
-        <View
-          android:layout_width="70dp"
-          android:layout_height="0dp" />
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="My files"
-          android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-          android:textColor="@android:color/white" />
-
-      </LinearLayout>
--->
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout

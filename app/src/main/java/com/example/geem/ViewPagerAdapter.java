@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.FragmentAddItem;
 import com.example.geem.fragments.FragmentFeeds;
-import com.example.geem.fragments.FragmentHistory;
+import com.example.geem.temp.ui.ui.browse2.history2.FragmentHistory;
 import com.example.geem.fragments.FragmentMessages;
 import com.example.geem.fragments.FragmentNotifications;
 import com.example.geem.fragments.FragmentProfile;

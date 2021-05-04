@@ -1,6 +1,5 @@
-package com.example.geem.fragments;
+package com.example.geem.temp.ui.ui.browse2.history2;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
@@ -17,17 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
-import com.example.geem.fragments.history.ActivityHistoryDetailStarter;
+import com.example.geem.temp.ui.ui.browse2.history2.history.ActivityHistoryDetailStarter;
 import com.example.geem.fragments.FragmentHistoryDetail;
-import com.example.geem.fragments.history.HistoryStructure;
-import com.example.geem.fragments.history.Variables;
+import com.example.geem.temp.ui.ui.browse2.history2.history.HistoryStructure;
+import com.example.geem.temp.ui.ui.browse2.history2.history.Variables;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -321,132 +319,3 @@ public class FragmentHistory extends Fragment
 //
 //
 //
-
-
-class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryRowHolder>
-{
- List<HistoryStructure> historyStructureList;
- 
- public HistoryAdapter(List<HistoryStructure> currentStructures)
- {
-  this.historyStructureList = new LinkedList<>();
-  for(HistoryStructure historyStructure : currentStructures)
-  {
-   this.historyStructureList.add(historyStructure);
-  }
- }
- 
- @NonNull
- @Override
- public HistoryRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
- {
-  LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-  View view = layoutInflater.inflate(R.layout.recycler_row_history_items, parent, false);
-  return new HistoryRowHolder(view);
- }
- 
- @Override
- public void onBindViewHolder(@NonNull HistoryRowHolder holder, int position)
- {
-  HistoryStructure currentStructure = historyStructureList.get(position);
-  Timestamp timestamp = currentStructure.getTimestamp();
-  
-  holder.textViewTitle.setText(currentStructure.getTitle());
-  holder.textViewCategory.setText(currentStructure.getType());
-  
-  //holder.textViewDate.setText("16 Feb");
-  boolean itemStatus = currentStructure.isItemTaken();
-  
-  final String DATE_FORMAT = "EE, d MMMM";
-  if(itemStatus)
-  {
-   holder.textViewDate.setText("Taken on " + (new SimpleDateFormat(DATE_FORMAT)).format(new Date(timestamp.getSeconds())));
-   Log.i("355", "" + new Date(timestamp.getNanoseconds()));
-  }
-  else
-  {
-   holder.textViewDate.setText("Given on " + (new SimpleDateFormat(DATE_FORMAT)).format(new Date(timestamp.getSeconds())));
-  }
-  
-  if(currentStructure.getPhotoUrl() != null && currentStructure.getPhotoUrl().size() >= 1)
-  {
-   Log.i("RECYCLER VIEW ", "Image loading : " + position);
-   Glide.with(holder.imageViewImage.getContext()).load(currentStructure.getPhotoUrl().get(0)).into(holder.imageViewImage);
-   // Picasso.get().load(currentStructure.getPhotoUrl().get(0)).error(R.drawable.common_full_open_on_phone).into(holder.imageViewImage);
-  }
-  else
-  {
-   Log.i("RECYCLER ERROR ", "url exists : " + (currentStructure.getPhotoUrl() == null));
-   Log.i("RECYCLER ERROR ", "url size : " + currentStructure.getPhotoUrl().size());
-   //Picasso.get().load(R.drawable.ic_tab_profile).into(holder.imageViewImage);
-  }
-  
-  
-  holder.itemView.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    FragmentHistoryDetail fragmentHistoryDetail = new FragmentHistoryDetail();
-    Bundle bundle = new Bundle();
-    bundle.putString(Variables.HISTORY_KEY_TO_DETAIL_FRAGMENT, currentStructure.getHistoryId());
-    fragmentHistoryDetail.setArguments(bundle);
-    
-    
-    /*
-    FrameLayout frameLayout = ((AppCompatActivity) view.getContext()).findViewById(R.id.history_fragment_framelayout);
-    frameLayout.setVisibility(View.GONE);
-    */
-    
-    
-    //  ((AppCompatActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment_framelayout, fragmentHistoryDetail).addToBackStack(null).commit();
-    //((AppCompatActivity) view.getContext()).getSupportFragmentManager().beginTransaction().remove(fragmentHistoryDetail);
-    
-    Intent intent = new Intent(view.getContext(), ActivityHistoryDetailStarter.class);
-    intent.putExtra(Variables.HISTORY_KEY_TO_DETAIL_FRAGMENT, currentStructure.getHistoryId());
-    view.getContext().startActivity(intent);
-   }
-  });
- }
- 
- 
- //WhatsApp kr dena me dusre tab pe hu, jb b kuch puchna ho to
- @Override
- public int getItemCount()
- {
-  return historyStructureList.size();
- }
- 
- public void addData(List<HistoryStructure> historyStructureListExtended)
- {
-  for(HistoryStructure structure : historyStructureListExtended)
-  {
-   this.historyStructureList.add(structure);
-  }
-  
-  //After inserting all items, notify to show these
-  // notifyItemInserted(this.historyRowStructureList.size() - 1);
-  notifyItemRangeChanged(0, 1);
- }
- 
- 
- class HistoryRowHolder extends RecyclerView.ViewHolder
- {
-  TextView textViewTitle, textViewCategory, textViewDate, textViewItemStatus;
-  ImageView imageViewImage, imageViewRightArrow;
-  
-  public HistoryRowHolder(@NonNull View itemView)
-  {
-   super(itemView);
-   textViewTitle = itemView.findViewById(R.id.historyTitleTextView);
-   textViewCategory = itemView.findViewById(R.id.historyCategoryTextView);
-   textViewDate = itemView.findViewById(R.id.history_right_arrow_image);
-   //textViewItemStatus = itemView.findViewById(R.id.historyItemStatusTextView);
-   imageViewImage = itemView.findViewById(R.id.historyRowImage);
-   
-   //Picasso.get().load(R.drawable.ic_tab_profile).into((Target) itemView.findViewById(R.id.history_right_arrow_image));
-   // imageViewRightArrow.setImageResource(R.drawable.right_arrow_background);
-   
-  }
- }
-}
