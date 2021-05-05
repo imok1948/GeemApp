@@ -8,41 +8,41 @@
 
   <fragment
     android:id="@+id/nav_profile"
-    android:name="com.example.geem.temp.ui.ui.profile2.Profile2Fragment"
+    android:name="com.example.geem.fragments.profile.FragmentProfile"
     android:label="Profile"
-    tools:layout="@layout/fragment_profile2" />
+    tools:layout="@layout/fragment_profile" />
 
 
   <fragment
     android:id="@+id/nav_address"
-    android:name="com.example.geem.temp.ui.ui.address2.Address2Fragment"
+    android:name="com.example.geem.fragments.address.FragmentAddress"
     android:label="Address"
-    tools:layout="@layout/fragment_address2" />
+    tools:layout="@layout/fragment_address" />
 
 
   <fragment
     android:id="@+id/nav_browse_items"
-    android:name="com.example.geem.temp.ui.ui.browse2.Browse2Fragment"
+    android:name="com.example.geem.fragments.browse.FragmentBrowseTabs"
     android:label="Browse Items"
-    tools:layout="@layout/fragment_browse2" />
+    tools:layout="@layout/fragment_browse_tabs" />
 
 
   <fragment
     android:id="@+id/nav_settings"
-    android:name="com.example.geem.temp.ui.ui.settings2.SettingsFragment"
+    android:name="com.example.geem.fragments.settings.SettingsFragment"
     android:label="Settings"
     tools:layout="@layout/fragment_settings" />
 
 
   <fragment
     android:id="@+id/nav_help"
-    android:name="com.example.geem.temp.ui.ui.help2.Help2Fragment"
+    android:name="com.example.geem.fragments.help.FragmentHelp"
     android:label="Help"
     tools:layout="@layout/fragment_help" />
 
   <fragment
     android:id="@+id/nav_about"
-    android:name="com.example.geem.temp.ui.ui.about2.About2Fragment"
+    android:name="com.example.geem.fragments.about.FragmentAbout"
     android:label="About"
     tools:layout="@layout/fragment_about" />
 

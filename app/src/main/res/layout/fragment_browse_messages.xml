@@ -6,7 +6,7 @@
   android:layout_height="match_parent"
   android:background="#D0DBE2"
   android:orientation="vertical"
-  tools:context=".temp.ui.ui.browse2.messages2.BrowseMessagesFragment">
+  tools:context=".fragments.browse.messages.FragmentBrowseMessages">
 
 
   <androidx.recyclerview.widget.RecyclerView

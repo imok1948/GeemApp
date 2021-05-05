@@ -8,7 +8,7 @@
   android:fitsSystemWindows="true"
   android:orientation="vertical"
 
-  tools:context=".temp.ui.ui.about2.About2Fragment">
+  tools:context=".fragments.about.FragmentAbout">
 
     <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
