@@ -1,5 +1,7 @@
 package com.example.geem.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -7,6 +9,7 @@ import com.example.geem.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,13 +24,25 @@ public class MainActivity extends AppCompatActivity
  public TabLayout tabLayoutForBrowseFragments;
  private AppBarConfiguration appBarConfiguration;
  public NavController navController;
+ public static final int GPS_REQUEST_CODE = 101;
+ public static final int NET_REQUEST_CODE = 102;
  
  @Override
  protected void onCreate(Bundle savedInstanceState)
  {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_main);
-  
+  if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+  {
+
+   ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+  }
+  if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+  {
+
+   ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
+  }
+
   Toolbar toolbar = findViewById(R.id.toolbar);
   setSupportActionBar(toolbar);
   

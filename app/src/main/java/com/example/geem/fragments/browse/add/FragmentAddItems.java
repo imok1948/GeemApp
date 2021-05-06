@@ -308,17 +308,27 @@ public class FragmentAddItems extends Fragment
  
  
  @Override
- public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
- {
-  if(requestCode == CAM_REQUEST_CODE)
-  {
-   if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0)
-   {
+ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+  if (requestCode == CAM_REQUEST_CODE) {
+   if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0) {
     cameraImplicitIntent();
-   }
-   else
-   {
+   } else {
     Toast.makeText(getActivity(), "Please grant the Camera permission to use this feature", Toast.LENGTH_SHORT).show();
+   }
+  }
+  if (requestCode == NET_REQUEST_CODE) {
+   if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0) {
+    getUserLocation();
+   } else {
+    Toast.makeText(getActivity(), "Please grant the Location permission to use this feature", Toast.LENGTH_SHORT).show();
+   }
+  }
+
+  if (requestCode == GPS_REQUEST_CODE) {
+   if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0) {
+    getUserLocation();
+   } else {
+    Toast.makeText(getActivity(), "Please grant the Location permission to use this feature", Toast.LENGTH_SHORT).show();
    }
   }
  }

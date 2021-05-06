@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
@@ -271,6 +272,34 @@ import static android.content.ContentValues.TAG;
    
    }
   };
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+  {
+   if(requestCode == NET_REQUEST_CODE)
+   {
+    if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0)
+    {
+     getUserLocation();
+    }
+    else
+    {
+     Toast.makeText(getActivity(), "Please grant the Location permission to use this feature", Toast.LENGTH_SHORT).show();
+    }
+   }
+
+   if(requestCode == GPS_REQUEST_CODE)
+   {
+    if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.length > 0)
+    {
+     getUserLocation();
+    }
+    else
+    {
+     Toast.makeText(getActivity(), "Please grant the Location permission to use this feature", Toast.LENGTH_SHORT).show();
+    }
+   }
+  }
   
   
  }
