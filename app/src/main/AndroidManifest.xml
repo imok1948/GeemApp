@@ -25,7 +25,14 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.GEEM">
 
+    <activity android:name=".Onboarding" />
+    <activity android:name=".Splash">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
     <activity
       android:name=".fragments.browse.feeds.activity.ActivityViewItem"
       android:label="@string/title_activity_scrolling"
@@ -39,17 +46,15 @@
       android:name=".activities.MainActivity"
       android:label="@string/title_activity_navigation_drawer_temp"
       android:theme="@style/Theme.GEEM.NoActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
     </activity>
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
 
     <meta-data
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyB1OrIcFmW56CjlXkNmikgYg1POm0NxGd8" />
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
     <!--
     <activity android:name=".MainActivity">
     </activity>
