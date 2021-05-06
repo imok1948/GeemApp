@@ -34,7 +34,7 @@ public class FragmentBrowseTabs extends Fragment
   viewPager.setAdapter(adapterTemp);
   tabLayout.setupWithViewPager(viewPager);
   
-  tabLayout.selectTab(tabLayout.getTabAt(1));
+  tabLayout.selectTab(tabLayout.getTabAt(0));
   
   for(int i = 0; i < tabLayout.getTabCount(); i++)
   {

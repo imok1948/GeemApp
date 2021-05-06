@@ -9,11 +9,12 @@ import com.example.geem.fragments.browse.add.FragmentAddItems;
 import com.example.geem.fragments.browse.feeds.FragmentBrowseFeeds;
 import com.example.geem.fragments.browse.history.FragmentBrowseHistory;
 import com.example.geem.fragments.browse.messages.FragmentBrowseMessages;
+import com.example.geem.fragments.browse.notifications.FragmentNotifications;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter
 {
  private static final String TAG = "Fragment Pager Adapter";
- private String[] names = new String[]{"Mesages", "Feeds", "Add Items", "History"};
+ private String[] names = new String[]{"Notifications", "Mesages", "Feeds", "Add Items", "History"};
  
  public ViewPagerAdapter(@NonNull FragmentManager fm)
  {
@@ -31,12 +32,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
     fragment = new FragmentBrowseMessages();
     break;
    case 1:
-    fragment = new FragmentBrowseFeeds();
+    fragment = new FragmentNotifications();
     break;
    case 2:
-    fragment = new FragmentAddItems();
+    fragment = new FragmentBrowseFeeds();
     break;
    case 3:
+    fragment = new FragmentAddItems();
+    break;
+   case 4:
     fragment = new FragmentBrowseHistory();
     break;
    default:
@@ -49,7 +53,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
  @Override
  public int getCount()
  {
-  return names.length;
+  return 5;
  }
  
  /*

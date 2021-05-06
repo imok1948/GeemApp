@@ -14,6 +14,6 @@ public class Variables
  public static final String TAB_NAMES[] = {"Profile", "Notifications", "Messages", "Feds", "Add Items", "History"};
  
  //Tab icons of fragments
- public static final int TAB_ICONS[] = {R.drawable.ic_tab_messages, R.drawable.ic_tab_feeds, R.drawable.ic_tab_additem, R.drawable.ic_tab_history};
- //R.drawable.ic_tab_profile, R.drawable.ic_tab_notification,
+ public static final int TAB_ICONS[] = {R.drawable.ic_tab_messages, R.drawable.ic_tab_notification, R.drawable.ic_tab_feeds, R.drawable.ic_tab_additem, R.drawable.ic_tab_history};
+ //R.drawable.ic_tab_profile, ,
 }
