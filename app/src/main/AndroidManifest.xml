@@ -32,6 +32,8 @@
       android:theme="@style/Theme.GEEM.NoActionBar">
 
     </activity>
+
+
     <activity android:name=".fragments.browse.messages.activity.MessageActivity">
 
     </activity>

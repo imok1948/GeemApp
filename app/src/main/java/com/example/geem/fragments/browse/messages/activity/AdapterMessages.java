@@ -23,16 +23,16 @@ public class AdapterMessages extends RecyclerView.Adapter<AdapterMessages.Messag
  private static final int OTHER_ID = 98;
  
  private Context context;
- private List<Message> messageList = new ArrayList<>();
+ private List<MessageTemplateForAdapter> messageTemplateForAdapterList = new ArrayList<>();
  
- public AdapterMessages(Context context, List<Message> messageList)
+ public AdapterMessages(Context context, List<MessageTemplateForAdapter> messageTemplateForAdapterList)
  {
   this.context = context;
-  this.messageList = messageList;
+  this.messageTemplateForAdapterList = messageTemplateForAdapterList;
   
-  for(Message message : messageList)
+  for(MessageTemplateForAdapter messageTemplateForAdapter : messageTemplateForAdapterList)
   {
-   Log.d(TAG, "AdapterMessags: message ==>" + message);
+   Log.d(TAG, "AdapterMessags: message ==>" + messageTemplateForAdapter);
   }
  }
  
@@ -58,10 +58,10 @@ public class AdapterMessages extends RecyclerView.Adapter<AdapterMessages.Messag
  public void onBindViewHolder(@NonNull MessagesHolder holder, int position)
  {
   
-  Message message = messageList.get(position);
+  MessageTemplateForAdapter messageTemplateForAdapter = messageTemplateForAdapterList.get(position);
   
-  holder.content.setText(message.getData());
-  holder.time.setText(message.getTimeDetails().getTime() + ", " + message.getTimeDetails().getDate());
+  holder.content.setText(messageTemplateForAdapter.getData());
+  holder.time.setText(messageTemplateForAdapter.getTimeDetails().getTime() + ", " + messageTemplateForAdapter.getTimeDetails().getDate());
   
   /*holder.content.setText("Hey, Rahul how are you ???");
   holder.time.setText("22:00, May 7");
@@ -82,13 +82,13 @@ public class AdapterMessages extends RecyclerView.Adapter<AdapterMessages.Messag
  public int getItemCount()
  {
   //return 10;
-  return messageList.size();
+  return messageTemplateForAdapterList.size();
  }
  
  @Override
  public int getItemViewType(int position)
  {
-  if(messageList.get(position).isSentByMe())
+  if(messageTemplateForAdapterList.get(position).isSentByMe())
   {
    return MY_ID;
   }
@@ -98,10 +98,21 @@ public class AdapterMessages extends RecyclerView.Adapter<AdapterMessages.Messag
   }
  }
  
- public void insertItem(Message message)
+ public void insertItem(MessageTemplateForAdapter messageTemplateForAdapter)
  {
-  this.messageList.add(message);
-  notifyItemInserted(messageList.size());
+  this.messageTemplateForAdapterList.add(messageTemplateForAdapter);
+  notifyItemInserted(messageTemplateForAdapterList.size());
+ }
+ 
+ 
+ public void setDelivered(int position)
+ {
+ 
+ }
+ 
+ public int getMessagesSize()
+ {
+  return messageTemplateForAdapterList.size();
  }
  
  

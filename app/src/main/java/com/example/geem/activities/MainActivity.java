@@ -6,6 +6,7 @@ import android.view.Menu;
 import com.example.geem.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -42,6 +43,15 @@ public class MainActivity extends AppCompatActivity
   NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
   NavigationUI.setupWithNavController(navigationView, navController);
   
+  
+  if(FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null)
+  {
+   navController.navigate(R.id.nav_browse_items);
+  }
+  else
+  {
+   navController.navigate(R.id.nav_profile);
+  }
  }
  
  @Override

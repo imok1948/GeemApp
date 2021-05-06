@@ -2,14 +2,14 @@ package com.example.geem.fragments.browse.messages.activity;
 
 import com.example.geem.extra.TimeDetails;
 
-public class Message
+public class MessageTemplateForAdapter
 {
  private int id;
  private boolean sentByMe = true;
  private String data;
  private TimeDetails timeDetails;
  
- public Message(int id, boolean sentByMe, String data, TimeDetails timeDetails)
+ public MessageTemplateForAdapter(int id, boolean sentByMe, String data, TimeDetails timeDetails)
  {
   this.id = id;
   this.sentByMe = sentByMe;

@@ -3,16 +3,24 @@ package com.example.geem.fragments.browse.messages;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +29,20 @@ import java.util.Random;
 public class FragmentBrowseMessages extends Fragment
 {
  
+ private static final String TAG = "FragmentBrowseMessages";
  private View root;
  
+ 
+ //View things
  private RecyclerView recyclerView;
  private AdapterListChatPeople adapterListChatPeople;
+ 
+ 
+ //Firebase things
+ 
+ private FirebaseFirestore firebaseFirestore;
+ private CollectionReference feedsCollectionReference;
+ private static final String MESSAGE_COLLECTION_NAME = "messages";
  
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -32,8 +50,33 @@ public class FragmentBrowseMessages extends Fragment
   root = inflater.inflate(R.layout.fragment_browse_messages, container, false);
   initializeComponents();
   
+  
+  firebaseFirestore = FirebaseFirestore.getInstance();
+  feedsCollectionReference = firebaseFirestore.collection(MESSAGE_COLLECTION_NAME);
+  
+  feedsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<QuerySnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     for(DocumentSnapshot snapshot : task.getResult())
+     {
+      Log.d(TAG, "onComplete: snapshot : " + snapshot.getId()+" "+ snapshot.get("timestamp")+" "+snapshot.get("content"));
+     }
+    }
+    else
+    {
+     Log.d(TAG, "onComplete: fetched from firestore ==> Failed");
+    }
+   }
+  });
+  
+  
   return root;
  }
+ 
  
  private void initializeComponents()
  {
