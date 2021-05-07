@@ -68,47 +68,49 @@ import static android.content.ContentValues.TAG;
 
 public class FragmentProfile extends Fragment implements View.OnClickListener
 {
+ 
+ private static final String TAG = "FragmentProfile";
  //Related to Firebase
  private FirebaseAuth mAuth;
  private StorageReference storageRef;
  FirebaseFirestore db;
  Uri imageUri;
-
+ 
  //Related to Login section
  ConstraintLayout loginFragment;
  TextView loginRegister, loginForgotPassword;
  Button loginSignIn;
  EditText loginEmail, loginPassword;
  ProgressBar loginProgressBar;
-
+ 
  //Related to Register section
  ConstraintLayout registerFragment;
- ImageView registerBannerDescription,profileImg;
- EditText registerFullName,registerEmail, registerPassword;
+ ImageView registerBannerDescription, profileImg;
+ EditText registerFullName, registerEmail, registerPassword;
  Button registerRegisterUser, registerGoBackToLogin;
  ProgressBar registerProgressBar;
-
+ 
  //Related to ForgotPassword section
  ConstraintLayout passwordFragment;
-
+ 
  ImageView passwordBanner;
  EditText passwordEmail;
  Button passwordResetPassword, passwordGoBackToLogin;
  ProgressBar passwordProgressBar;
-
+ 
  //Related to UserProfile section
  ConstraintLayout userProfile;
  TextView userProfileFullName, userProfileEmail;
  Button userProfileSignOut;
  ImageView proBanner, proPic;
-
+ 
  //Related to User ID
  String currentUserID;
-
+ 
  //String for EditText Purpose
  private String temp;
-
-
+ 
+ 
  void hideLoginScreen()
  {
   loginFragment.setVisibility(View.GONE);
@@ -119,7 +121,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   loginPassword.setVisibility(View.GONE);
   loginProgressBar.setVisibility(View.GONE);
  }
-
+ 
  void showLoginScreen()
  {
   loginFragment.setVisibility(View.VISIBLE);
@@ -130,8 +132,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   loginPassword.setVisibility(View.VISIBLE);
   loginProgressBar.setVisibility(View.VISIBLE);
  }
-
-
+ 
+ 
  void hideRegisterScreen()
  {
   registerFragment.setVisibility(View.GONE);
@@ -144,13 +146,13 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerProgressBar.setVisibility(View.GONE);
   profileImg.setVisibility(View.GONE);
  }
-
+ 
  void showRegisterScreen()
  {
   registerFragment.setVisibility(View.VISIBLE);
   registerBannerDescription.setVisibility(View.VISIBLE);
   registerFullName.setVisibility(View.VISIBLE);
-
+  
   registerEmail.setVisibility(View.VISIBLE);
   registerPassword.setVisibility(View.VISIBLE);
   registerRegisterUser.setVisibility(View.VISIBLE);
@@ -158,31 +160,31 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerProgressBar.setVisibility(View.VISIBLE);
   profileImg.setVisibility(View.VISIBLE);
  }
-
-
+ 
+ 
  void hideForgetScreen()
  {
   passwordFragment.setVisibility(View.GONE);
   passwordBanner.setVisibility(View.GONE);
-
+  
   passwordEmail.setVisibility(View.GONE);
   passwordResetPassword.setVisibility(View.GONE);
   passwordGoBackToLogin.setVisibility(View.GONE);
   passwordProgressBar.setVisibility(View.GONE);
  }
-
-
+ 
+ 
  void showForgetScreen()
  {
   passwordFragment.setVisibility(View.VISIBLE);
   passwordBanner.setVisibility(View.VISIBLE);
-
+  
   passwordEmail.setVisibility(View.VISIBLE);
   passwordResetPassword.setVisibility(View.VISIBLE);
   passwordGoBackToLogin.setVisibility(View.VISIBLE);
   passwordProgressBar.setVisibility(View.VISIBLE);
  }
-
+ 
  void hideProfileScreen()
  {
   userProfile.setVisibility(View.GONE);
@@ -190,10 +192,10 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   userProfileEmail.setVisibility(View.GONE);
   proBanner.setVisibility(View.GONE);
   proPic.setVisibility(View.GONE);
-
+  
   userProfileSignOut.setVisibility(View.GONE);
  }
-
+ 
  void showProfileScreen()
  {
   userProfile.setVisibility(View.VISIBLE);
@@ -203,56 +205,56 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   proPic.setVisibility(View.VISIBLE);
   userProfileSignOut.setVisibility(View.VISIBLE);
  }
-
-
+ 
+ 
  void hideLoginScreen2()
  {
-
-
+  
+  
   loginProgressBar.setVisibility(View.GONE);
   loginFragment.setVisibility(View.GONE);
   registerFragment.setVisibility(View.GONE);
   passwordFragment.setVisibility(View.GONE);
-
+  
   userProfile.setVisibility(View.VISIBLE);
  }
-
-
+ 
+ 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
-
+  
+  
   //Declare fragments
   loginFragment = view.findViewById(R.id.loginFragment);
   registerFragment = view.findViewById(R.id.registerFragment);
   passwordFragment = view.findViewById(R.id.passwordFragment);
   userProfile = view.findViewById(R.id.userProfile);
-
-
+  
+  
   //Declare TextView
   loginRegister = view.findViewById(R.id.loginRegister);
   loginForgotPassword = view.findViewById(R.id.loginForgotPassword);
   registerBannerDescription = view.findViewById(R.id.registerBannerDescription);
   passwordBanner = view.findViewById(R.id.passwordBanner);
-
+  
   userProfileFullName = view.findViewById(R.id.userProfileFullName);
   userProfileEmail = view.findViewById(R.id.userProfileEmail);
-
-
+  
+  
   //Declare EditText
   loginEmail = view.findViewById(R.id.loginEmail);
   loginPassword = view.findViewById(R.id.loginPassword);
   registerFullName = view.findViewById(R.id.registerFullName);
-
+  
   registerEmail = view.findViewById(R.id.registerEmail);
   registerPassword = view.findViewById(R.id.registerPassword);
   passwordEmail = view.findViewById(R.id.passwordEmail);
-
+  
   profileImg = view.findViewById(R.id.selected_image);
-
-
+  
+  
   //Declare Buttons
   registerGoBackToLogin = view.findViewById(R.id.registerGoBackToLogin);
   passwordGoBackToLogin = view.findViewById(R.id.passwordGoBackToLogin);
@@ -260,24 +262,24 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerRegisterUser = view.findViewById(R.id.registerRegisterUser);
   passwordResetPassword = view.findViewById(R.id.passwordResetPassword);
   userProfileSignOut = view.findViewById(R.id.userProfileSignOut);
-
+  
   //Declare ProgressBar
   loginProgressBar = view.findViewById(R.id.loginProgressBar);
   registerProgressBar = view.findViewById(R.id.registerProgressBar);
   passwordProgressBar = view.findViewById(R.id.passwordProgressBar);
-
-  proPic= view.findViewById(R.id.profile_picture);
-
-
+  
+  proPic = view.findViewById(R.id.profilePic);
+  
+  
   //Declare Firebase and FireStore
   mAuth = FirebaseAuth.getInstance();
   db = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();
-
+  
   //Declare String value (for overwriting EditText)
   temp = null;
-
-
+  
+  
   //onClickListeners in Login section
   loginRegister.setOnClickListener(new View.OnClickListener()
   {
@@ -289,7 +291,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     passwordFragment.setVisibility(View.GONE);
    }
   });
-
+  
   loginForgotPassword.setOnClickListener(new View.OnClickListener()
   {
    @Override
@@ -300,8 +302,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     passwordFragment.setVisibility(View.VISIBLE);
    }
   });
-
-
+  
+  
   passwordGoBackToLogin.setOnClickListener(new View.OnClickListener()
   {
    @Override
@@ -314,7 +316,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     passwordProgressBar.setVisibility(View.GONE);
    }
   });
-
+  
   loginSignIn.setOnClickListener(new View.OnClickListener()
   {
    @Override
@@ -323,7 +325,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     userLogin();
    }
   });
-
+  
   //onClickListeners in Register section
   registerRegisterUser.setOnClickListener(new View.OnClickListener()
   {
@@ -333,7 +335,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     registerUser();
    }
   });
- profileImg.setOnClickListener(new View.OnClickListener()
+  profileImg.setOnClickListener(new View.OnClickListener()
   {
    @Override
    public void onClick(View v)
@@ -341,7 +343,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     choosePicture();
    }
   });
-
+  
   registerGoBackToLogin.setOnClickListener(new View.OnClickListener()
   {
    @Override
@@ -352,8 +354,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     passwordFragment.setVisibility(View.GONE);
    }
   });
-
-
+  
+  
   //onClickListeners in Password section
   passwordResetPassword.setOnClickListener(new View.OnClickListener()
   {
@@ -363,7 +365,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     resetPassword();
    }
   });
-
+  
   //onClickListeners in User Profile section
   userProfileSignOut.setOnClickListener(new View.OnClickListener()
   {
@@ -376,21 +378,21 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     registerFragment.setVisibility(View.GONE);
     passwordFragment.setVisibility(View.GONE);
     userProfile.setVisibility(View.GONE);
-
+    
     mAuth.signOut();
    }
   });
-
-
+  
+  
   boolean loggedIn = true;
-
+  
   if(mAuth.getCurrentUser() != null && mAuth.getCurrentUser().getUid() != null)
   {
    currentUserID = mAuth.getCurrentUser().getUid();
    hideLoginScreen2();
    loggedIn = true;
    DocumentReference documentReference = db.collection("new_profile").document(currentUserID);
-
+   
    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
    {
     @Override
@@ -399,13 +401,25 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      if(task.isSuccessful())
      {
       DocumentSnapshot snapshot = task.getResult();
-
+      
       userProfileFullName.setText(snapshot.getString("name"));
       userProfileEmail.setText(snapshot.getString("email"));
       //get profile picture----------------------------------------------------------------------------------------------------
-
+      
       //proPic.setImageURI(snapshot.getString("profileimg"));
       //Picasso.get().load(snapshot.getString("profileimg")).into(proPic);
+      Log.d(TAG, "onComplete: Profile picture url " + snapshot.get("profileimg"));
+      
+      String profilePictureUrl = "" + snapshot.get("profileimg");
+      try
+      {
+       Glide.with(getContext()).load(profilePictureUrl).error(R.drawable.elon).placeholder(R.drawable.profile_pic).into(proPic);
+      }
+      catch(Exception e)
+      {
+       Log.d(TAG, "onEvent: Context : " + getContext() + ", Url : " + profilePictureUrl + ", proPic : " + proPic);
+       e.printStackTrace();
+      }
      }
      else
      {
@@ -413,92 +427,94 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      }
     }
    });
-
+   
   }
   else
   {
    //Already logged in
-
+   
   }
-
-
+  
+  
   //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
   return view;
  }
-
-
-
+ 
+ 
  //for selecting image-----------------------------------
- private void choosePicture() {
+ private void choosePicture()
+ {
   Intent i = new Intent();
   i.setType("image/*");
   i.setAction(Intent.ACTION_GET_CONTENT);
-  startActivityForResult(i,1);
+  startActivityForResult(i, 1);
  }
-
-
+ 
+ 
  @Override
- public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+ public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+ {
   super.onActivityResult(requestCode, resultCode, data);
-  if(requestCode==1 && resultCode== getActivity().RESULT_OK && data!=null && data.getData() != null ){
-     imageUri = data.getData();
-     profileImg.setImageURI(imageUri);
+  if(requestCode == 1 && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null)
+  {
+   imageUri = data.getData();
+   profileImg.setImageURI(imageUri);
   }
  }
-
+ 
  @Override
  public void onClick(View v)
  {
-
+ 
  }
-
+ 
  //userLogin() starts
  private void userLogin()
  {
   String email = loginEmail.getText().toString().trim();
   String password = loginPassword.getText().toString().trim();
-
+  
   if(email.isEmpty())
   {
    loginEmail.setError("Email is required!");
    loginEmail.requestFocus();
    return;
   }
-
+  
   if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
   {
    loginEmail.setError("Please enter a valid email!");
    loginEmail.requestFocus();
    return;
   }
-
+  
   if(password.isEmpty())
   {
    loginPassword.setError("Password is required!");
    loginPassword.requestFocus();
    return;
   }
-
+  
   if(password.length() < 6)
   {
    loginPassword.setError("Minimum password length is 6 characters!");
    loginPassword.requestFocus();
    return;
   }
-
+  
   loginProgressBar.setVisibility(View.VISIBLE);
-
-
+  
+  
   mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
   {
    @Override
    public void onComplete(@NonNull Task<AuthResult> task)
    {
-
+    
     if(task.isSuccessful())
     {
      FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+     
      if(user.isEmailVerified())
      {
       //redirect to user profile
@@ -506,10 +522,10 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       loginFragment.setVisibility(View.GONE);
       registerFragment.setVisibility(View.GONE);
       passwordFragment.setVisibility(View.GONE);
-
+      
       //Retrieve the logged in user information from the Cloud FireStore
       currentUserID = mAuth.getCurrentUser().getUid();
-
+      
       DocumentReference documentReference = db.collection("new_profile").document(currentUserID);
       documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>()
       {
@@ -519,13 +535,24 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
         userProfileFullName.setText(value.getString("name"));
         userProfileEmail.setText(value.getString("email"));
         //Picasso.get().load(value.getString("profileimg")).into(proPic);
-
+        
+        Log.d(TAG, "onComplete: Profile picture url 529 " + value.getString("profileimg"));
+        String profilePictureUrl = value.getString("profileimg");
+        try
+        {
+         Glide.with(getContext()).load(profilePictureUrl).error(R.drawable.elon).placeholder(R.drawable.profile_pic).into(proPic);
+        }
+        catch(Exception e)
+        {
+         Log.d(TAG, "onEvent: Context : " + getContext() + ", Url : " + profilePictureUrl + ", proPic : " + proPic);
+         e.printStackTrace();
+        }
         //get image-------------------------------------------------------------------------------
-
+        
        }
       });
       //Data Retrieval Completed
-
+      
       userProfile.setVisibility(View.VISIBLE);
      }
      else
@@ -533,8 +560,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       user.sendEmailVerification();
       Toast.makeText(getActivity(), "Check your email to verify your account!", Toast.LENGTH_LONG).show();
      }
-
-
+     
+     
     }
     else
     {
@@ -543,24 +570,24 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     }
    }
   });
-
+  
  }
  //userLogin() ends
-
+ 
  //registerUser() starts
  private void registerUser()
  {
   String email = registerEmail.getText().toString().trim();
   String password = registerPassword.getText().toString().trim();
   String fullName = registerFullName.getText().toString().trim();
-
+  
   if(fullName.isEmpty())
   {
    registerFullName.setError("Full name is required!");
    registerFullName.requestFocus();
    return;
   }
-
+  
   if(fullName.isEmpty())
   {
    registerEmail.setError("Email is required!");
@@ -585,7 +612,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
    registerPassword.requestFocus();
    return;
   }
-
+  
   registerProgressBar.setVisibility(View.VISIBLE);
   mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
   {
@@ -597,15 +624,15 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     {
      loginEmail.setText(temp);
      loginPassword.setText(temp);
-
+     
      //Get userID of current user
      currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
      //currentUserID = mAuth.getCurrentUser().getUid();
      //DocumentReference documentReference = db.collection("profile1").document(currentUserID);
-
+     
      //here insert profile pic
      insertData();
-
+     
      registerProgressBar.setVisibility(View.GONE);
      loginFragment.setVisibility(View.VISIBLE);
      registerFragment.setVisibility(View.GONE);
@@ -621,37 +648,37 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     }
    }
   });
-
-
+  
+  
  }
  //registerUser() ends
-
+ 
  //resetPassword() starts
  private void resetPassword()
  {
   String email = passwordEmail.getText().toString().trim();
-
+  
   if(email.isEmpty())
   {
    passwordEmail.setError("Email is required!");
    passwordEmail.requestFocus();
    return;
   }
-
+  
   if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
   {
    passwordEmail.setError("Please provide a valid email!");
    passwordEmail.requestFocus();
    return;
   }
-
+  
   passwordProgressBar.setVisibility(View.VISIBLE);
   mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>()
   {
    @Override
    public void onComplete(@NonNull Task<Void> task)
    {
-
+    
     if(task.isSuccessful())
     {
      Toast.makeText(getActivity(), "Check your email to reset the password!", Toast.LENGTH_LONG).show();
@@ -662,20 +689,20 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     }
    }
   });
-
+  
  }
  //resetPassword() ends
-
+ 
  //insertData() starts
  // this code uploads data to firebase
  public void insertData()
  {
   if(imageUri != null)
   {
-
+   
    StorageReference imgPath = storageRef.child("profile_pictures").child(Timestamp.now().toString() + ".jpeg");
    //setting up progressDialog
-
+   
    imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
    {
     @Override
@@ -684,7 +711,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      if(!task.isSuccessful())
      {
       throw task.getException();
-
+      
      }
      return imgPath.getDownloadUrl();
     }
@@ -693,7 +720,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     @Override
     public void onComplete(@NonNull Task<Uri> task)
     {
-
+     
      if(task.isSuccessful())
      {
       Uri url = task.getResult();
@@ -701,7 +728,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       items.put("name", registerFullName.getText().toString().trim());
       items.put("email", registerEmail.getText().toString().trim());
       items.put("profileimg", url.toString());
-
+      
       db.collection("new_profile").document(currentUserID).set(items).addOnCompleteListener(new OnCompleteListener<Void>()
       {
        @Override
@@ -711,25 +738,25 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
         {
          Log.d(TAG, "DocumentSnapshot for user successfully written!");
          registerProgressBar.setVisibility(View.GONE);
-
+         
          Toast.makeText(getActivity(), "User Registered Successfully!", Toast.LENGTH_SHORT).show();
-
-
+         
+         
         }
         else
         {
-
+         
          Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
          registerProgressBar.setVisibility(View.GONE);
-
+         
         }
        }
       });
      }
     }
-
+    
    });
-
+   
   }
  }
 
@@ -768,6 +795,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  }
  //insertData() ends
  */
-
-
+ 
+ 
 }
