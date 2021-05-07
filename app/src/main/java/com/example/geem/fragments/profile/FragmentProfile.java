@@ -585,7 +585,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     {
      loginEmail.setText(temp);
      loginPassword.setText(temp);
-     Toast.makeText(getActivity(), "User has been registered successfully!", Toast.LENGTH_LONG).show();
+
      //Get userID of current user
      currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
      //currentUserID = mAuth.getCurrentUser().getUid();
@@ -663,10 +663,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
    StorageReference imgPath = storageRef.child("profile_pictures").child(Timestamp.now().toString() + ".jpeg");
    //setting up progressDialog
-   ProgressDialog progressDialog = new ProgressDialog(getActivity());
-   progressDialog.setMessage("Uploading the item...");
-   progressDialog.setCancelable(false);
-   progressDialog.show();
+
    imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
    {
     @Override
@@ -702,7 +699,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
         {
          Log.d(TAG, "DocumentSnapshot for user successfully written!");
          registerProgressBar.setVisibility(View.GONE);
-         progressDialog.cancel();
+
          Toast.makeText(getActivity(), "User Registered Successfully!", Toast.LENGTH_SHORT).show();
 
 
@@ -712,7 +709,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
          Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
          registerProgressBar.setVisibility(View.GONE);
-         progressDialog.cancel();
+         
         }
        }
       });
