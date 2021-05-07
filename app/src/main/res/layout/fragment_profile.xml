@@ -193,6 +193,21 @@
 
         </ImageView>
 
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:id="@+id/selected_image"
+            android:src="@mipmap/profile_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/registerBannerDescription"
+            />
+
+
+
         <EditText
             android:id="@+id/registerFullName"
             android:layout_width="match_parent"
@@ -208,7 +223,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerBannerDescription">
+            app:layout_constraintTop_toBottomOf="@+id/selected_image">
 
         </EditText>
 
@@ -253,60 +268,7 @@
             app:layout_constraintTop_toBottomOf="@+id/registerEmail">
 
         </EditText>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/linear"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerPassword">
-        <TextView
-            android:id="@+id/profileText"
 
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-
-            android:text="Select Profile Picture:"
-            android:fontFamily="serif"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            />
-
-        <Button
-            android:id="@+id/profile_image"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="30dp"
-
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Gallery"
-            android:fontFamily="serif"
-            android:backgroundTint="@color/orange_800"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            >
-
-
-        </Button>
-
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/selected_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            app:layout_constraintTop_toBottomOf="@+id/linear"
-          />
 
 
 
@@ -329,7 +291,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selected_image">
+            app:layout_constraintTop_toBottomOf="@+id/registerPassword">
 
         </Button>
 

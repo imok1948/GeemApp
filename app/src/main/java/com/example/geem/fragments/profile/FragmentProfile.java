@@ -1,5 +1,7 @@
 package com.example.geem.fragments.profile;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -34,10 +36,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.geem.activities.MainActivity;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +54,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +68,9 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 {
  //Related to Firebase
  private FirebaseAuth mAuth;
+ private StorageReference storageRef;
  FirebaseFirestore db;
+ Uri imageUri;
 
  //Related to Login section
  ConstraintLayout loginFragment;
@@ -69,7 +81,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
  //Related to Register section
  ConstraintLayout registerFragment;
- ImageView registerBannerDescription;
+ ImageView registerBannerDescription,profileImg;
  EditText registerFullName,registerEmail, registerPassword;
  Button registerRegisterUser, registerGoBackToLogin;
  ProgressBar registerProgressBar;
@@ -127,6 +139,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerRegisterUser.setVisibility(View.GONE);
   registerGoBackToLogin.setVisibility(View.GONE);
   registerProgressBar.setVisibility(View.GONE);
+  profileImg.setVisibility(View.GONE);
  }
 
  void showRegisterScreen()
@@ -140,6 +153,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerRegisterUser.setVisibility(View.VISIBLE);
   registerGoBackToLogin.setVisibility(View.VISIBLE);
   registerProgressBar.setVisibility(View.VISIBLE);
+  profileImg.setVisibility(View.VISIBLE);
  }
 
 
@@ -203,6 +217,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  {
   View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
   //Declare fragments
   loginFragment = view.findViewById(R.id.loginFragment);
   registerFragment = view.findViewById(R.id.registerFragment);
@@ -229,6 +244,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerPassword = view.findViewById(R.id.registerPassword);
   passwordEmail = view.findViewById(R.id.passwordEmail);
 
+  profileImg = view.findViewById(R.id.selected_image);
+
 
   //Declare Buttons
   registerGoBackToLogin = view.findViewById(R.id.registerGoBackToLogin);
@@ -246,6 +263,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   //Declare Firebase and FireStore
   mAuth = FirebaseAuth.getInstance();
   db = FirebaseFirestore.getInstance();
+  storageRef = FirebaseStorage.getInstance().getReference();
 
   //Declare String value (for overwriting EditText)
   temp = null;
@@ -306,6 +324,14 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
     registerUser();
    }
   });
+ profileImg.setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View v)
+   {
+    choosePicture();
+   }
+  });
 
   registerGoBackToLogin.setOnClickListener(new View.OnClickListener()
   {
@@ -354,7 +380,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
    currentUserID = mAuth.getCurrentUser().getUid();
    hideLoginScreen2();
    loggedIn = true;
-   DocumentReference documentReference = db.collection("profile1").document(currentUserID);
+   DocumentReference documentReference = db.collection("new_profile").document(currentUserID);
 
    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
    {
@@ -387,6 +413,26 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
   //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
   return view;
+ }
+
+
+
+ //for selecting image-----------------------------------
+ private void choosePicture() {
+  Intent i = new Intent();
+  i.setType("image/*");
+  i.setAction(Intent.ACTION_GET_CONTENT);
+  startActivityForResult(i,1);
+ }
+
+
+ @Override
+ public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+  super.onActivityResult(requestCode, resultCode, data);
+  if(requestCode==1 && resultCode== getActivity().RESULT_OK && data!=null && data.getData() != null ){
+     imageUri = data.getData();
+     profileImg.setImageURI(imageUri);
+  }
  }
 
  @Override
@@ -453,7 +499,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       //Retrieve the logged in user information from the Cloud FireStore
       currentUserID = mAuth.getCurrentUser().getUid();
 
-      DocumentReference documentReference = db.collection("profile1").document(currentUserID);
+      DocumentReference documentReference = db.collection("new_profile").document(currentUserID);
       documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>()
       {
        @Override
@@ -547,13 +593,14 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
      //here insert profile pic
      insertData();
+
      registerProgressBar.setVisibility(View.GONE);
      loginFragment.setVisibility(View.VISIBLE);
      registerFragment.setVisibility(View.GONE);
      passwordFragment.setVisibility(View.GONE);
-     registerFullName.setText(temp);
-     registerEmail.setText(temp);
-     registerPassword.setText(temp);
+     //registerFullName.setText(temp);
+     //registerEmail.setText(temp);
+     //registerPassword.setText(temp);
     }
     else
     {
@@ -608,6 +655,80 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  //resetPassword() ends
 
  //insertData() starts
+ // this code uploads data to firebase
+ public void insertData()
+ {
+  if(imageUri != null)
+  {
+
+   StorageReference imgPath = storageRef.child("profile_pictures").child(Timestamp.now().toString() + ".jpeg");
+   //setting up progressDialog
+   ProgressDialog progressDialog = new ProgressDialog(getActivity());
+   progressDialog.setMessage("Uploading the item...");
+   progressDialog.setCancelable(false);
+   progressDialog.show();
+   imgPath.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+   {
+    @Override
+    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
+    {
+     if(!task.isSuccessful())
+     {
+      throw task.getException();
+
+     }
+     return imgPath.getDownloadUrl();
+    }
+   }).addOnCompleteListener(new OnCompleteListener<Uri>()
+   {
+    @Override
+    public void onComplete(@NonNull Task<Uri> task)
+    {
+
+     if(task.isSuccessful())
+     {
+      Uri url = task.getResult();
+      Map<String, Object> items = new HashMap<>();
+      items.put("name", registerFullName.getText().toString().trim());
+      items.put("email", registerEmail.getText().toString().trim());
+      items.put("profileimg", url.toString());
+
+      db.collection("new_profile").document(currentUserID).set(items).addOnCompleteListener(new OnCompleteListener<Void>()
+      {
+       @Override
+       public void onComplete(@NonNull Task<Void> task)
+       {
+        if(task.isSuccessful())
+        {
+         Log.d(TAG, "DocumentSnapshot for user successfully written!");
+         registerProgressBar.setVisibility(View.GONE);
+         progressDialog.cancel();
+         Toast.makeText(getActivity(), "User Registered Successfully!", Toast.LENGTH_SHORT).show();
+
+
+        }
+        else
+        {
+
+         Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+         registerProgressBar.setVisibility(View.GONE);
+         progressDialog.cancel();
+        }
+       }
+      });
+     }
+    }
+
+   });
+
+  }
+ }
+
+
+
+
+
+ /*
  public void insertData()
  {
   Map<String, String> items = new HashMap<>();
@@ -637,5 +758,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   });
  }
  //insertData() ends
+ */
+
 
 }
