@@ -190,16 +190,20 @@
 
         </EditText>
 
+
+
+
+
         <EditText
-            android:id="@+id/registerBirthYear"
+            android:id="@+id/registerEmail"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Birth Year"
-            android:inputType="number"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
@@ -209,30 +213,12 @@
         </EditText>
 
         <EditText
-            android:id="@+id/registerEmail"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerBirthYear">
-
-        </EditText>
-
-        <EditText
             android:id="@+id/registerPassword"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
@@ -249,10 +235,11 @@
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Register"
-            android:textSize="26sp"
+            android:background="@drawable/grad"
+            android:textSize="15sp"
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:backgroundTint="#0ED6B9"
@@ -268,11 +255,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10sp"
             android:layout_marginRight="20dp"
+            android:background="@drawable/grad"
             android:backgroundTint="#0ED6B9"
-            android:text="Go Back to Login"
+            android:text="Back to Login"
             android:textColor="#ffffff"
-            android:textSize="10sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +350,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Reset Password"
-            android:textSize="26sp"
+            android:background="@drawable/grad"
+            android:textSize="15sp"
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:backgroundTint="#0ED6B9"
@@ -378,9 +368,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:backgroundTint="#0ED6B9"
-            android:text="Go Back to Login"
+            android:background="@drawable/grad"
+            android:text="Back to Login"
             android:textColor="#ffffff"
-            android:textSize="10sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

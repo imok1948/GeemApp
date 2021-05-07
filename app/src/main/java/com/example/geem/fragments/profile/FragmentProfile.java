@@ -70,7 +70,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  //Related to Register section
  ConstraintLayout registerFragment;
  ImageView registerBannerDescription;
- EditText registerFullName, registerBirthYear, registerEmail, registerPassword;
+ EditText registerFullName,registerEmail, registerPassword;
  Button registerRegisterUser, registerGoBackToLogin;
  ProgressBar registerProgressBar;
 
@@ -122,7 +122,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerFragment.setVisibility(View.GONE);
   registerBannerDescription.setVisibility(View.GONE);
   registerFullName.setVisibility(View.GONE);
-  registerBirthYear.setVisibility(View.GONE);
   registerEmail.setVisibility(View.GONE);
   registerPassword.setVisibility(View.GONE);
   registerRegisterUser.setVisibility(View.GONE);
@@ -135,7 +134,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   registerFragment.setVisibility(View.VISIBLE);
   registerBannerDescription.setVisibility(View.VISIBLE);
   registerFullName.setVisibility(View.VISIBLE);
-  registerBirthYear.setVisibility(View.VISIBLE);
+
   registerEmail.setVisibility(View.VISIBLE);
   registerPassword.setVisibility(View.VISIBLE);
   registerRegisterUser.setVisibility(View.VISIBLE);
@@ -226,7 +225,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   loginEmail = view.findViewById(R.id.loginEmail);
   loginPassword = view.findViewById(R.id.loginPassword);
   registerFullName = view.findViewById(R.id.registerFullName);
-  registerBirthYear = view.findViewById(R.id.registerBirthYear);
+
   registerEmail = view.findViewById(R.id.registerEmail);
   registerPassword = view.findViewById(R.id.registerPassword);
   passwordEmail = view.findViewById(R.id.passwordEmail);
@@ -494,7 +493,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   String email = registerEmail.getText().toString().trim();
   String password = registerPassword.getText().toString().trim();
   String fullName = registerFullName.getText().toString().trim();
-  String birthYear = registerBirthYear.getText().toString().trim();
 
   if(fullName.isEmpty())
   {
@@ -502,12 +500,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
    registerFullName.requestFocus();
    return;
   }
-  if(birthYear.isEmpty())
-  {
-   registerBirthYear.setError("Age is required!");
-   registerBirthYear.requestFocus();
-   return;
-  }
+
   if(fullName.isEmpty())
   {
    registerEmail.setError("Email is required!");
@@ -555,7 +548,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      registerFragment.setVisibility(View.GONE);
      passwordFragment.setVisibility(View.GONE);
      registerFullName.setText(temp);
-     registerBirthYear.setText(temp);
      registerEmail.setText(temp);
      registerPassword.setText(temp);
     }
@@ -617,7 +609,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   Map<String, String> items = new HashMap<>();
   items.put("name", registerFullName.getText().toString().trim());
   items.put("email", registerEmail.getText().toString().trim());
-  items.put("birthYear", registerBirthYear.getText().toString());
 
   db.collection("profile1").document(currentUserID).set(items).addOnSuccessListener(new OnSuccessListener<Void>()
   {
