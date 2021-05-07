@@ -102,6 +102,7 @@ public class AdapterMessages extends RecyclerView.Adapter<AdapterMessages.Messag
  {
   this.messageTemplateForAdapterList.add(messageTemplateForAdapter);
   notifyItemInserted(messageTemplateForAdapterList.size());
+  Log.d(TAG, "insertItem: Item received to adapter : " + messageTemplateForAdapter);
  }
  
  

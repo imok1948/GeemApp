@@ -1,5 +1,6 @@
 package com.example.geem.fragments.browse.feeds.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,8 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.geem.R;
 import com.example.geem.extra.ShivankUserItems;
+import com.example.geem.extra.Variables;
+import com.example.geem.fragments.browse.messages.activity.MessageActivity;
 import com.example.geem.fragments.browse.notifications.FragmentNotifications;
 import com.example.geem.fragments.browse.notifications.NotificationTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,15 +75,6 @@ public class ActivityViewItem extends AppCompatActivity
    }
   });
   
-  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-  fab.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-   }
-  });
  }
  
  
@@ -128,6 +122,20 @@ public class ActivityViewItem extends AppCompatActivity
      }
     }
     
+   }
+  });
+  
+  
+  findViewById(R.id.fab).setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    Log.d(TAG, "onClick: Chat button, opening chats...");
+    
+    Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+    intent.putExtra(Variables.OTHER_ID, item.getUserid());
+    startActivity(intent);
    }
   });
  }

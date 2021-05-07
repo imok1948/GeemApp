@@ -16,4 +16,8 @@ public class Variables
  //Tab icons of fragments
  public static final int TAB_ICONS[] = {R.drawable.ic_tab_messages, R.drawable.ic_tab_notification, R.drawable.ic_tab_feeds, R.drawable.ic_tab_additem, R.drawable.ic_tab_history};
  //R.drawable.ic_tab_profile, ,
+ 
+ 
+ public static final String ITEM_ID = "ITEM_ID";
+ public static final String OTHER_ID = "OTHER_ID";
 }

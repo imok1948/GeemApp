@@ -4,40 +4,34 @@ import com.example.geem.extra.TimeDetails;
 
 public class ChatPeople
 {
- private int profilePicture;
+ private String profilePictureUrl;
  private String name;
  private String message;
  private TimeDetails timeDetails;
  
- public ChatPeople(int profilePicture, String name, String message, TimeDetails timeDetails)
+ 
+ public ChatPeople(String profilePictureUrl, String name, String message, TimeDetails timeDetails)
  {
-  this.profilePicture = profilePicture;
+  this.profilePictureUrl = profilePictureUrl;
   this.name = name;
   this.message = message;
   this.timeDetails = timeDetails;
  }
  
- public ChatPeople()
- {
- 
- }
- 
- 
  @Override
  public String toString()
  {
-  return "ChatPeople{" + "profilePicture=" + profilePicture + ", name='" + name + '\'' + ", message='" + message + '\'' + ", timeDetails=" + timeDetails + '}';
+  return "ChatPeople{" + "profilePictureUrl='" + profilePictureUrl + '\'' + ", name='" + name + '\'' + ", message='" + message + '\'' + ", timeDetails=" + timeDetails + '}';
  }
  
- //Getter setters ....
- public int getProfilePicture()
+ public String getProfilePictureUrl()
  {
-  return profilePicture;
+  return profilePictureUrl;
  }
  
- public void setProfilePicture(int profilePicture)
+ public void setProfilePictureUrl(String profilePictureUrl)
  {
-  this.profilePicture = profilePicture;
+  this.profilePictureUrl = profilePictureUrl;
  }
  
  public String getName()

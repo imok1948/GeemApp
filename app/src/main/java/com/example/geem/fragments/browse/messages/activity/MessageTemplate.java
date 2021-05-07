@@ -20,6 +20,7 @@ public class MessageTemplate
   this.otherId = otherId;
   this.sentByMe = sentByMe;
   this.content = content;
+  
  }
  
  

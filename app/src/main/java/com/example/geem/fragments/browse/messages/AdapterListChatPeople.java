@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -27,11 +28,11 @@ public class AdapterListChatPeople extends RecyclerView.Adapter<AdapterListChatP
  private Context context;
  private List<ChatPeople> chatPeopleList = new ArrayList<>();
  
- public AdapterListChatPeople(Context context, List<ChatPeople> chatPeopleList)
+ public AdapterListChatPeople(Context context)
  {
   this.context = context;
-  this.chatPeopleList = chatPeopleList;
  }
+ 
  
  @NonNull
  @Override
@@ -49,12 +50,13 @@ public class AdapterListChatPeople extends RecyclerView.Adapter<AdapterListChatP
   holder.time.setText("20:00PM");
   holder.profilePicture.setImageResource(R.drawable.profile_pic);
   */
-  ChatPeople chatPeople = chatPeopleList.get(position);
+  ChatPeople people = chatPeopleList.get(position);
   
-  holder.name.setText(chatPeople.getName());
-  holder.time.setText(chatPeople.getTimeDetails().getTime() + ", " + chatPeople.getTimeDetails().getDate());
-  holder.message.setText(chatPeople.getMessage());
-  holder.profilePicture.setImageResource(chatPeople.getProfilePicture());
+  holder.name.setText(people.getName());
+  holder.time.setText(people.getTimeDetails().getTime() + ", " + people.getTimeDetails().getDate());
+  holder.message.setText(people.getMessage());
+  
+  Glide.with(context).load(people.getProfilePictureUrl()).placeholder(R.drawable.elon).error(R.drawable.elon).into(holder.profilePicture);
   
   holder.layoutParent.setOnClickListener(new View.OnClickListener()
   {
@@ -70,6 +72,22 @@ public class AdapterListChatPeople extends RecyclerView.Adapter<AdapterListChatP
  public int getItemCount()
  {
   return chatPeopleList.size();
+ }
+ 
+ 
+ public void addItem(ChatPeople people)
+ {
+  this.chatPeopleList.add(people);
+  notifyItemInserted(this.chatPeopleList.size() - 1);
+ }
+ 
+ public void addItems(List<ChatPeople> peopleList)
+ {
+  for(ChatPeople people : peopleList)
+  {
+   this.chatPeopleList.add(people);
+   notifyItemInserted(this.chatPeopleList.size() - 1);
+  }
  }
  
  class ChatPeopleDetailHolder extends RecyclerView.ViewHolder
