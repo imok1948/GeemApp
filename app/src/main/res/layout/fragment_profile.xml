@@ -489,6 +489,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+          <ImageView
+              android:id="@+id/ProfileBanner"
+              android:layout_width="match_parent"
+              android:layout_height="250dp"
+
+              android:gravity="center_horizontal"
+              android:src="@drawable/logo"
+              />
+
+          <ImageView
+              android:layout_width="400dp"
+              android:layout_height="150dp"
+              android:id="@+id/profilePic"
+              android:src="@mipmap/profile_pic"
+              android:layout_marginTop="10dp"
+              android:gravity="center"
+
+
+              />
 
 
           <TextView
@@ -496,9 +515,12 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Name"
-              android:textSize="13sp"
-              android:layout_marginTop="10dp"
-              android:gravity="center">
+              android:typeface="serif"
+              android:textSize="18sp"
+              android:textColor="@color/orange_800"
+              android:layout_marginTop="20dp"
+              android:gravity="center"
+             >
 
           </TextView>
 
@@ -507,9 +529,11 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text=""
+              android:typeface="serif"
               android:textSize="20sp"
-              android:textColor="@color/purple_700"
-              android:gravity="center">
+              android:textColor="@color/black"
+              android:gravity="center"
+             >
 
           </TextView>
 
@@ -518,9 +542,12 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Email"
-              android:textSize="13sp"
-              android:layout_marginTop="10dp"
-              android:gravity="center">
+              android:textColor="@color/orange_800"
+              android:typeface="serif"
+              android:textSize="18sp"
+              android:layout_marginTop="20dp"
+              android:gravity="center"
+              >
 
           </TextView>
 
@@ -529,9 +556,11 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text=""
+              android:typeface="serif"
               android:textSize="20sp"
-              android:textColor="@color/purple_700"
-              android:gravity="center">
+              android:textColor="@color/black"
+              android:gravity="center"
+              >
 
           </TextView>
 
@@ -543,9 +572,9 @@
               android:id="@+id/userProfileSignOut"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/grad"
-              android:layout_marginTop="10dp"
-              android:backgroundTint="#0ED6B9"
+              android:background="@drawable/grad2"
+              android:layout_marginTop="30dp"
+
               android:text="Signout"
               android:textColor="#ffffff"
               android:textSize="15sp"
