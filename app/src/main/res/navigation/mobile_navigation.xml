@@ -47,4 +47,24 @@
     tools:layout="@layout/fragment_about" />
 
 
+  <fragment
+    android:id="@+id/nav_view_profile"
+    android:name="com.example.geem.fragments.rating.FragmentViewProfile"
+    android:label="Temp"
+    tools:layout="@layout/fragment_view_profile" />
+
+
+  <fragment
+    android:id="@+id/nav_request_list"
+    android:name="com.example.geem.fragments.browse.requests.FragmentRequestList"
+    android:label="Requested Items"
+    tools:layout="@layout/fragment_request_list" />
+
+  <fragment
+    android:id="@+id/nav_requester"
+    android:name="com.example.geem.fragments.browse.requests.FragmentRequester"
+    android:label="Requester Fragment"
+    tools:layout="@layout/fragment_requester" />
+
+
 </navigation>

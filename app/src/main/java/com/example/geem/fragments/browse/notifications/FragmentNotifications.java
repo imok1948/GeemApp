@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.geem.R;
+import com.example.geem.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -41,27 +43,11 @@ public class FragmentNotifications extends Fragment
    @Override
    public void onClick(View view)
    {
-    NotificationTemplate template = new NotificationTemplate("Temp", "Data");
-    feedsCollectionReference.document().set(template).addOnCompleteListener(new OnCompleteListener<Void>()
-    {
-     @Override
-     public void onComplete(@NonNull Task<Void> task)
-     {
-      if(task.isSuccessful())
-      {
-       Log.d(TAG, "onComplete: uploading success ");
-      }
-      else
-      {
-       Log.d(TAG, "onComplete: uploading failed : " + task.getException());
-       
-      }
-     }
-    });
+   
    }
   });
- 
- 
+  
+  
   //Recreate this class;
   //Recreate this class;
   //Recreate this class;

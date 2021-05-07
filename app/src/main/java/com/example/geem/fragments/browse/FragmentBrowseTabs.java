@@ -1,6 +1,7 @@
 package com.example.geem.fragments.browse;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class FragmentBrowseTabs extends Fragment
 {
+ private final static String TAG = "FragmentBrowseTabs";
  ViewPagerAdapter adapterTemp;
  private TabLayout tabLayout;
  private ViewPager viewPager;
@@ -29,19 +31,42 @@ public class FragmentBrowseTabs extends Fragment
   tabLayout = root.findViewById(R.id.tabLayout1);
   viewPager = root.findViewById(R.id.viewpages1);
   
-  ((MainActivity) getActivity()).tabLayoutForBrowseFragments = tabLayout;
+  Log.d(TAG, "onCreateView: tablayout : " + ((MainActivity) getActivity()).tabLayoutForBrowseFragments);
+  
   adapterTemp = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
   viewPager.setAdapter(adapterTemp);
   tabLayout.setupWithViewPager(viewPager);
   
-  tabLayout.selectTab(tabLayout.getTabAt(0));
   
   for(int i = 0; i < tabLayout.getTabCount(); i++)
   {
    tabLayout.getTabAt(i).setIcon(Variables.TAB_ICONS[i]);
   }
+  
+  
+  if(((MainActivity) getActivity()).tabLayoutForBrowseFragments != null)
+  {
+   int position = ((MainActivity) getActivity()).tabLayoutForBrowseFragments.getSelectedTabPosition();
+   tabLayout.selectTab(tabLayout.getTabAt(position));
+  }
+  else
+  {
+   tabLayout.selectTab(tabLayout.getTabAt(0));
+  }
+  
+  ((MainActivity) getActivity()).tabLayoutForBrowseFragments = tabLayout;
+  
   return root;
  }
+ 
+ 
+ @Override
+ public void onSaveInstanceState(@NonNull Bundle outState)
+ {
+  super.onSaveInstanceState(outState);
+  outState.putString("rahul", "meena");
+ }
+ 
  
  private void toast(String s)
  {

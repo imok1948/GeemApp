@@ -2,12 +2,15 @@ package com.example.geem.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.geem.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,9 +19,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.HashMap;
+
+
 public class MainActivity extends AppCompatActivity
 {
- 
+ public HashMap<Integer, Fragment> positionFragmentMap = new HashMap<>();
  public TabLayout tabLayoutForBrowseFragments;
  private AppBarConfiguration appBarConfiguration;
  public NavController navController;
@@ -44,14 +50,14 @@ public class MainActivity extends AppCompatActivity
   NavigationUI.setupWithNavController(navigationView, navController);
   
   
-  if(FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null)
+ /* if(FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null)
   {
-   navController.navigate(R.id.nav_browse_items);
+   navController.navigate(R.id.nav_requester);
   }
   else
   {
    navController.navigate(R.id.nav_profile);
-  }
+  }*/
  }
  
  @Override

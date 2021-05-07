@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.geem.activities.MainActivity;
 import com.example.geem.fragments.browse.add.FragmentAddItems;
 import com.example.geem.fragments.browse.feeds.FragmentBrowseFeeds;
 import com.example.geem.fragments.browse.history.FragmentBrowseHistory;
@@ -19,6 +20,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
  public ViewPagerAdapter(@NonNull FragmentManager fm)
  {
   super(fm);
+  
  }
  
  @NonNull
