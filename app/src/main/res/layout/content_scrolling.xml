@@ -2,8 +2,10 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:marginTop="50dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/pink_tile"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".fragments.browse.feeds.activity.ActivityViewItem"
     tools:showIn="@layout/activity_view_item">
@@ -11,11 +13,13 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item Time"/>
+        android:layout_marginTop="20dp"
+        android:padding="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
