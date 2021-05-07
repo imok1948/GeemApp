@@ -24,7 +24,7 @@
     android:roundIcon="@drawable/ic_app_launcher_ying_yang"
     android:supportsRtl="true"
     android:theme="@style/Theme.GEEM">
-
+    <activity android:name=".activities.ActivityShowUserProfile"></activity>
     <activity android:name=".Onboarding" />
     <activity android:name=".Splash">
       <intent-filter>
@@ -36,27 +36,20 @@
     <activity
       android:name=".fragments.browse.feeds.activity.ActivityViewItem"
       android:label="@string/title_activity_scrolling"
-      android:theme="@style/Theme.GEEM.NoActionBar">
-
-    </activity>
-
-
-    <activity android:name=".fragments.browse.messages.activity.MessageActivity">
-
-    </activity>
+      android:theme="@style/Theme.GEEM.NoActionBar"></activity>
+    <activity android:name=".fragments.browse.messages.activity.MessageActivity"></activity>
     <activity
       android:name=".activities.MainActivity"
       android:label="@string/title_activity_navigation_drawer_temp"
-      android:theme="@style/Theme.GEEM.NoActionBar">
-    </activity>
+      android:theme="@style/Theme.GEEM.NoActionBar"></activity>
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
 
     <meta-data
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyB1OrIcFmW56CjlXkNmikgYg1POm0NxGd8" />
     <meta-data
-        android:name="preloaded_fonts"
-        android:resource="@array/preloaded_fonts" />
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
     <!--
     <activity android:name=".MainActivity">
     </activity>

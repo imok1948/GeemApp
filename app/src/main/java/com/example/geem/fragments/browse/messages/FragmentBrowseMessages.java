@@ -76,7 +76,7 @@ public class FragmentBrowseMessages extends Fragment
  private void initFirebase()
  {
   
-  messagesCollectionReference.whereEqualTo(VariablesForFirebase.MY_ID, MY_ID).orderBy(VariablesForFirebase.TIMESTAMP, Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  messagesCollectionReference.orderBy(VariablesForFirebase.TIMESTAMP, Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
    @Override
    public void onComplete(@NonNull Task<QuerySnapshot> task)
