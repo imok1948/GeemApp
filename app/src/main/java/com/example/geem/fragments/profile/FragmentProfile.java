@@ -367,7 +367,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
       userProfileFullName.setText(snapshot.getString("name"));
       userProfileEmail.setText(snapshot.getString("email"));
-      //get profile picture
+      //get profile picture----------------------------------------------------------------------------------------------------
 
      }
      else
@@ -461,6 +461,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
        {
         userProfileFullName.setText(value.getString("name"));
         userProfileEmail.setText(value.getString("email"));
+
+        //get image-------------------------------------------------------------------------------
 
        }
       });
