@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.geem.R;
 
 
@@ -57,6 +58,7 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,6 +100,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
  ConstraintLayout userProfile;
  TextView userProfileFullName, userProfileEmail;
  Button userProfileSignOut;
+ ImageView proBanner, proPic;
 
  //Related to User ID
  String currentUserID;
@@ -185,6 +188,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   userProfile.setVisibility(View.GONE);
   userProfileFullName.setVisibility(View.GONE);
   userProfileEmail.setVisibility(View.GONE);
+  proBanner.setVisibility(View.GONE);
+  proPic.setVisibility(View.GONE);
 
   userProfileSignOut.setVisibility(View.GONE);
  }
@@ -194,7 +199,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   userProfile.setVisibility(View.VISIBLE);
   userProfileFullName.setVisibility(View.VISIBLE);
   userProfileEmail.setVisibility(View.VISIBLE);
-
+  proBanner.setVisibility(View.VISIBLE);
+  proPic.setVisibility(View.VISIBLE);
   userProfileSignOut.setVisibility(View.VISIBLE);
  }
 
@@ -259,6 +265,9 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   loginProgressBar = view.findViewById(R.id.loginProgressBar);
   registerProgressBar = view.findViewById(R.id.registerProgressBar);
   passwordProgressBar = view.findViewById(R.id.passwordProgressBar);
+
+  proPic= view.findViewById(R.id.profile_picture);
+
 
   //Declare Firebase and FireStore
   mAuth = FirebaseAuth.getInstance();
@@ -395,6 +404,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
       userProfileEmail.setText(snapshot.getString("email"));
       //get profile picture----------------------------------------------------------------------------------------------------
 
+      //proPic.setImageURI(snapshot.getString("profileimg"));
+      //Picasso.get().load(snapshot.getString("profileimg")).into(proPic);
      }
      else
      {
@@ -507,6 +518,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
        {
         userProfileFullName.setText(value.getString("name"));
         userProfileEmail.setText(value.getString("email"));
+        //Picasso.get().load(value.getString("profileimg")).into(proPic);
 
         //get image-------------------------------------------------------------------------------
 
