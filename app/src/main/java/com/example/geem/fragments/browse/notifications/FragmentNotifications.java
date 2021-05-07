@@ -26,86 +26,21 @@ public class FragmentNotifications extends Fragment
  private static final String TAG = "FragmentNotifications";
  private FirebaseFirestore firebaseFirestore;
  private CollectionReference feedsCollectionReference;
- private static final String MESSAGE_COLLECTION_NAME = "messages";
+ public static final String NOTIFICATIONS_COLLECTION_NAME = "notifications";
  
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   View view = inflater.inflate(R.layout.fragment_notifications, container, false);
   
-  
-  firebaseFirestore = FirebaseFirestore.getInstance();
-  feedsCollectionReference = firebaseFirestore.collection(MESSAGE_COLLECTION_NAME);
-  
-  
-  view.findViewById(R.id.button_upload).setOnClickListener(new View.OnClickListener()
+  if(((MainActivity) getActivity()).checkLoggedIn())
   {
-   @Override
-   public void onClick(View view)
-   {
-   
-   }
-  });
   
-  
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  //Recreate this class;
-  
-  
-  view.findViewById(R.id.button_download).setOnClickListener(new View.OnClickListener()
+  }
+  else
   {
-   @Override
-   public void onClick(View view)
-   {
-    feedsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-    {
-     @Override
-     public void onComplete(@NonNull Task<QuerySnapshot> task)
-     {
-      if(task.isSuccessful())
-      {
-       Log.d(TAG, "onComplete: Downloading success ");
-       for(DocumentSnapshot snapshot : task.getResult())
-       {
-        NotificationTemplate template = snapshot.toObject(NotificationTemplate.class);
-        Log.d(TAG, "onComplete: Title ==> " + template.getTitle() + " Content ==> " + template.getContentOfDataTempForCheckingCamleCase());
-       }
-      }
-      else
-      {
-       Log.d(TAG, "onComplete: Downloading failed : " + task.getException());
-      }
-     }
-    });
-   }
-  });
-  
+   ((MainActivity) getActivity()).goToLoginFragment();
+  }
   return view;
  }
 }
-

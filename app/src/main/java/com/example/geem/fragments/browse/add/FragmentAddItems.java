@@ -77,7 +77,7 @@ public class FragmentAddItems extends Fragment
  
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id = "Mi44ruQiwrYjRmxYtQzjf8NaqV52";
+ String userId = "Mi44ruQiwrYjRmxYtQzjf8NaqV52";
  private FirebaseAuth firebaseAuth;
  
  
@@ -87,92 +87,99 @@ public class FragmentAddItems extends Fragment
   //firebaseAuth = FirebaseAuth.getInstance();
   //user_id = firebaseAuth.getCurrentUser().getUid();
   
-  firebaseFireStore = FirebaseFirestore.getInstance();
-  storageRef = FirebaseStorage.getInstance().getReference();
-  
   View view = inflater.inflate(R.layout.fragment_browse_add_item, container, false);
-  imgView = view.findViewById(R.id.imageView);
-  captureImgBtn = view.findViewById(R.id.capture_image);
-  saveBtn = view.findViewById(R.id.save_btn);
-  locationBtn = view.findViewById(R.id.usrLocation);
-  mTitle = view.findViewById(R.id.editTitle);
-  mAddress = view.findViewById(R.id.editAddress);
-  mDescription = view.findViewById(R.id.editDescription);
   
-  spinnerMenu = view.findViewById(R.id.spinner);
-  ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_items, android.R.layout.simple_spinner_item);
-  mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-  spinnerMenu.setAdapter(mAdapter);
-  
-  
-  captureImgBtn.setOnClickListener(new View.OnClickListener()
+  if(((MainActivity) getActivity()).checkLoggedIn())
   {
-   @Override
-   public void onClick(View v)
+   userId = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+   firebaseFireStore = FirebaseFirestore.getInstance();
+   storageRef = FirebaseStorage.getInstance().getReference();
+   
+   imgView = view.findViewById(R.id.imageView);
+   captureImgBtn = view.findViewById(R.id.capture_image);
+   saveBtn = view.findViewById(R.id.save_btn);
+   locationBtn = view.findViewById(R.id.usrLocation);
+   mTitle = view.findViewById(R.id.editTitle);
+   mAddress = view.findViewById(R.id.editAddress);
+   mDescription = view.findViewById(R.id.editDescription);
+   
+   spinnerMenu = view.findViewById(R.id.spinner);
+   ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_items, android.R.layout.simple_spinner_item);
+   mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+   spinnerMenu.setAdapter(mAdapter);
+   
+   
+   captureImgBtn.setOnClickListener(new View.OnClickListener()
    {
-    //ask user for camera permission at runtime
-    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+    @Override
+    public void onClick(View v)
     {
-     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAM_REQUEST_CODE);
-    }
-    else
-    {
-     //launch the implicit intent
-     cameraImplicitIntent();
-    }
-   }
-  });
-  
-  
-  saveBtn.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View v)
-   {
-    // this function uploads to database
-    ConnectivityManager connMan = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-    NetworkInfo netInfo = connMan.getActiveNetworkInfo();
-    
-    //checking for network
-    if(netInfo != null && netInfo.isConnected())
-    {
-     
-     if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && lat != 0 && lng != 0 && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null)
+     //ask user for camera permission at runtime
+     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
      {
-      uploadData();
+      ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAM_REQUEST_CODE);
      }
      else
      {
-      Toast.makeText(getActivity(), "Please complete all the details first", Toast.LENGTH_SHORT).show();
+      //launch the implicit intent
+      cameraImplicitIntent();
      }
-     
     }
-    else
-    {
-     Toast.makeText(getActivity(), "Network Connection is not Available", Toast.LENGTH_SHORT).show();
-    }
-   }
+   });
    
-  });
-  
-  
-  locationBtn.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View v)
+   
+   saveBtn.setOnClickListener(new View.OnClickListener()
    {
-    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+    @Override
+    public void onClick(View v)
     {
-     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+     // this function uploads to database
+     ConnectivityManager connMan = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+     NetworkInfo netInfo = connMan.getActiveNetworkInfo();
+     
+     //checking for network
+     if(netInfo != null && netInfo.isConnected())
+     {
+      
+      if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && lat != 0 && lng != 0 && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null)
+      {
+       uploadData();
+      }
+      else
+      {
+       Toast.makeText(getActivity(), "Please complete all the details first", Toast.LENGTH_SHORT).show();
+      }
+      
+     }
+     else
+     {
+      Toast.makeText(getActivity(), "Network Connection is not Available", Toast.LENGTH_SHORT).show();
+     }
     }
-    else
+    
+   });
+   
+   
+   locationBtn.setOnClickListener(new View.OnClickListener()
+   {
+    @Override
+    public void onClick(View v)
     {
-     getUserLocation();
+     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+     {
+      ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+     }
+     else
+     {
+      getUserLocation();
+     }
     }
-   }
-  });
-  
-  
+   });
+  }
+  else
+  {
+   ((MainActivity) getActivity()).goToLoginFragment();
+  }
   return view;
  }
  
@@ -361,7 +368,7 @@ public class FragmentAddItems extends Fragment
       Boolean isAvailable = true;
       String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
       Map<String, Object> userItems = new HashMap<>();
-      userItems.put("userid", user_id);
+      userItems.put("userid", userId);
       userItems.put("category", spinnerMenu.getSelectedItem().toString());
       userItems.put("title", mTitle.getText().toString());
       userItems.put("description", mDescription.getText().toString());

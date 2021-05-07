@@ -1,6 +1,7 @@
 package com.example.geem.fragments.browse;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.example.geem.activities.MainActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class FragmentBrowseTabs extends Fragment
@@ -51,11 +54,8 @@ public class FragmentBrowseTabs extends Fragment
   }
   else
   {
-   tabLayout.selectTab(tabLayout.getTabAt(0));
+   tabLayout.selectTab(tabLayout.getTabAt(2));
   }
-  
-  ((MainActivity) getActivity()).tabLayoutForBrowseFragments = tabLayout;
-  
   return root;
  }
  

@@ -3,7 +3,7 @@ package com.example.geem.extra;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ShivankUserItems  implements Serializable
+public class ShivankUserItems implements Serializable
 {
  private String address;
  private String category;
@@ -11,7 +11,7 @@ public class ShivankUserItems  implements Serializable
  private String image;
  private Date timestamp;
  private String title;
- private String userId;
+ private String userid;
  private String geohash;
  private boolean isAvailable;
  private double latitude;
@@ -22,18 +22,24 @@ public class ShivankUserItems  implements Serializable
  
  }
  
- public ShivankUserItems(String address, String category, String description, String image, String title, String userId, String geoHash, boolean isAvailable, double latitude, double longitude)
+ public ShivankUserItems(String address, String category, String description, String image, String title, String userid, String geoHash, boolean isAvailable, double latitude, double longitude)
  {
   this.address = address;
   this.category = category;
   this.description = description;
   this.image = image;
   this.title = title;
-  this.userId = userId;
+  this.userid = userid;
   this.geohash = geoHash;
   this.isAvailable = isAvailable;
   this.latitude = latitude;
   this.longitude = longitude;
+ }
+ 
+ @Override
+ public String toString()
+ {
+  return "ShivankUserItems{" + "address='" + address + '\'' + ", category='" + category + '\'' + ", description='" + description + '\'' + ", image='" + image + '\'' + ", timestamp=" + timestamp + ", title='" + title + '\'' + ", userId='" + userid + '\'' + ", geohash='" + geohash + '\'' + ", isAvailable=" + isAvailable + ", latitude=" + latitude + ", longitude=" + longitude + '}';
  }
  
  public String getAddress()
@@ -96,14 +102,14 @@ public class ShivankUserItems  implements Serializable
   this.title = title;
  }
  
- public String getUserId()
+ public String getUserid()
  {
-  return userId;
+  return userid;
  }
  
- public void setUserId(String userId)
+ public void setUserid(String userid)
  {
-  this.userId = userId;
+  this.userid = userid;
  }
  
  public String getGeohash()

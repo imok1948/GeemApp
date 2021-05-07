@@ -25,9 +25,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
+import com.example.geem.activities.MainActivity;
 import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.fragments.browse.feeds.activity.ActivityViewItem;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -43,234 +45,256 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.DecimalFormat;
 
 import static android.content.ContentValues.TAG;
+
+public class FragmentBrowseFeeds extends Fragment
+{
+ //Recycler View Container
+ RecyclerView feedsRecyclerView;
+ ItemsAdapter itemsAdapter;
+ ImageButton searchButton;
+ EditText searchQuery;
+ FirestoreRecyclerOptions<ShivankUserItems> options;
+ LocationManager locationManager;
+ Location currentLocation;
+ public static final int GPS_REQUEST_CODE = 101;
+ public static final int NET_REQUEST_CODE = 102;
+ FirebaseFirestore db;
  
- public class FragmentBrowseFeeds extends Fragment
+ @Override
+ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
-  //Recycler View Container
-  RecyclerView feedsRecyclerView;
-  ItemsAdapter itemsAdapter;
-  ImageButton searchButton;
-  EditText searchQuery;
-  FirestoreRecyclerOptions<ShivankUserItems> options;
-  LocationManager locationManager;
-  Location currentLocation;
-  public static final int GPS_REQUEST_CODE = 101;
-  public static final int NET_REQUEST_CODE = 102;
-  FirebaseFirestore db;
+  View view = inflater.inflate(R.layout.fragment_browse_feeds, container, false);
   
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+  db = FirebaseFirestore.getInstance();
+  currentLocation = new Location("");
+  getUserLocation();
+  db.collection("user_items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
-   View view = inflater.inflate(R.layout.fragment_browse_feeds, container, false);
-   db = FirebaseFirestore.getInstance();
-   currentLocation = new Location("");
-   getUserLocation();
-   db.collection("user_items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+   @Override
+   public void onComplete(@NonNull Task<QuerySnapshot> task)
    {
-    @Override
-    public void onComplete(@NonNull Task<QuerySnapshot> task)
+    if(task.isSuccessful())
     {
-     if(task.isSuccessful())
+     for(QueryDocumentSnapshot document : task.getResult())
      {
-      for(QueryDocumentSnapshot document : task.getResult())
-      {
-       Log.i(TAG, document.getId() + " => " + document.getData());
-      }
-     }
-     else
-     {
-      Log.i(TAG, "Error getting documents.", task.getException());
+      Log.i(TAG, document.getId() + " => " + document.getData());
      }
     }
-   });
-   
-   feedsRecyclerView = view.findViewById(R.id.feeds_recycler_view);
-   feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
-   
-   updateUI(options);
-   //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
-   searchQuery = view.findViewById(R.id.search_text);
-   searchButton = view.findViewById(R.id.search_feeds);
-   searchQuery.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    
+    else
+    {
+     Log.i(TAG, "Error getting documents.", task.getException());
     }
-    
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-     searchFeedsFirebase(searchQuery.getText().toString());
-    }
-    
-    @Override
-    public void afterTextChanged(Editable s) {
-    
-    }
-   });
-   searchButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-     searchFeedsFirebase(searchQuery.getText().toString());
-    }
-   });
-   return view;
-  }
-  public void searchFeedsFirebase(String query){
-   Log.i("Q",query);
-   if(query.equals("")){
-    options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
    }
-   else options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").whereEqualTo("title",query).orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
-   updateUI(options);
-   
-  }
+  });
   
-  public void updateUI(FirestoreRecyclerOptions<ShivankUserItems> options)
-  {
-   //if(itemsAdapter == null){
-   itemsAdapter = new ItemsAdapter(options);
-   feedsRecyclerView.setAdapter(itemsAdapter);
-   itemsAdapter.startListening();
-   Log.i("INFO", "New Adapter Generated");
-   //}
-   
-   //else{
-   //itemsAdapter.notifyDataSetChanged();
-   //Log.i("INFO","Old Adapter Refreshed");
-   //}
-  }
+  feedsRecyclerView = view.findViewById(R.id.feeds_recycler_view);
+  feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+  options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
   
-  @Override
-  public void onResume()
+  updateUI(options);
+  //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
+  searchQuery = view.findViewById(R.id.search_text);
+  searchButton = view.findViewById(R.id.search_feeds);
+  searchQuery.addTextChangedListener(new TextWatcher()
   {
-   super.onResume();
-   updateUI(options);
-  }
-  
-  private class ItemsAdapter extends FirestoreRecyclerAdapter<ShivankUserItems, CardViewHolder>
-  {
-   
-   /**
-    * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-    * FirestoreRecyclerOptions} for configuration options.
-    *
-    * @param options
-    */
-   public ItemsAdapter(@NonNull FirestoreRecyclerOptions<ShivankUserItems> options)
+   @Override
+   public void beforeTextChanged(CharSequence s, int start, int count, int after)
    {
-    super(options);
+    
    }
    
    @Override
-   
-   public void onError(FirebaseFirestoreException e)
+   public void onTextChanged(CharSequence s, int start, int before, int count)
    {
-    //Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+    searchFeedsFirebase(searchQuery.getText().toString());
    }
    
-   @NonNull
    @Override
-   public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+   public void afterTextChanged(Editable s)
    {
-    LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-    return new CardViewHolder(layoutInflater, parent);
-   }
-   
-   
-   @Override
-   protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull ShivankUserItems model)
-   {
-    holder.thisItem = model;
-    holder.itemTitle.setText(model.getTitle());
-    Glide.with(holder.itemImage.getContext()).load(model.getImage()).into(holder.itemImage);
-    double itemLatitude = model.getLatitude();
-    double itemLongitude = model.getLongitude();
-    Location itemLocation = new Location("");
-    itemLocation.setLatitude(itemLatitude);
-    itemLocation.setLongitude(itemLongitude);
-    float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-    holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " km");
     
    }
-   
-  }
-  
-  //View Holder Class
-  private class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+  });
+  searchButton.setOnClickListener(new View.OnClickListener()
   {
-   TextView itemTitle, distance;
-   ImageView itemImage;
-   ShivankUserItems thisItem;
-   
-   public CardViewHolder(LayoutInflater inflater, ViewGroup parent)
-   {
-    super(inflater.inflate(R.layout.card_view_item, parent, false));
-    itemView.setOnClickListener(this);
-    itemTitle = itemView.findViewById(R.id.item_title);
-    itemImage = itemView.findViewById(R.id.item_image);
-    distance = itemView.findViewById(R.id.distance);
-   }
-   
-   
    @Override
    public void onClick(View v)
    {
-    Intent intent = new Intent(getActivity(), ActivityViewItem.class);
-    intent.putExtra("item_details", thisItem);
-    startActivity(intent);
-    
+    searchFeedsFirebase(searchQuery.getText().toString());
    }
-   
-  }
+  });
   
-  private void getUserLocation()
+  return view;
+ }
+ 
+ public void searchFeedsFirebase(String query)
+ {
+  Log.i("Q", query);
+  if(query.equals(""))
   {
-   locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-   
-   
-   if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-   {
-    
-    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
-   }
-   locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
-   
-   if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-   {
-    
-    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
-   }
-   locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-   
+   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
   }
-  
-  private final LocationListener mLocationListener = new LocationListener()
+  else
   {
-   
-   @Override
-   public void onLocationChanged(@NonNull Location location)
-   {
-    currentLocation = location;
-   }
-   
-   @Override
-   public void onStatusChanged(String provider, int status, Bundle extras)
-   {
-   }
-   
-   @Override
-   public void onProviderEnabled(@NonNull String provider)
-   {
-   
-   }
-   
-   @Override
-   public void onProviderDisabled(@NonNull String provider)
-   {
-   
-   }
-  };
-  
+   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").whereEqualTo("title", query).orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
+  }
+  updateUI(options);
   
  }
+ 
+ public void updateUI(FirestoreRecyclerOptions<ShivankUserItems> options)
+ {
+  //if(itemsAdapter == null){
+  itemsAdapter = new ItemsAdapter(options);
+  feedsRecyclerView.setAdapter(itemsAdapter);
+  itemsAdapter.startListening();
+  Log.i("INFO", "New Adapter Generated");
+  //}
+  
+  //else{
+  //itemsAdapter.notifyDataSetChanged();
+  //Log.i("INFO","Old Adapter Refreshed");
+  //}
+ }
+ 
+ @Override
+ public void onResume()
+ {
+  super.onResume();
+  updateUI(options);
+ }
+ 
+ private class ItemsAdapter extends FirestoreRecyclerAdapter<ShivankUserItems, CardViewHolder>
+ {
+  
+  /**
+   * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
+   * FirestoreRecyclerOptions} for configuration options.
+   *
+   * @param options
+   */
+  public ItemsAdapter(@NonNull FirestoreRecyclerOptions<ShivankUserItems> options)
+  {
+   super(options);
+  }
+  
+  @Override
+  
+  public void onError(FirebaseFirestoreException e)
+  {
+   //Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+  }
+  
+  @NonNull
+  @Override
+  public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+  {
+   LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+   return new CardViewHolder(layoutInflater, parent);
+  }
+  
+  
+  @Override
+  protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull ShivankUserItems model)
+  {
+   holder.thisItem = model;
+   holder.itemTitle.setText(model.getTitle());
+   Glide.with(holder.itemImage.getContext()).load(model.getImage()).into(holder.itemImage);
+   double itemLatitude = model.getLatitude();
+   double itemLongitude = model.getLongitude();
+   Location itemLocation = new Location("");
+   itemLocation.setLatitude(itemLatitude);
+   itemLocation.setLongitude(itemLongitude);
+   float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
+   holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " km");
+   
+   
+   holder.itemView.setOnClickListener(new View.OnClickListener()
+   {
+    @Override
+    public void onClick(View view)
+    {
+     boolean loggedIn = true;
+     if(loggedIn)
+     {
+      Intent intent = new Intent(getActivity(), ActivityViewItem.class);
+      intent.putExtra("itemId", getSnapshots().getSnapshot(position).getId());
+      intent.putExtra("item_details", holder.thisItem);
+      startActivity(intent);
+     }
+     else
+     {
+     
+     }
+    }
+   });
+  }
+  
+ }
+ 
+ //View Holder Class
+ private class CardViewHolder extends RecyclerView.ViewHolder
+ {
+  TextView itemTitle, distance;
+  ImageView itemImage;
+  ShivankUserItems thisItem;
+  
+  public CardViewHolder(LayoutInflater inflater, ViewGroup parent)
+  {
+   super(inflater.inflate(R.layout.card_view_item, parent, false));
+   itemTitle = itemView.findViewById(R.id.item_title);
+   itemImage = itemView.findViewById(R.id.item_image);
+   distance = itemView.findViewById(R.id.distance);
+  }
+ }
+ 
+ private void getUserLocation()
+ {
+  locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+  
+  
+  if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+  {
+   
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
+  }
+  locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+  
+  if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+  {
+   
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+  }
+  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+  
+ }
+ 
+ private final LocationListener mLocationListener = new LocationListener()
+ {
+  
+  @Override
+  public void onLocationChanged(@NonNull Location location)
+  {
+   currentLocation = location;
+  }
+  
+  @Override
+  public void onStatusChanged(String provider, int status, Bundle extras)
+  {
+  }
+  
+  @Override
+  public void onProviderEnabled(@NonNull String provider)
+  {
+   
+  }
+  
+  @Override
+  public void onProviderDisabled(@NonNull String provider)
+  {
+   
+  }
+ };
+ 
+ 
+}

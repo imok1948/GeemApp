@@ -3,6 +3,7 @@ package com.example.geem.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.geem.R;
 import com.google.android.material.navigation.NavigationView;
@@ -49,15 +50,23 @@ public class MainActivity extends AppCompatActivity
   NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
   NavigationUI.setupWithNavController(navigationView, navController);
   
-  
- /* if(FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null)
-  {
-   navController.navigate(R.id.nav_requester);
-  }
-  else
-  {
-   navController.navigate(R.id.nav_profile);
-  }*/
+ }
+ 
+ public boolean checkLoggedIn()
+ {
+  return FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null;
+ }
+ 
+ 
+ public void goToHomeFragment()
+ {
+  navController.navigate(R.id.nav_browse_items);
+ }
+ 
+ public void goToLoginFragment()
+ {
+  Toast.makeText(getApplicationContext(), "Please log in first", Toast.LENGTH_SHORT).show();
+  navController.navigate(R.id.nav_profile);
  }
  
  @Override
