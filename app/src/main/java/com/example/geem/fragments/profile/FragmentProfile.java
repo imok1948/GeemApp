@@ -367,6 +367,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
       userProfileFullName.setText(snapshot.getString("name"));
       userProfileEmail.setText(snapshot.getString("email"));
+      //get profile picture
 
      }
      else
@@ -541,6 +542,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
      currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
      //currentUserID = mAuth.getCurrentUser().getUid();
      //DocumentReference documentReference = db.collection("profile1").document(currentUserID);
+
+     //here insert profile pic
      insertData();
      registerProgressBar.setVisibility(View.GONE);
      loginFragment.setVisibility(View.VISIBLE);
@@ -608,6 +611,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   Map<String, String> items = new HashMap<>();
   items.put("name", registerFullName.getText().toString().trim());
   items.put("email", registerEmail.getText().toString().trim());
+
+  //save profile picture here ------------------------------------------------------------------------------
 
   db.collection("profile1").document(currentUserID).set(items).addOnSuccessListener(new OnSuccessListener<Void>()
   {
