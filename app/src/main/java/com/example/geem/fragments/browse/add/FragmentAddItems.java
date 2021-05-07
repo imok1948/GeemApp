@@ -77,15 +77,15 @@ public class FragmentAddItems extends Fragment
  
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String user_id = "Mi44ruQiwrYjRmxYtQzjf8NaqV52";
+ String user_id ;
  private FirebaseAuth firebaseAuth;
  
  
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
-  //firebaseAuth = FirebaseAuth.getInstance();
-  //user_id = firebaseAuth.getCurrentUser().getUid();
+  firebaseAuth = FirebaseAuth.getInstance();
+  user_id = firebaseAuth.getCurrentUser().getUid();
   
   firebaseFireStore = FirebaseFirestore.getInstance();
   storageRef = FirebaseStorage.getInstance().getReference();

@@ -709,7 +709,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
          Toast.makeText(getActivity(), "Failed to register! Try again!", Toast.LENGTH_LONG).show();
          registerProgressBar.setVisibility(View.GONE);
-         
+
         }
        }
       });
