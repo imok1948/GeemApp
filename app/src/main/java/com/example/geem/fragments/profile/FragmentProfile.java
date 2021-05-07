@@ -84,7 +84,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
  //Related to UserProfile section
  ConstraintLayout userProfile;
- TextView userProfileFullName, userProfileEmail, userProfileBirthYear;
+ TextView userProfileFullName, userProfileEmail;
  Button userProfileSignOut;
 
  //Related to User ID
@@ -171,7 +171,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   userProfile.setVisibility(View.GONE);
   userProfileFullName.setVisibility(View.GONE);
   userProfileEmail.setVisibility(View.GONE);
-  userProfileBirthYear.setVisibility(View.GONE);
+
   userProfileSignOut.setVisibility(View.GONE);
  }
 
@@ -180,7 +180,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
   userProfile.setVisibility(View.VISIBLE);
   userProfileFullName.setVisibility(View.VISIBLE);
   userProfileEmail.setVisibility(View.VISIBLE);
-  userProfileBirthYear.setVisibility(View.VISIBLE);
+
   userProfileSignOut.setVisibility(View.VISIBLE);
  }
 
@@ -218,7 +218,6 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
   userProfileFullName = view.findViewById(R.id.userProfileFullName);
   userProfileEmail = view.findViewById(R.id.userProfileEmail);
-  userProfileBirthYear = view.findViewById(R.id.userProfileBirthYear);
 
 
   //Declare EditText
@@ -368,7 +367,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
 
       userProfileFullName.setText(snapshot.getString("name"));
       userProfileEmail.setText(snapshot.getString("email"));
-      userProfileBirthYear.setText(snapshot.getString("birthYear"));
+
      }
      else
      {
@@ -461,7 +460,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener
        {
         userProfileFullName.setText(value.getString("name"));
         userProfileEmail.setText(value.getString("email"));
-        userProfileBirthYear.setText(value.getString("birthYear"));
+
        }
       });
       //Data Retrieval Completed

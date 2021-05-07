@@ -44,8 +44,9 @@
             android:layout_marginTop="32dp"
             android:ems="10"
             android:hint="Email Address"
+            android:fontFamily="serif"
             android:inputType="textEmailAddress"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +89,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginPassword">
+            app:layout_constraintTop_toBottomOf="@+id/loginForgotPassword">
 
         </Button>
 
@@ -96,14 +97,16 @@
             android:id="@+id/loginForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="8dp"
             android:text="Forgot Password?"
-            android:textSize="16sp"
+            android:textColor="@color/orange_800"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:typeface="serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.876"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword">
 
         </TextView>
 
@@ -111,15 +114,31 @@
             android:id="@+id/loginRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginRight="80dp"
-            android:text="Register"
-            android:textSize="16sp"
+            android:layout_marginTop="36dp"
+            android:text="Sign Up"
+            android:textColor="@color/orange_800"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:typeface="serif"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginSignIn">
-        </TextView>
+            app:layout_constraintHorizontal_bias="0.638"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginSignIn"></TextView>
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="New User? "
+
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.345"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginSignIn"></TextView>
 
         <ProgressBar
             android:id="@+id/loginProgressBar"
@@ -470,27 +489,7 @@
 
           </TextView>
 
-          <TextView
-              android:id="@+id/userProfileBirthYearText"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Birth Year"
-              android:textSize="13sp"
-              android:layout_marginTop="10dp"
-              android:gravity="center">
 
-          </TextView>
-
-          <TextView
-              android:id="@+id/userProfileBirthYear"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text=""
-              android:textSize="20sp"
-              android:textColor="@color/purple_700"
-              android:gravity="center">
-
-          </TextView>
 
 
 
@@ -498,11 +497,12 @@
               android:id="@+id/userProfileSignOut"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="7dp"
+              android:background="@drawable/grad"
+              android:layout_marginTop="10dp"
               android:backgroundTint="#0ED6B9"
               android:text="Signout"
               android:textColor="#ffffff"
-              android:textSize="10sp"
+              android:textSize="15sp"
               android:textStyle="bold"
               android:layout_marginLeft="20dp"
               android:layout_marginRight="20dp">
