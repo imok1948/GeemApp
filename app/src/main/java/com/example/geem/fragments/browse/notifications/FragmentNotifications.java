@@ -49,7 +49,6 @@ public class FragmentNotifications extends Fragment
     {
      feedsCollectionReference = FirebaseFirestore.getInstance().collection(DUMMY_PROFILE_COLLECTION_NAME);
      
-     
      String[] documentIds = new String[]{
       "Eaw3iPx39HUyNp1DlCsU7NLcUuL2",
       "Mi44ruQiwrYjRmxYtQzjf8NaqV52",

@@ -63,15 +63,18 @@ public class ActivityViewItem extends AppCompatActivity
  Location itemLocation = new Location("");
  
  
- 
  private CircularImageView profilePicture;
  
  private String otherId = "";
  private String myId = "";
+ private String itemId = "";
  
  //For request and msg things...
  ImageView message;
  ImageView request;
+ 
+ //Firebase
+ private static final String FEEDS_COLLECTION_NAME = "fetch_items_final";
  
  @Override
  protected void onCreate(Bundle savedInstanceState)
@@ -80,40 +83,52 @@ public class ActivityViewItem extends AppCompatActivity
   
   try
   {
-   otherId = getIntent().getStringExtra(Variables.USER_ID);
+   otherId = getIntent().getStringExtra(Variables.OWNER_ID);
    Log.d(TAG, "onCreate: User ID : " + otherId);
    myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+   itemId = getIntent().getStringExtra(Variables.ITEM_ID);
+   Log.d(TAG, "onCreate: Item id ==> " + itemId);
   }
   catch(Exception e)
   {
    e.printStackTrace();
    Log.d(TAG, "onCreate: Unable to get user id" + otherId);
   }
+  
   setContentView(R.layout.activity_view_item);
+  fetchItemContentsFromFirebase();
   
   
-  item = (ShivankUserItems) getIntent().getSerializableExtra("item_details");
-  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-  setSupportActionBar(toolbar);
-  CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-  toolBarLayout.setTitle(getTitle());
-  getUserLocation();
-  init();
-  
-  setClickListeners();
-  
-  appBar = findViewById(R.id.app_bar);
-  detailsTile = findViewById(R.id.details_tile);
-  title = detailsTile.findViewById(R.id.item_name);
-  category = detailsTile.findViewById(R.id.item_category);
-  proximity = detailsTile.findViewById(R.id.item_proximity);
-  description = detailsTile.findViewById(R.id.item_description);
-  user = detailsTile.findViewById(R.id.item_owner);
-  
+ }
+ 
+ 
+ private void fetchItemContentsFromFirebase()
+ {
+  FirebaseFirestore.getInstance().collection(FEEDS_COLLECTION_NAME).document(itemId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     item = task.getResult().toObject(ShivankUserItems.class);
+     Log.d(TAG, "onComplete: Items ==> " + item);
+     
+     init();
+     getUserLocation();
+     setNames();
+     setClickListeners();
+     setUserNamesAndProfilePicture();
+    }
+   }
+  });
+ }
+ 
+ private void setNames()
+ {
   title.setText(item.getTitle());
   category.setText(item.getCategory());
   description.setText(item.getDescription());
-  
   
   Glide.with(this).asBitmap().load(item.getImage()).into(new CustomTarget<Bitmap>()
   {
@@ -129,17 +144,6 @@ public class ActivityViewItem extends AppCompatActivity
    }
   });
   
-  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-  fab.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-   }
-  });
- 
-  setUserNamesAndProfilePicture();
  }
  
  
@@ -184,13 +188,44 @@ public class ActivityViewItem extends AppCompatActivity
     startActivity(intent);
    }
   });
+  
+  
+  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+  fab.setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+   }
+  });
  }
  
  private void init()
  {
+  
+  
+  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+  setSupportActionBar(toolbar);
+  
+  CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+  toolBarLayout.setTitle(getTitle());
+  
+  
   request = findViewById(R.id.request);
   message = findViewById(R.id.message);
   profilePicture = findViewById(R.id.owner_picture);
+  
+  
+  appBar = findViewById(R.id.app_bar);
+  detailsTile = findViewById(R.id.details_tile);
+  title = detailsTile.findViewById(R.id.item_name);
+  category = detailsTile.findViewById(R.id.item_category);
+  proximity = detailsTile.findViewById(R.id.item_proximity);
+  description = detailsTile.findViewById(R.id.item_description);
+  user = detailsTile.findViewById(R.id.item_owner);
+  
+  
  }
  
  
@@ -198,19 +233,20 @@ public class ActivityViewItem extends AppCompatActivity
  protected void onResume()
  {
   super.onResume();
-  double itemLatitude = item.getLatitude();
-  double itemLongitude = item.getLongitude();
-  itemLocation.setLatitude(itemLatitude);
-  itemLocation.setLongitude(itemLongitude);
-  float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-  proximity.setText("Loading...");
+  
+  
+  //  double itemLatitude = item.getLatitude();
+  //  double itemLongitude = item.getLongitude();
+  //  itemLocation.setLatitude(itemLatitude);
+  //  itemLocation.setLongitude(itemLongitude);
+  //  float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
+  //  proximity.setText("Loading...");
  }
+ 
  
  private void getUserLocation()
  {
   locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-  
-  
   if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
   {
    
@@ -224,7 +260,6 @@ public class ActivityViewItem extends AppCompatActivity
    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
   locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-  
  }
  
  private final LocationListener mLocationListener = new LocationListener()
@@ -235,8 +270,7 @@ public class ActivityViewItem extends AppCompatActivity
   {
    currentLocation = location;
    float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-   proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
-   
+   //proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
   }
   
   @Override

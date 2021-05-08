@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,10 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
@@ -72,9 +69,7 @@ public class FragmentBrowseFeeds extends Fragment
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
-  
   View view = inflater.inflate(R.layout.fragment_browse_feeds, container, false);
-  
   try
   {
    myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -84,6 +79,8 @@ public class FragmentBrowseFeeds extends Fragment
    Log.d(TAG, "onCreateView: Error geting user name");
    e.printStackTrace();
   }
+  
+  
   db = FirebaseFirestore.getInstance();
   currentLocation = new Location("");
   getUserLocation();
@@ -105,6 +102,9 @@ public class FragmentBrowseFeeds extends Fragment
     }
    }
   });
+  
+  
+  
   feedsDrawer = view.findViewById(R.id.feeds_drawer);
   feedsRecyclerView = view.findViewById(R.id.feeds_recycler_view);
   feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -170,14 +170,13 @@ public class FragmentBrowseFeeds extends Fragment
   Log.i("Q", query);
   if(query.equals(""))
   {
-   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").whereNotEqualTo("userid", myId).orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
+   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).whereNotEqualTo("userid", myId).limit(50), ShivankUserItems.class).build();
   }
   else
   {
-   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").whereNotEqualTo("userid", myId).whereEqualTo("title", query).orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
+   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").whereEqualTo("title", query).orderBy("timestamp", Query.Direction.DESCENDING).whereNotEqualTo("userid", myId).limit(50), ShivankUserItems.class).build();
   }
   updateUI(options);
-  
  }
  
  public void updateUI(FirestoreRecyclerOptions<ShivankUserItems> options)
@@ -205,12 +204,6 @@ public class FragmentBrowseFeeds extends Fragment
  private class ItemsAdapter extends FirestoreRecyclerAdapter<ShivankUserItems, CardViewHolder>
  {
   
-  /**
-   * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-   * FirestoreRecyclerOptions} for configuration options.
-   *
-   * @param options
-   */
   public ItemsAdapter(@NonNull FirestoreRecyclerOptions<ShivankUserItems> options)
   {
    super(options);
@@ -257,7 +250,7 @@ public class FragmentBrowseFeeds extends Fragment
      Intent intent = new Intent(getContext(), ActivityViewItem.class);
      
      intent.putExtra("item_details", holder.thisItem);
-     intent.putExtra(Variables.USER_ID, getSnapshots().get(position).getUserid());
+     intent.putExtra(Variables.OWNER_ID, getSnapshots().get(position).getUserid());
      startActivity(intent);
     }
    });

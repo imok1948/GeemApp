@@ -21,5 +21,5 @@ public class Variables
  public static final String ITEM_ID = "ITEM_ID";
  public static final String OTHER_ID = "OTHER_ID";
  
- public static final String USER_ID = "USER_ID";
+ public static final String OWNER_ID = "OWNER_ID";
 }

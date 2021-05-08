@@ -148,5 +148,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
   <string name="title_activity_scrolling">View Item</string>
-    <string name="title_activity_example__navebar">Example_Navebar</string>
+  <string name="title_activity_example__navebar">Example_Navebar</string>
 </resources>
