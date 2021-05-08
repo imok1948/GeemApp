@@ -159,7 +159,7 @@ public class MessageActivity extends AppCompatActivity
        boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
        boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
        
-       if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
+       if((fromMySide || toMySide))
        {
         MessageTemplateForAdapter messageTemplateForAdapter = new MessageTemplateForAdapter(messageTemplatesForAdapterList.size(), template.getMyId().equals(MY_ID), template.getContent(), new TimeDetails(template.getTimestamp()));
         lastTimestamp = template.getTimestamp();
@@ -190,6 +190,38 @@ public class MessageActivity extends AppCompatActivity
       //When all messages loaded then only listen for new messages
       //When all messages loaded then only listen for new messages
       
+      
+      messageCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>()
+      {
+       @Override
+       public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+       {
+        if(error != null)
+        {
+         Log.d(TAG, "onEvent: Error occured : " + error);
+        }
+        else
+        {
+         Log.d(TAG, "onEvent: Snapshotlistner called");
+         for(DocumentChange documentChange : value.getDocumentChanges())
+         {
+          MessageTemplate template = documentChange.getDocument().toObject(MessageTemplate.class);
+     
+          boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
+          boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
+     
+          if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
+          {
+           lastTimestamp = template.getTimestamp();
+           Log.d(TAG, "onEvent: Receieved msg : " + template);
+           adapterMessages.insertItem(new MessageTemplateForAdapter(recyclerItemCounts - 1, template.getMyId().equals(MY_ID), template.getContent(), new TimeDetails(template.getTimestamp())));
+           recyclerItemCounts++;
+           recyclerView.scrollToPosition(adapterMessages.getMessagesSize() - 1);
+          }
+         }
+        }
+       }
+      });
      }
      else
      {
@@ -234,38 +266,6 @@ public class MessageActivity extends AppCompatActivity
        else
        {
         Log.d(TAG, "onComplete: Sending message failed ==> " + messageTemplate + task.getException());
-       }
-      }
-     });
-     
-     
-     messageCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>()
-     {
-      @Override
-      public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-      {
-       if(error != null)
-       {
-        Log.d(TAG, "onEvent: Error occured : " + error);
-       }
-       else
-       {
-        Log.d(TAG, "onEvent: Snapshotlistner called");
-        for(DocumentChange documentChange : value.getDocumentChanges())
-        {
-         MessageTemplate template = documentChange.getDocument().toObject(MessageTemplate.class);
-         
-         boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
-         boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
-         
-         if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
-         {
-          lastTimestamp = template.getTimestamp();
-          Log.d(TAG, "onEvent: Receieved msg : " + template);
-          adapterMessages.insertItem(new MessageTemplateForAdapter(recyclerItemCounts, template.getMyId().equals(MY_ID), template.getContent(), new TimeDetails(template.getTimestamp())));
-          recyclerItemCounts++;
-         }
-        }
        }
       }
      });

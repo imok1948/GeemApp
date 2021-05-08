@@ -31,8 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import io.grpc.InternalChannelz;
-
 public class FragmentBrowseMessages extends Fragment
 {
  
@@ -84,7 +82,7 @@ public class FragmentBrowseMessages extends Fragment
  private void initFirebase()
  {
   
-  messagesCollectionReference.orderBy(VariablesForFirebase.TIMESTAMP, Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  messagesCollectionReference.orderBy(VariablesForFirebase.TIMESTAMP, Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
    @Override
    public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -128,27 +126,37 @@ public class FragmentBrowseMessages extends Fragment
  
  private void getProfileDetailsAndAddToAdapter(MessageTemplate template)
  {
-  FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION_NAME).document(template.getOtherId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  String otherId = "";
+  if(template.getMyId().equals(MY_ID))
+  {
+   otherId = template.getOtherId();
+  }
+  else
+  {
+   otherId = template.getMyId();
+  }
+  
+  FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION_NAME).document(otherId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
   {
    @Override
    public void onComplete(@NonNull Task<DocumentSnapshot> task)
    {
-    
     //This thing can be replaced with better one, but due to lack of time and it's time for dinner, I am leaving with only this version :|
+    String otherId = "";
     if(template.getMyId().equals(MY_ID))
     {
-     OTHER_ID = template.getOtherId();
+     otherId = template.getOtherId();
     }
     else
     {
-     OTHER_ID = template.getMyId();
+     otherId = template.getMyId();
     }
     DummyTemplate profileTemplate = task.getResult().toObject(DummyTemplate.class);
-    adapterListChatPeople.addItem(new ChatPeople(profileTemplate.getProfilePictureUrl(), profileTemplate.getName(), template.getContent(), new TimeDetails(template.getTimestamp()), OTHER_ID));
+    adapterListChatPeople.addItem(new ChatPeople(profileTemplate.getProfilePictureUrl(), profileTemplate.getName(), template.getContent(), new TimeDetails(template.getTimestamp()), otherId));
    }
   });
+  
  }
- 
  
  private void initializeComponents()
  {
