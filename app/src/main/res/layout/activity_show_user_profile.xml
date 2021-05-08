@@ -12,15 +12,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      android:background="@android:color/white"
-      app:contentInsetStartWithNavigation="0dp"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-      app:theme="@style/Toolbar.Light" />
-
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
@@ -63,6 +54,7 @@
           android:orientation="horizontal">
 
           <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rahul Meena"
@@ -74,15 +66,26 @@
         </LinearLayout>
 
         <TextView
+          android:id="@+id/joining_date"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Designer"
+          android:text="Jained on 10 Feb 2020"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/grey_20" />
+
+
+        <TextView
+          android:id="@+id/city"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Bhopal"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/grey_20" />
 
       </LinearLayout>
 
     </LinearLayout>
+
 
     <View
       android:layout_width="match_parent"
@@ -91,6 +94,73 @@
       android:layout_marginBottom="@dimen/spacing_large"
       android:background="@color/grey_5" />
 
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Given"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:fontFamily="sans-serif-medium" />
+
+
+      <View
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <TextView
+        android:id="@+id/total_item_given"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="254"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/grey_20" />
+
+    </LinearLayout>
+
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginTop="@dimen/spacing_small"
+      android:layout_marginBottom="@dimen/spacing_small"
+      android:background="@color/grey_5" />
+
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Taken"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:fontFamily="sans-serif-medium" />
+
+
+      <View
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <TextView
+        android:id="@+id/total_item_taken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="14"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/grey_20" />
+
+    </LinearLayout>
 
     <View
       android:layout_width="match_parent"
@@ -129,9 +199,18 @@
           android:background="@color/grey_60" />
 
         <TextView
+          android:id="@+id/average_rating"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="4.5/5"
+          android:text="4.5"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/grey_80"
+          android:textStyle="bold" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="/5"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/grey_80"
           android:textStyle="bold" />
@@ -163,6 +242,7 @@
           app:tint="@color/purple_900" />
 
         <ProgressBar
+          android:id="@+id/one_star_rating"
           style="@style/Widget.AppCompat.ProgressBar.Horizontal"
           android:layout_width="0dp"
           android:layout_height="@dimen/spacing_middle"
@@ -172,10 +252,10 @@
           android:layout_weight="1"
           android:indeterminate="false"
           android:max="100"
-          android:progress="80"
-          android:progressDrawable="@drawable/rating_scale" />
+          android:progress="80" />
 
         <TextView
+          android:id="@+id/one_star_count"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="0.1"
@@ -210,6 +290,7 @@
           app:tint="@color/purple_900" />
 
         <ProgressBar
+          android:id="@+id/two_star_rating"
           style="@style/Widget.AppCompat.ProgressBar.Horizontal"
           android:layout_width="0dp"
           android:layout_height="@dimen/spacing_middle"
@@ -219,10 +300,10 @@
           android:layout_weight="1"
           android:indeterminate="false"
           android:max="100"
-          android:progress="80"
-          android:progressDrawable="@drawable/rating_scale" />
+          android:progress="80" />
 
         <TextView
+          android:id="@+id/two_star_count"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="0.1"
@@ -257,6 +338,7 @@
           app:tint="@color/purple_900" />
 
         <ProgressBar
+          android:id="@+id/three_star_rating"
           style="@style/Widget.AppCompat.ProgressBar.Horizontal"
           android:layout_width="0dp"
           android:layout_height="@dimen/spacing_middle"
@@ -266,10 +348,10 @@
           android:layout_weight="1"
           android:indeterminate="false"
           android:max="100"
-          android:progress="80"
-          android:progressDrawable="@drawable/rating_scale" />
+          android:progress="80" />
 
         <TextView
+          android:id="@+id/three_star_count"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="0.1"
@@ -304,6 +386,7 @@
           app:tint="@color/purple_900" />
 
         <ProgressBar
+          android:id="@+id/four_star_rating"
           style="@style/Widget.AppCompat.ProgressBar.Horizontal"
           android:layout_width="0dp"
           android:layout_height="@dimen/spacing_middle"
@@ -313,10 +396,10 @@
           android:layout_weight="1"
           android:indeterminate="false"
           android:max="100"
-          android:progress="80"
-          android:progressDrawable="@drawable/rating_scale" />
+          android:progress="80" />
 
         <TextView
+          android:id="@+id/four_star_count"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="0.1"
@@ -351,6 +434,7 @@
           app:tint="@color/purple_900" />
 
         <ProgressBar
+          android:id="@+id/five_star_rating"
           style="@style/Widget.AppCompat.ProgressBar.Horizontal"
           android:layout_width="0dp"
           android:layout_height="@dimen/spacing_middle"
@@ -360,10 +444,10 @@
           android:layout_weight="1"
           android:indeterminate="false"
           android:max="100"
-          android:progress="80"
-          android:progressDrawable="@drawable/rating_scale" />
+          android:progress="80" />
 
         <TextView
+          android:id="@+id/five_star_count"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="0.1"

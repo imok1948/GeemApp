@@ -21,10 +21,11 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.GEEM">
 
-    <activity android:name=".activities.ActivityShowUserProfile" />
-    <activity android:name=".Onboarding" />
-    <activity android:name=".Splash">
+    <activity android:name=".activities.ActivityShowUserProfile">
+
     </activity>
+    <activity android:name=".Onboarding" />
+    <activity android:name=".Splash"></activity>
 
     <activity
       android:name=".fragments.browse.feeds.activity.ActivityViewItem"
@@ -40,11 +41,11 @@
       android:label="@string/title_activity_navigation_drawer_temp"
       android:theme="@style/Theme.GEEM.NoActionBar">
 
-
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
     </activity>
 
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />

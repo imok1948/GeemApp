@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
+import com.example.geem.activities.ActivityShowUserProfile;
 import com.example.geem.extra.TimeDetails;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.ChatPeople;
@@ -206,10 +208,10 @@ public class MessageActivity extends AppCompatActivity
          for(DocumentChange documentChange : value.getDocumentChanges())
          {
           MessageTemplate template = documentChange.getDocument().toObject(MessageTemplate.class);
-     
+          
           boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
           boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
-     
+          
           if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
           {
            lastTimestamp = template.getTimestamp();
@@ -286,6 +288,17 @@ public class MessageActivity extends AppCompatActivity
    public void onClick(View view)
    {
     finish();
+   }
+  });
+  
+  findViewById(R.id.name).setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    Intent intent = new Intent(getApplicationContext(), ActivityShowUserProfile.class);
+    intent.putExtra(Variables.OTHER_ID, OTHER_ID);
+    startActivity(intent);
    }
   });
  }
