@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.geem.activities.MainActivity;
 import com.example.geem.fragments.browse.add.FragmentAddItems;
 import com.example.geem.fragments.browse.feeds.FragmentBrowseFeeds;
-import com.example.geem.fragments.browse.feeds.FragmentBrowseFeeds2;
 import com.example.geem.fragments.browse.history.FragmentBrowseHistory;
 import com.example.geem.fragments.browse.messages.FragmentBrowseMessages;
 import com.example.geem.fragments.browse.notifications.FragmentNotifications;
@@ -38,7 +36,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
     fragment = new FragmentNotifications();
     break;
    case 2:
-    fragment = new FragmentBrowseFeeds2();
+    fragment = new FragmentBrowseFeeds();
     break;
    case 3:
     fragment = new FragmentAddItems();
@@ -47,7 +45,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
     fragment = new FragmentBrowseHistory();
     break;
    default:
-    fragment = new FragmentBrowseFeeds2();
+    fragment = new FragmentBrowseFeeds();
     break;
   }
   return fragment;
