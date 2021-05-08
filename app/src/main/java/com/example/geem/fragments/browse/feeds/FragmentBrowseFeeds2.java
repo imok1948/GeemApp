@@ -1,6 +1,7 @@
 package com.example.geem.fragments.browse.feeds;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -50,11 +51,18 @@ public class FragmentBrowseFeeds2 extends Fragment
  public static final int NET_REQUEST_CODE = 102;
  
  
+ //
+ ProgressDialog dialog;
+ 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   view = inflater.inflate(R.layout.fragment_browse_feeds, container, false);
   
+  
+  dialog = new ProgressDialog(getContext());
+  dialog.setMessage("Loading...");
+  dialog.show();
   
   boolean loggedIn = true;
   if(loggedIn)
@@ -66,6 +74,7 @@ public class FragmentBrowseFeeds2 extends Fragment
   else
   {
    //Not logged in
+   dialog.cancel();
   }
   return view;
  }
@@ -77,6 +86,7 @@ public class FragmentBrowseFeeds2 extends Fragment
    @Override
    public void onComplete(@NonNull Task<QuerySnapshot> task)
    {
+    dialog.cancel();
     if(task.isSuccessful())
     {
      
