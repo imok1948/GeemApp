@@ -1,6 +1,7 @@
 package com.example.geem.fragments.browse.messages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
+import com.example.geem.extra.Variables;
+import com.example.geem.fragments.browse.messages.activity.MessageActivity;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
@@ -64,6 +67,10 @@ public class AdapterListChatPeople extends RecyclerView.Adapter<AdapterListChatP
    public void onClick(View view)
    {
     Log.d(TAG, "onClick: position ==> " + position);
+    Log.d(TAG, "onClick: Opening thread with " + people.getName());
+    Intent intent = new Intent(context, MessageActivity.class);
+    intent.putExtra(Variables.OTHER_ID, people.getUserId());
+    context.startActivity(intent);
    }
   });
  }

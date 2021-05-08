@@ -32,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -159,6 +160,7 @@ public class ActivityViewItem extends AppCompatActivity
     
     Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
     intent.putExtra(Variables.OTHER_ID, item.getUserid());
+    Toast.makeText(getApplicationContext(), "Messages for " + item.getUserid(), Toast.LENGTH_SHORT).show();
     startActivity(intent);
    }
   });

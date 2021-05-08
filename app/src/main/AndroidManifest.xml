@@ -24,10 +24,6 @@
     <activity android:name=".activities.ActivityShowUserProfile" />
     <activity android:name=".Onboarding" />
     <activity android:name=".Splash">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
     </activity>
 
     <activity
@@ -44,6 +40,11 @@
       android:label="@string/title_activity_navigation_drawer_temp"
       android:theme="@style/Theme.GEEM.NoActionBar">
 
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
     </activity>
 
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />

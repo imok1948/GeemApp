@@ -8,20 +8,21 @@ public class ChatPeople
  private String name;
  private String message;
  private TimeDetails timeDetails;
+ private String userId;
  
- 
- public ChatPeople(String profilePictureUrl, String name, String message, TimeDetails timeDetails)
+ public ChatPeople(String profilePictureUrl, String name, String message, TimeDetails timeDetails, String userId)
  {
   this.profilePictureUrl = profilePictureUrl;
   this.name = name;
   this.message = message;
   this.timeDetails = timeDetails;
+  this.userId = userId;
  }
  
  @Override
  public String toString()
  {
-  return "ChatPeople{" + "profilePictureUrl='" + profilePictureUrl + '\'' + ", name='" + name + '\'' + ", message='" + message + '\'' + ", timeDetails=" + timeDetails + '}';
+  return "ChatPeople{" + "profilePictureUrl='" + profilePictureUrl + "'\n" + ", name='" + name + "'\n" + ", message='" + message + "'\n" + ", timeDetails=" + timeDetails + ", userId='" + userId + "'\n" + '}';
  }
  
  public String getProfilePictureUrl()
@@ -62,5 +63,15 @@ public class ChatPeople
  public void setTimeDetails(TimeDetails timeDetails)
  {
   this.timeDetails = timeDetails;
+ }
+ 
+ public String getUserId()
+ {
+  return userId;
+ }
+ 
+ public void setUserId(String userId)
+ {
+  this.userId = userId;
  }
 }

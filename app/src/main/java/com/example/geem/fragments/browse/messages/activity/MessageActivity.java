@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
 import com.example.geem.extra.Variables;
-import com.example.geem.fragments.browse.messages.VariablesForFirebase;
+import com.example.geem.fragments.browse.messages.ChatPeople;
+import com.example.geem.fragments.browse.notifications.DummyTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +48,7 @@ public class MessageActivity extends AppCompatActivity
  private ImageView sendButton;
  private EditText typedText;
  private CircularImageView profilePicture;
+ private TextView name;
  
  private int recyclerItemCounts = 0;
  
@@ -60,6 +63,7 @@ public class MessageActivity extends AppCompatActivity
  //Firebase things
  private CollectionReference messageCollectionReference;
  private static final String MESSAGE_COLLECTION_NAME = "messages";
+ private static final String PROFILE_COLLECTION_NAME = "dummy_profiles_do_not_delete";
  
  @Override
  protected void onCreate(Bundle savedInstanceState)
@@ -73,9 +77,11 @@ public class MessageActivity extends AppCompatActivity
    MY_ID = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
    OTHER_ID = getIntent().getStringExtra(Variables.OTHER_ID);
    Toast.makeText(getApplicationContext(), "Welcome : " + MY_ID, Toast.LENGTH_SHORT).show();
+   Toast.makeText(getApplicationContext(), "MyId : " + MY_ID + ", OtherId : " + OTHER_ID, Toast.LENGTH_SHORT).show();
    Log.d(TAG, "onCreate: MY_ID : " + MY_ID + ", OTHER_ID : " + OTHER_ID);
    initializeComponents();
    getSupportActionBar().hide();
+   setUserNamesAndProfilePicture();
   }
   else
   {
@@ -89,6 +95,21 @@ public class MessageActivity extends AppCompatActivity
    }
    finish();
   }
+ }
+ 
+ private void setUserNamesAndProfilePicture()
+ {
+  FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION_NAME).document(OTHER_ID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    //This thing can be replaced with better one, but due to lack of time and it's time for dinner, I am leaving with only this version :|
+    DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
+    Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
+    name.setText(template.getName());
+   }
+  });
  }
  
  
@@ -109,6 +130,7 @@ public class MessageActivity extends AppCompatActivity
   typedText = findViewById(R.id.text_typed_message);
   sendButton = findViewById(R.id.button_send);
   profilePicture = findViewById(R.id.profile_picture);
+  name = findViewById(R.id.name);
  }
  
  private void initializeFirebase()
@@ -121,7 +143,7 @@ public class MessageActivity extends AppCompatActivity
    ids.add(MY_ID);
    ids.add(OTHER_ID);
    
-   messageCollectionReference.orderBy("timestamp").whereIn(VariablesForFirebase.MY_ID, ids).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+   messageCollectionReference.orderBy("timestamp").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
    {
     @Override
     public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -132,20 +154,41 @@ public class MessageActivity extends AppCompatActivity
       messageTemplatesForAdapterList = new ArrayList<>();
       for(DocumentSnapshot snapshot : task.getResult())
       {
-       MessageTemplate messageTemplate = snapshot.toObject(MessageTemplate.class);
-       MessageTemplateForAdapter messageTemplateForAdapter = new MessageTemplateForAdapter(messageTemplatesForAdapterList.size(), messageTemplate.getMyId().equals(MY_ID), messageTemplate.getContent(), new TimeDetails(messageTemplate.getTimestamp()));
+       MessageTemplate template = snapshot.toObject(MessageTemplate.class);
        
-       lastTimestamp = messageTemplate.getTimestamp();
+       boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
+       boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
        
-       //No need to store messages
-       messageTemplatesForAdapterList.add(messageTemplateForAdapter);
-       
-       adapterMessages.insertItem(messageTemplateForAdapter);
-       recyclerItemCounts++;
-       recyclerView.scrollToPosition(adapterMessages.getMessagesSize() - 1);
-       
-       Log.d(TAG, "onComplete: Print item : " + messageTemplate);
+       if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
+       {
+        MessageTemplateForAdapter messageTemplateForAdapter = new MessageTemplateForAdapter(messageTemplatesForAdapterList.size(), template.getMyId().equals(MY_ID), template.getContent(), new TimeDetails(template.getTimestamp()));
+        lastTimestamp = template.getTimestamp();
+        //No need to store messages
+        messageTemplatesForAdapterList.add(messageTemplateForAdapter);
+        
+        adapterMessages.insertItem(messageTemplateForAdapter);
+        recyclerItemCounts++;
+        recyclerView.scrollToPosition(adapterMessages.getMessagesSize() - 1);
+        
+        Log.d(TAG, "onComplete: Print item : " + template);
+       }
       }
+      
+      
+      //Here listen for new msg
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
+      //When all messages loaded then only listen for new messages
       
      }
      else
@@ -175,7 +218,8 @@ public class MessageActivity extends AppCompatActivity
      String content = "" + typedText.getText();
      MessageTemplate messageTemplate = new MessageTemplate(new Date().getTime(), MY_ID, OTHER_ID, true, content);
      
-     adapterMessages.insertItem(new MessageTemplateForAdapter(recyclerItemCounts, messageTemplate.isSentByMe(), messageTemplate.getContent(), new TimeDetails(messageTemplate.getTimestamp())));
+     //adapterMessages.insertItem(new MessageTemplateForAdapter(recyclerItemCounts, messageTemplate.isSentByMe(), messageTemplate.getContent(), new TimeDetails(messageTemplate.getTimestamp())));
+     
      
      messageCollectionReference.document().set(messageTemplate).addOnCompleteListener(new OnCompleteListener<Void>()
      {
@@ -210,7 +254,11 @@ public class MessageActivity extends AppCompatActivity
         for(DocumentChange documentChange : value.getDocumentChanges())
         {
          MessageTemplate template = documentChange.getDocument().toObject(MessageTemplate.class);
-         if(template.getOtherId().equals(MY_ID) && template.getMyId().equals(OTHER_ID) && template.getTimestamp() > lastTimestamp)
+         
+         boolean fromMySide = template.getMyId().equals(MY_ID) && template.getOtherId().equals(OTHER_ID);
+         boolean toMySide = template.getMyId().equals(OTHER_ID) && template.getOtherId().equals(MY_ID);
+         
+         if(template.getTimestamp() > lastTimestamp && (fromMySide || toMySide))
          {
           lastTimestamp = template.getTimestamp();
           Log.d(TAG, "onEvent: Receieved msg : " + template);
@@ -240,20 +288,6 @@ public class MessageActivity extends AppCompatActivity
     finish();
    }
   });
-  
-  findViewById(R.id.user_full_name).setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    String temp = MY_ID;
-    MY_ID = OTHER_ID;
-    OTHER_ID = temp;
-    ((TextView) findViewById(R.id.user_full_name)).setText(MY_ID);
-   }
-  });
-  
-  
  }
  
  
