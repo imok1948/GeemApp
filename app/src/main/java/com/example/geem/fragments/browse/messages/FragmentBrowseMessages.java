@@ -16,6 +16,7 @@ import com.example.geem.R;
 import com.example.geem.activities.MainActivity;
 import com.example.geem.extra.TimeDetails;
 import com.example.geem.fragments.browse.messages.activity.MessageTemplate;
+import com.example.geem.fragments.browse.notifications.DummyTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -49,7 +50,7 @@ public class FragmentBrowseMessages extends Fragment
  private FirebaseFirestore firebaseFirestore;
  private CollectionReference messagesCollectionReference;
  private static final String MESSAGE_COLLECTION_NAME = "messages";
- 
+ private static final String PROFILE_COLLECTION_NAME = "dummy_profiles_do_not_delete";
  
  //Adapter things
  List<ChatPeople> peopleList = new ArrayList<>();
@@ -86,8 +87,10 @@ public class FragmentBrowseMessages extends Fragment
      for(DocumentSnapshot snapshot : task.getResult())
      {
       MessageTemplate template = snapshot.toObject(MessageTemplate.class);
-      Log.d(TAG, "onComplete: Snapshot : " + template);
-      adapterListChatPeople.addItem(new ChatPeople(null, template.getOtherId(), template.getContent(), new TimeDetails(template.getTimestamp())));
+      Log.d(TAG, "onComplete: Fetched Message : " + template);
+      
+      getProfileDetailsAndAddToAdapter(template);
+      
      }
     }
     else
@@ -96,6 +99,20 @@ public class FragmentBrowseMessages extends Fragment
     }
    }
   });
+ }
+ 
+ private void getProfileDetailsAndAddToAdapter(MessageTemplate template)
+ {
+  FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION_NAME).document(template.getOtherId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    DummyTemplate profileTemplate = task.getResult().toObject(DummyTemplate.class);
+    adapterListChatPeople.addItem(new ChatPeople(profileTemplate.getProfilePictureUrl(), profileTemplate.getName(), template.getContent(), new TimeDetails(template.getTimestamp())));
+   }
+  });
+  
  }
  
  

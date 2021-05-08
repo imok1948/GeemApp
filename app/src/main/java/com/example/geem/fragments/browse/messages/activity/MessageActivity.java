@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
@@ -71,8 +72,7 @@ public class MessageActivity extends AppCompatActivity
   {
    MY_ID = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
    OTHER_ID = getIntent().getStringExtra(Variables.OTHER_ID);
-   
-   
+   Toast.makeText(getApplicationContext(), "Welcome : " + MY_ID, Toast.LENGTH_SHORT).show();
    Log.d(TAG, "onCreate: MY_ID : " + MY_ID + ", OTHER_ID : " + OTHER_ID);
    initializeComponents();
    getSupportActionBar().hide();
@@ -185,11 +185,11 @@ public class MessageActivity extends AppCompatActivity
        if(task.isSuccessful())
        {
         adapterMessages.setDelivered(recyclerItemCounts - 1);
-        Log.d(TAG, "onComplete: Message adding to collection : success with template : " + messageTemplate);
+        Log.d(TAG, "onComplete: Sending message success ==> " + messageTemplate);
        }
        else
        {
-        Log.d(TAG, "onComplete: Message adding to collection : failed" + task.getException());
+        Log.d(TAG, "onComplete: Sending message failed ==> " + messageTemplate + task.getException());
        }
       }
      });

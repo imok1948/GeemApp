@@ -46,6 +46,14 @@ public class FragmentBrowseTabs extends Fragment
    tabLayout.getTabAt(i).setIcon(Variables.TAB_ICONS[i]);
   }
   
+  try
+  {
+   Toast.makeText(getContext(), "Welcome : " + FirebaseAuth.getInstance().getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+  }
+  catch(Exception e)
+  {
+   e.printStackTrace();
+  }
   
   if(((MainActivity) getActivity()).tabLayoutForBrowseFragments != null)
   {

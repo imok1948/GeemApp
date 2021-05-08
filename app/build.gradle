@@ -10,7 +10,7 @@ android {
 
   defaultConfig {
     applicationId "com.example.geem"
-    minSdkVersion 16
+    minSdkVersion 19
     targetSdkVersion 30
     versionCode 1
     versionName "1.0"
@@ -92,4 +92,7 @@ dependencies {
 
 //required for onboarding activity
   implementation 'com.github.chyrta:AndroidOnboarder:0.7'
+
+  //https://github.com/ernestoyaquello/VerticalStepperForm
+  implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.4.1'
 }

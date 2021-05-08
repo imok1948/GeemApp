@@ -54,5 +54,14 @@
     app:layout_anchorGravity="bottom|start"
     app:srcCompat="@drawable/tick_right" />
 
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/button_delete"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    app:layout_anchor="@id/app_bar"
+    app:layout_anchorGravity="top|right"
+    app:srcCompat="@drawable/cross_sign" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

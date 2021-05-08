@@ -60,6 +60,8 @@ import java.util.Map;
 
 public class FragmentAddItems extends Fragment
 {
+ 
+ private static final String TAG = "FragmentAddItems";
  String currentPhotoPath;
  public static final int CAM_REQUEST_CODE = 111;
  public static final int CAM_INTENT_REQUEST_CODE = 112;
@@ -77,7 +79,7 @@ public class FragmentAddItems extends Fragment
  
  private FirebaseFirestore firebaseFireStore;
  private StorageReference storageRef;
- String userId = "Mi44ruQiwrYjRmxYtQzjf8NaqV52";
+ String userId = "random";
  private FirebaseAuth firebaseAuth;
  
  
@@ -92,6 +94,7 @@ public class FragmentAddItems extends Fragment
   if(((MainActivity) getActivity()).checkLoggedIn())
   {
    userId = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+   Toast.makeText(getContext(), "Welcome : " + userId, Toast.LENGTH_SHORT).show();
    firebaseFireStore = FirebaseFirestore.getInstance();
    storageRef = FirebaseStorage.getInstance().getReference();
    
@@ -360,7 +363,6 @@ public class FragmentAddItems extends Fragment
     @Override
     public void onComplete(@NonNull Task<Uri> task)
     {
-     
      if(task.isSuccessful())
      {
       Uri url = task.getResult();
@@ -391,7 +393,13 @@ public class FragmentAddItems extends Fragment
          progressDialog.cancel();
          Toast.makeText(getActivity(), "Item uploaded successfully in feeds", Toast.LENGTH_LONG).show();
          
-         
+         Log.d(TAG, "onComplete: added new item : ");
+         String temp = "";
+         for(Map.Entry<String, Object> map : userItems.entrySet())
+         {
+          temp += map.getKey() + " ==> " + map.getValue() + "\n";
+         }
+         Log.d(TAG, "Data : " + temp);
          if(((MainActivity) getActivity()).tabLayoutForBrowseFragments != null)
          {
           ((MainActivity) getActivity()).tabLayoutForBrowseFragments.selectTab(((MainActivity) getActivity()).tabLayoutForBrowseFragments.getTabAt(1));

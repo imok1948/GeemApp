@@ -19,7 +19,7 @@ public class ShivankUserItems implements Serializable
  
  public ShivankUserItems()
  {
- 
+  //Do not delete
  }
  
  public ShivankUserItems(String address, String category, String description, String image, String title, String userid, String geoHash, boolean isAvailable, double latitude, double longitude)
@@ -39,7 +39,7 @@ public class ShivankUserItems implements Serializable
  @Override
  public String toString()
  {
-  return "ShivankUserItems{" + "address='" + address + '\'' + ", category='" + category + '\'' + ", description='" + description + '\'' + ", image='" + image + '\'' + ", timestamp=" + timestamp + ", title='" + title + '\'' + ", userId='" + userid + '\'' + ", geohash='" + geohash + '\'' + ", isAvailable=" + isAvailable + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+  return "ShivankUserItems{" + "address='" + address + "'\n" + ", category='" + category + "'\n" + ", description='" + description + "'\n" + ", image='" + image + "'\n" + ", timestamp=" + timestamp + ", title='" + title + "'\n" + ", userid='" + userid + "'\n" + ", geohash='" + geohash + "'\n" + ", isAvailable=" + isAvailable + ", latitude=" + latitude + ", longitude=" + longitude + '}';
  }
  
  public String getAddress()

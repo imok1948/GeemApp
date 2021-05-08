@@ -51,7 +51,14 @@ public class FragmentNotifications extends Fragment
      
      
      String[] documentIds = new String[]{
-      "Mi44ruQiwrYjRmxYtQzjf8NaqV52", "ZhdDwBYZrJfdAUFsIvoV2OHcWx53", "bRBGZ3a7HySxw8hSEcgcCi4RsEw1", "f3D2aHKaOlYB6caTCzLZyXspFXj2", "ixu8JucKuOUqN5LitJWSLD0eHuR2", "prdEd8kRjHWX3IRJr8ju36Fkf3C3", "rBlJNO9OSrbZYruMd7u7B4SNVPa2"
+      "Eaw3iPx39HUyNp1DlCsU7NLcUuL2",
+      "Mi44ruQiwrYjRmxYtQzjf8NaqV52",
+      "ZhdDwBYZrJfdAUFsIvoV2OHcWx53",
+      "f3D2aHKaOlYB6caTCzLZyXspFXj2",
+      "ixu8JucKuOUqN5LitJWSLD0eHuR2",
+      "prdEd8kRjHWX3IRJr8ju36Fkf3C3",
+      "hjUntVW1PSZMDOJGfTPyt43YcB02",
+      "rBlJNO9OSrbZYruMd7u7B4SNVPa2",
      };
      List<DummyTemplate> dummyTemplateList = getTemplates();
      
@@ -101,6 +108,13 @@ public class FragmentNotifications extends Fragment
   templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2F3.jpg?alt=media&token=6d7df674-cada-4c9d-be72-11c82846d7f3", "Pappu", "pappu@gmail.com", "Bhopal"));
   
   templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2F2.jpg?alt=media&token=36b72bdf-f67f-482c-8f64-6b97a1381d82", "Ravi", "ravi@gmail.com", "Mumbai"));
+  
+  templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2F2.jpg?alt=media&token=36b72bdf-f67f-482c-8f64-6b97a1381d82", "RaviRandome", "randomEmail@gsjkln", "o078atffjh"));
+  
+  templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2F2.jpg?alt=media&token=36b72bdf-f67f-482c-8f64-6b97a1381d82", "Ra5sd4g5sd45dvi", "gsdgsdgsdgravi@gmail.com", "Mumbaisdfs78tfdgf"));
+  
+  templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2F2.jpg?alt=media&token=36b72bdf-f67f-482c-8f64-6b97a1381d82", "Rarfgsrtgsgsgvi", "raggsgsfgsdfgsvi@gmail.com", "Mumfdfuyjfgbai"));
+  
   return templateList;
  }
  

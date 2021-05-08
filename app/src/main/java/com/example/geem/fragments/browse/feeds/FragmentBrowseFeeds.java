@@ -32,10 +32,13 @@ import com.example.geem.R;
 import com.example.geem.activities.MainActivity;
 import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.fragments.browse.feeds.activity.ActivityViewItem;
+import com.example.geem.fragments.browse.notifications.FragmentNotifications;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -60,10 +63,22 @@ public class FragmentBrowseFeeds extends Fragment
  public static final int NET_REQUEST_CODE = 102;
  FirebaseFirestore db;
  
+ 
+ private static String MY_ID = "";
+ 
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   View view = inflater.inflate(R.layout.fragment_browse_feeds, container, false);
+  try
+  {
+   MY_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+  }
+  catch(Exception e)
+  {
+   e.printStackTrace();
+  }
+  
   
   db = FirebaseFirestore.getInstance();
   currentLocation = new Location("");
@@ -89,7 +104,7 @@ public class FragmentBrowseFeeds extends Fragment
   
   feedsRecyclerView = view.findViewById(R.id.feeds_recycler_view);
   feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-  options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
+  options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("userid").whereNotEqualTo("userid", MY_ID).orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
   
   updateUI(options);
   //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
@@ -217,6 +232,7 @@ public class FragmentBrowseFeeds extends Fragment
      boolean loggedIn = true;
      if(loggedIn)
      {
+      Log.d(TAG, "onClick: Starting with item ==> " + holder.thisItem);
       Intent intent = new Intent(getActivity(), ActivityViewItem.class);
       intent.putExtra("itemId", getSnapshots().getSnapshot(position).getId());
       intent.putExtra("item_details", holder.thisItem);
@@ -226,6 +242,35 @@ public class FragmentBrowseFeeds extends Fragment
      {
      
      }
+    }
+   });
+   
+   
+   holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+   {
+    @Override
+    public boolean onLongClick(View view)
+    {
+     
+     CollectionReference feedsCollectionReference = FirebaseFirestore.getInstance().collection(FragmentNotifications.NOTIFICATIONS_COLLECTION_NAME);
+     feedsCollectionReference.document(getSnapshots().getSnapshot(position).getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>()
+     {
+      @Override
+      public void onComplete(@NonNull Task<Void> task)
+      {
+       if(task.isSuccessful())
+       {
+        Log.d(TAG, "onComplete: Deleting ==> " + task.getException());
+        Log.d(TAG, "onComplete: Deleted item with is : " + getSnapshots().getSnapshot(position).getId());
+        Toast.makeText(getContext(), "Deleted : " + getSnapshots().getSnapshot(position).getId(), Toast.LENGTH_SHORT).show();
+       }
+       else
+       {
+        Log.d(TAG, "onComplete: Failed to delete item");
+       }
+      }
+     });
+     return true;
     }
    });
   }

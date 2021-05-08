@@ -52,7 +52,7 @@ public class ActivityViewItem extends AppCompatActivity
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_view_item);
   item = (ShivankUserItems) getIntent().getSerializableExtra("item_details");
-  Log.d(TAG, "onCreate: Printing Item : " + item);
+  Log.d(TAG, "onCreate: Received item : " + item);
   Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
   setSupportActionBar(toolbar);
   CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -122,6 +122,30 @@ public class ActivityViewItem extends AppCompatActivity
      }
     }
     
+   }
+  });
+  
+  findViewById(R.id.button_delete).setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    CollectionReference feedsCollectionReference = FirebaseFirestore.getInstance().collection(FragmentNotifications.NOTIFICATIONS_COLLECTION_NAME);
+    feedsCollectionReference.document(getIntent().getStringExtra("itemId")).delete().addOnCompleteListener(new OnCompleteListener<Void>()
+    {
+     @Override
+     public void onComplete(@NonNull Task<Void> task)
+     {
+      if(task.isSuccessful())
+      {
+       Log.d(TAG, "onComplete: Deleted item with is : " + getIntent().getStringExtra("itemId"));
+      }
+      else
+      {
+       Log.d(TAG, "onComplete: Failed to delete item");
+      }
+     }
+    });
    }
   });
   
