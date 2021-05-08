@@ -190,7 +190,7 @@ import static android.content.ContentValues.TAG;
     itemLocation.setLatitude(itemLatitude);
     itemLocation.setLongitude(itemLongitude);
     float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-    holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " km");
+    holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
     
    }
    
