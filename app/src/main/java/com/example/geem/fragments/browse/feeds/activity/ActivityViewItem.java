@@ -105,7 +105,7 @@ public class ActivityViewItem extends AppCompatActivity
   itemLocation.setLatitude(itemLatitude);
   itemLocation.setLongitude(itemLongitude);
   float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-  proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
+  proximity.setText("Loading...");
 
  }
 
@@ -137,6 +137,9 @@ public class ActivityViewItem extends AppCompatActivity
   public void onLocationChanged(@NonNull Location location)
   {
    currentLocation = location;
+   float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
+   proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
+
   }
 
   @Override
