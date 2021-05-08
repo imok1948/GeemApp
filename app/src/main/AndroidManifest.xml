@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.example.geem">
+    package="com.example.geem" >
 
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
-  <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-  <application
-    android:allowBackup="true"
-    android:icon="@drawable/ic_app_launcher_ying_yang"
-    android:label="@string/app_name"
-    android:roundIcon="@drawable/ic_app_launcher_ying_yang"
-    android:supportsRtl="true"
-    android:theme="@style/Theme.GEEM">
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_app_launcher_ying_yang"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_app_launcher_ying_yang"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GEEM" >
+        <activity
+            android:name=".fragments.browse.feeds.activity.Example_Navebar"
+            android:label="@string/title_activity_example__navebar"
+            android:theme="@style/Theme.GEEM.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".fragments.browse.feeds.activity.ActivityViewItem"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/Theme.GEEM.NoActionBar" >
+        </activity>
+        <activity android:name=".fragments.browse.messages.activity.MessageActivity" >
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_navigation_drawer_temp"
+            android:theme="@style/Theme.GEEM.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
 
-    <activity
-      android:name=".fragments.browse.feeds.activity.ActivityViewItem"
-      android:label="@string/title_activity_scrolling"
-      android:theme="@style/Theme.GEEM.NoActionBar">
-
-    </activity>
-    <activity android:name=".fragments.browse.messages.activity.MessageActivity">
-
-    </activity>
-    <activity
-      android:name=".activities.MainActivity"
-      android:label="@string/title_activity_navigation_drawer_temp"
-      android:theme="@style/Theme.GEEM.NoActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
-
-    <meta-data
-      android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyB1OrIcFmW56CjlXkNmikgYg1POm0NxGd8" />
-    <!--
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB1OrIcFmW56CjlXkNmikgYg1POm0NxGd8" />
+        <!--
     <activity android:name=".MainActivity">
     </activity>
         -->
-    <provider
-      android:name="androidx.core.content.FileProvider"
-      android:authorities="com.example.android.fileprovider"
-      android:exported="false"
-      android:grantUriPermissions="true">
-      <meta-data
-        android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/file_paths" />
-    </provider>
-  </application>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
 
 </manifest>

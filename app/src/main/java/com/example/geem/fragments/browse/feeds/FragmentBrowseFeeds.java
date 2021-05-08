@@ -11,10 +11,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -49,7 +52,7 @@ import static android.content.ContentValues.TAG;
   //Recycler View Container
   RecyclerView feedsRecyclerView;
   ItemsAdapter itemsAdapter;
-  ImageButton searchButton;
+  ImageView searchButton;
   EditText searchQuery;
   FirestoreRecyclerOptions<ShivankUserItems> options;
   LocationManager locationManager;
@@ -57,7 +60,7 @@ import static android.content.ContentValues.TAG;
   public static final int GPS_REQUEST_CODE = 101;
   public static final int NET_REQUEST_CODE = 102;
   FirebaseFirestore db;
-  
+  DrawerLayout feedsDrawer;
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -83,15 +86,19 @@ import static android.content.ContentValues.TAG;
      }
     }
    });
-   
+   feedsDrawer = view.findViewById(R.id.feeds_drawer);
    feedsRecyclerView = view.findViewById(R.id.feeds_recycler_view);
    feedsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>().setQuery(FirebaseFirestore.getInstance().collection("fetch_items_final").orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class).build();
+   options = new FirestoreRecyclerOptions.Builder<ShivankUserItems>()
+           .setQuery(FirebaseFirestore
+                   .getInstance().collection("fetch_items_final")
+                   .orderBy("timestamp", Query.Direction.DESCENDING).limit(50), ShivankUserItems.class)
+           .build();
    
    updateUI(options);
    //Toast.makeText(getContext(), getArguments().getString(Variables.GREETING_KEY), Toast.LENGTH_SHORT).show();
    searchQuery = view.findViewById(R.id.search_text);
-   searchButton = view.findViewById(R.id.search_feeds);
+   searchButton = (ImageView) view.findViewById(R.id.filter_feeds);
    searchQuery.addTextChangedListener(new TextWatcher() {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -111,7 +118,23 @@ import static android.content.ContentValues.TAG;
    searchButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-     searchFeedsFirebase(searchQuery.getText().toString());
+     feedsDrawer.openDrawer(GravityCompat.END);
+
+    }
+
+   });
+
+   view.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+     feedsDrawer.closeDrawer(GravityCompat.END);
+    }
+   });
+
+   view.findViewById(R.id.btn_close_filter).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+     feedsDrawer.closeDrawer(GravityCompat.END);
     }
    });
    return view;
@@ -140,7 +163,7 @@ import static android.content.ContentValues.TAG;
    //Log.i("INFO","Old Adapter Refreshed");
    //}
   }
-  
+
   @Override
   public void onResume()
   {
@@ -191,7 +214,7 @@ import static android.content.ContentValues.TAG;
     itemLocation.setLongitude(itemLongitude);
     float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
     holder.distance.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
-    
+
    }
    
   }
