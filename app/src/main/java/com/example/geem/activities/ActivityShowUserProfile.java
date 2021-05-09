@@ -14,16 +14,22 @@ import com.example.geem.R;
 import com.example.geem.extra.TimeDetails;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.notifications.DummyTemplate;
+import com.example.geem.fragments.browse.requests.TemplateFirebaseReview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
 public class ActivityShowUserProfile extends AppCompatActivity
 {
+ 
+ // [10, 20, 10, 50, 60]
+ 
  
  private static final String TAG = "ActivityShowUserProfile";
  
@@ -33,6 +39,7 @@ public class ActivityShowUserProfile extends AppCompatActivity
  private ProgressBar oneStarRating, twoStarRating, threeStarRating, fourStarRating, fiveStarRating;
  private RecyclerView recyclerView;
  
+ private String myId;
  
  //Firebase
  private static final String PROFILE_COLLECTION_NAME = "dummy_profiles_do_not_delete";
@@ -44,19 +51,90 @@ public class ActivityShowUserProfile extends AppCompatActivity
   setContentView(R.layout.activity_show_user_profile);
   init();
   
-  String userId = "Eaw3iPx39HUyNp1DlCsU7NLcUuL2";
+  myId = "Eaw3iPx39HUyNp1DlCsU7NLcUuL2";
   
   if(getIntent().getStringExtra(Variables.OTHER_ID) != null)
   {
-   userId = getIntent().getStringExtra(Variables.OTHER_ID);
+   myId = getIntent().getStringExtra(Variables.OTHER_ID);
   }
   
-  initializeFirebase(userId);
+  
+  this.myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+  initComponents();
+  initializeFirebase(myId);
  }
+ 
+ private void initComponents()
+ {
+  FirebaseFirestore.getInstance().collection(Variables.REVIEW_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<QuerySnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     
+     int[] ratings = new int[5];
+     
+     for(DocumentSnapshot snapshot : task.getResult())
+     {
+      TemplateFirebaseReview reviewTemplate = snapshot.toObject(TemplateFirebaseReview.class);
+      if(reviewTemplate.getToId().equals(myId))
+      {
+       try
+       {
+        ratings[reviewTemplate.getRating() - 1] += 1;
+        fetchProfilePictureAndAddToRecycleView(reviewTemplate.getFromId(), reviewTemplate.getRating(), reviewTemplate.getReview());
+       }
+       catch(Exception e)
+       {
+        e.printStackTrace();
+       }
+      }
+     }
+     
+     //[10, 20, 10, 60, 50]
+     int totalRatings = 0;
+     int totalRaters = 0;
+     
+     for(int i = 0; i < ratings.length; i++)
+     {
+      totalRatings += (ratings[i] * (i + 1)); //10*1
+      totalRaters += ratings[i];
+     }
+     
+     
+    }
+   }
+  });
+ }
+ 
+ private void fetchProfilePictureAndAddToRecycleView(String fromId, int rating, String review)
+ {
+ 
+ }
+ 
+ 
+ private void setMyInfo()
+ {
+  FirebaseFirestore.getInstance().collection(Variables.PROFILE_COLLECTION_NAME).document(myId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
+    Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.rahul_profile).error(R.drawable.ic_tab_profile).into(image);
+    name.setText(template.getName());
+    joiningDate.setText(new TimeDetails(template.getJoiningTime()).getDate());
+    city.setText(template.getCity());
+   }
+  });
+ }
+ 
  
  private void initializeFirebase(String userId)
  {
-  FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION_NAME).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  FirebaseFirestore.getInstance().collection(Variables.PROFILE_COLLECTION_NAME).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
   {
    @Override
    public void onComplete(@NonNull Task<DocumentSnapshot> task)
@@ -76,19 +154,10 @@ public class ActivityShowUserProfile extends AppCompatActivity
     joiningDate.setText(new TimeDetails(template.getJoiningTime()).getDate());
     city.setText(template.getCity());
     
+    
     totalItemGiven.setText(55 + "");
     totalItemTaken.setText(21 + "");
     
-    /*
-    givenRatings = template.getGivenRatings();
-    takenRatings = template.getTakenRatings();
-    
-    givenRatingTotal = template.getTotalGivenRatings();
-    takenRatingTotal = template.getTotalTakenRatings();
-    */
-    
-    
-    //Now considering only taken rating
     float averageRatingTemp = 0;
     for(float rating : template.getTakenRatings())
     {
@@ -107,7 +176,6 @@ public class ActivityShowUserProfile extends AppCompatActivity
     {
      totalRater = 1000000;
     }
-    
     
     averageRating.setText(String.format("%.2f", averageRatingTemp));
     oneStarRating.setProgress((int) ((template.getTakenRatings().get(0) / 5) * 100));
