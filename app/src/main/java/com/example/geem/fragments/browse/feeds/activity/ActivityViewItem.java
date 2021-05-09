@@ -20,8 +20,7 @@ import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageActivity;
 import com.example.geem.fragments.browse.notifications.DummyTemplate;
-import com.example.geem.fragments.browse.notifications.FragmentNotifications;
-import com.example.geem.fragments.browse.notifications.NotificationTemplate;
+import com.example.geem.fragments.browse.notifications.FirebaseNotificationTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
@@ -45,7 +44,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 
 public class ActivityViewItem extends AppCompatActivity
@@ -177,7 +175,7 @@ public class ActivityViewItem extends AppCompatActivity
     //Toast.makeText(getApplicationContext(), "Requesting item, with other id : " + otherId + " Change logic at" + Thread.currentThread().getStackTrace()[2].getLineNumber(), Toast.LENGTH_SHORT).show();
     Log.d(TAG, "onClick: Requesting item, change with suitable logic at line number : " + Thread.currentThread().getStackTrace()[2].getLineNumber());
     
-    NotificationTemplate template = new NotificationTemplate(new Date().getTime(), Variables.NOTIFICATION_TYPE_REQUEST, myId, otherId, itemId);
+    FirebaseNotificationTemplate template = new FirebaseNotificationTemplate(new Date().getTime(), Variables.NOTIFICATION_TYPE_REQUEST, myId, otherId, itemId);
     
     FirebaseFirestore.getInstance().collection(Variables.NOTIFICATIONS_COLLECTION_NAME).document().set(template).addOnCompleteListener(new OnCompleteListener<Void>()
     {

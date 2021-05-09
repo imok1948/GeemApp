@@ -1,6 +1,6 @@
 package com.example.geem.fragments.browse.notifications;
 
-public class NotificationTemplate
+public class FirebaseNotificationTemplate
 {
  private long timestamp;
  private String type; // request, response, ...
@@ -9,13 +9,14 @@ public class NotificationTemplate
  private String itemId;
  private boolean requestAccepted;
  private boolean itemTaken;
+ private String notificationId;
  
- public NotificationTemplate()
+ public FirebaseNotificationTemplate()
  {
   //Required
  }
  
- public NotificationTemplate(long timestamp, String type, String senderId, String receiverId, String itemId, boolean requestAccepted, boolean itemTaken)
+ public FirebaseNotificationTemplate(long timestamp, String type, String senderId, String receiverId, String itemId, boolean requestAccepted, boolean itemTaken, String notificationId)
  {
   this.timestamp = timestamp;
   this.type = type;
@@ -24,9 +25,12 @@ public class NotificationTemplate
   this.itemId = itemId;
   this.requestAccepted = requestAccepted;
   this.itemTaken = itemTaken;
+  this.notificationId = notificationId;
  }
  
- public NotificationTemplate(long timestamp, String type, String senderId, String receiverId, String itemId)
+ 
+ 
+ public FirebaseNotificationTemplate(long timestamp, String type, String senderId, String receiverId, String itemId)
  {
   this.timestamp = timestamp;
   this.type = type;
@@ -39,7 +43,18 @@ public class NotificationTemplate
  @Override
  public String toString()
  {
-  return "NotificationTemplate{" + "timestamp=" + timestamp + ", type='" + type + '\'' + ", senderId='" + senderId + '\'' + ", receiverId='" + receiverId + '\'' + ", itemId='" + itemId + '\'' + ", requestAccepted=" + requestAccepted + ", itemTaken=" + itemTaken + '}';
+  return "FirebaseNotificationTemplate{" + "timestamp=" + timestamp + ", type='" + type + "'\n" + ", senderId='" + senderId + "'\n" + ", receiverId='" + receiverId + "'\n" + ", itemId='" + itemId + "'\n" + ", requestAccepted=" + requestAccepted + ", itemTaken=" + itemTaken + ", notificationId='" + notificationId + "'\n" + '}';
+ }
+ 
+ 
+ public String getNotificationId()
+ {
+  return notificationId;
+ }
+ 
+ public void setNotificationId(String notificationId)
+ {
+  this.notificationId = notificationId;
  }
  
  public long getTimestamp()

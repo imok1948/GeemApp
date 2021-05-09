@@ -99,7 +99,6 @@ public class FragmentBrowseFeeds extends Fragment
     dialog.cancel();
     if(task.isSuccessful())
     {
-     
      for(DocumentSnapshot snapshot : task.getResult())
      {
       ShivankUserItems template = snapshot.toObject(ShivankUserItems.class);

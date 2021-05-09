@@ -8,31 +8,25 @@ public class RequestedItemsTemplate
  private String name;
  private int totalRequests;
  private String itemId;
+ private String requestType;
+ private String notificationId;
+ private String requesterId;
  
- 
- public RequestedItemsTemplate(String imageUrl, String name, int totalRequests, String itemId)
+ public RequestedItemsTemplate(String imageUrl, String name, int totalRequests, String itemId, String requestType, String notificationId, String requesterId)
  {
   this.imageUrl = imageUrl;
   this.name = name;
   this.totalRequests = totalRequests;
   this.itemId = itemId;
+  this.requestType = requestType;
+  this.notificationId = notificationId;
+  this.requesterId = requesterId;
  }
- 
  
  @Override
  public String toString()
  {
-  return "RequestedItemsTemplate{" + "imageUrl='" + imageUrl + "'\n" + ", name='" + name + "'\n" + ", totalRequests=" + totalRequests + ", itemId='" + itemId + "'\n" + '}';
- }
- 
- public String getItemId()
- {
-  return itemId;
- }
- 
- public void setItemId(String itemId)
- {
-  this.itemId = itemId;
+  return "RequestedItemsTemplate{" + "imageUrl='" + imageUrl + "'\n" + ", name='" + name + "'\n" + ", totalRequests=" + totalRequests + ", itemId='" + itemId + "'\n" + ", requestType='" + requestType + "'\n" + ", notificationId='" + notificationId + "'\n" + ", requesterId='" + requesterId + "'\n" + '}';
  }
  
  public String getImageUrl()
@@ -63,5 +57,45 @@ public class RequestedItemsTemplate
  public void setTotalRequests(int totalRequests)
  {
   this.totalRequests = totalRequests;
+ }
+ 
+ public String getItemId()
+ {
+  return itemId;
+ }
+ 
+ public void setItemId(String itemId)
+ {
+  this.itemId = itemId;
+ }
+ 
+ public String getRequestType()
+ {
+  return requestType;
+ }
+ 
+ public void setRequestType(String requestType)
+ {
+  this.requestType = requestType;
+ }
+ 
+ public String getNotificationId()
+ {
+  return notificationId;
+ }
+ 
+ public void setNotificationId(String notificationId)
+ {
+  this.notificationId = notificationId;
+ }
+ 
+ public String getRequesterId()
+ {
+  return requesterId;
+ }
+ 
+ public void setRequesterId(String requesterId)
+ {
+  this.requesterId = requesterId;
  }
 }

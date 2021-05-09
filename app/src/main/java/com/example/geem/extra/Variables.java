@@ -31,6 +31,12 @@ public class Variables
  public static final String NOTIFICATION_TYPE_REQUEST = "request";
  public static final String NOTIFICATION_TYPE_RESPONSE = "response";
  public static final String NEW_FEEDS_COLLECTION_NAME = "fetch_items_final";
+ public static final String REVIEW_COLLECTION_NAME = "reviews";
+ public static final String NOTIFICATION_RATING_REQUEST = "rating";
+ 
+ public static final String NOTIFICATION_TYPE_FOR_PASSING_ACTIVITY = "NOTIFICATION_TYPE";
+ public static final String NOTIFICATION_ID_FOR_PASSING_ACTIVITY = "NOTIFICATION_ID";
+ 
  
  public static final String getMyId() throws Exception
  {

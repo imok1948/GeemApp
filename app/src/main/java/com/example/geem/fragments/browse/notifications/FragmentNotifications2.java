@@ -20,20 +20,21 @@ import android.widget.Toast;
 
 import com.example.geem.R;
 import com.example.geem.activities.MainActivity;
+import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.requests.AdapterRequestedItems;
 import com.example.geem.fragments.browse.requests.FragmentRequestList;
 import com.example.geem.fragments.browse.requests.RequestedItemsTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class FragmentNotifications2 extends Fragment
@@ -51,12 +52,16 @@ public class FragmentNotifications2 extends Fragment
  LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
  AdapterRequestedItems adapterRequestedItems1, adapterRequestedItems2, adapterRequestedItems3, adapterRequestedItems4;
  
+ 
+ private HashMap<String, Integer> hashMap = new HashMap<>();
+ private HashMap<String, Integer> hashMapByMe = new HashMap<>();
+ 
+ 
  boolean toggledStatus1, toggledStatus2, toggledStatus3, toggledStatus4;
  
  NestedScrollView nestedScrollView;
  
  int LINEAR_LAYOUT_HEIGHT = 1600;
- 
  
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -64,29 +69,26 @@ public class FragmentNotifications2 extends Fragment
   view = inflater.inflate(R.layout.fragment_notifications2, container, false);
   
   boolean loggedIn = true;
-  if(loggedIn)
+  if(Variables.isLoggedIn())
   {
    try
    {
-    myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    myId = Variables.getMyId();
     Log.d(TAG, "onCreateView: My id ==> " + myId);
    }
    catch(Exception e)
    {
     Log.d(TAG, "onCreateView: Error while getting my id" + FirebaseAuth.getInstance().getCurrentUser());
    }
+   
    init();
    initializeComponents();
    setListeners();
    setInitialToggle();
-   initFirebase();
    
-   
-   // setRandomTemplates(adapterRequestedItems1);
-   //   setRandomTemplates(adapterRequestedItems2);
-   //   setRandomTemplates(adapterRequestedItems3);
-   //   setRandomTemplates(adapterRequestedItems4);
-   
+   getItemsFromFirebase(adapterRequestedItems1, Variables.NOTIFICATION_TYPE_REQUEST, false);
+   fetchRequestByMe(adapterRequestedItems2, Variables.NOTIFICATION_TYPE_RESPONSE, true);
+   fetchItemsToRate(adapterRequestedItems3, Variables.NOTIFICATION_RATING_REQUEST);
   }
   else
   {
@@ -96,7 +98,7 @@ public class FragmentNotifications2 extends Fragment
   return view;
  }
  
- private void initFirebase()
+ private void fetchItemsToRate(AdapterRequestedItems adapterRequestedItems, String requestType)
  {
   FirebaseFirestore.getInstance().collection(FragmentNotifications.NOTIFICATIONS_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
@@ -107,11 +109,20 @@ public class FragmentNotifications2 extends Fragment
     {
      for(DocumentSnapshot snapshot : task.getResult())
      {
-      NotificationTemplate template = snapshot.toObject(NotificationTemplate.class);
-      Log.d(TAG, "onComplete: Template ==> " + template);
-      if(true)
+      FirebaseNotificationTemplate template = snapshot.toObject(FirebaseNotificationTemplate.class);
+      myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+      if(template.getReceiverId().equals(myId) && template.getType().equals(requestType))
       {
-       fetchImageAndSetToAdapter(template.getItemId());
+       FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(template.getItemId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+       {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task)
+        {
+         ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
+         RequestedItemsTemplate requestedItemsTemplate = new RequestedItemsTemplate(item.getImage(), item.getTitle(), 1, task.getResult().getId(), requestType, snapshot.getId(), item.getUserid());
+         adapterRequestedItems.insertItems(requestedItemsTemplate);
+        }
+       });
       }
      }
     }
@@ -122,22 +133,6 @@ public class FragmentNotifications2 extends Fragment
    }
   });
  }
- 
- private void fetchImageAndSetToAdapter(String itemId)
- {
-  FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(itemId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
-  {
-   @Override
-   public void onComplete(@NonNull Task<DocumentSnapshot> task)
-   {
-    if(task.isSuccessful())
-    {
-    
-    }
-   }
-  });
- }
- 
  
  private void initializeComponents()
  {
@@ -150,8 +145,6 @@ public class FragmentNotifications2 extends Fragment
   recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity()));
   recyclerView3.setAdapter(adapterRequestedItems3);
   
-  recyclerView4.setLayoutManager(new LinearLayoutManager(getActivity()));
-  recyclerView4.setAdapter(adapterRequestedItems4);
  }
  
  
@@ -162,38 +155,135 @@ public class FragmentNotifications2 extends Fragment
   recyclerView1 = view.findViewById(R.id.recycler_view_1);
   recyclerView2 = view.findViewById(R.id.recycler_view_2);
   recyclerView3 = view.findViewById(R.id.recycler_view_3);
-  recyclerView4 = view.findViewById(R.id.recycler_view_4);
   
   toggle1 = view.findViewById(R.id.button_1);
   toggle2 = view.findViewById(R.id.button_2);
   toggle3 = view.findViewById(R.id.button_3);
-  toggle4 = view.findViewById(R.id.button_4);
   
   linearLayout1 = view.findViewById(R.id.expand_1);
   linearLayout2 = view.findViewById(R.id.expand_2);
   linearLayout3 = view.findViewById(R.id.expand_3);
-  linearLayout4 = view.findViewById(R.id.expand_4);
   
   
   adapterRequestedItems1 = new AdapterRequestedItems(getContext());
   adapterRequestedItems2 = new AdapterRequestedItems(getContext());
   adapterRequestedItems3 = new AdapterRequestedItems(getContext());
-  adapterRequestedItems4 = new AdapterRequestedItems(getContext());
   
+ }
+ 
+ 
+ private void getItemsFromFirebase(AdapterRequestedItems adapterRequestedItems, String itemType, boolean requestedAccepted)
+ {
+  FirebaseFirestore.getInstance().collection(FragmentNotifications.NOTIFICATIONS_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<QuerySnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     HashMap<String, Integer> hashMap = new HashMap<>();
+     for(DocumentSnapshot snapshot : task.getResult())
+     {
+      FirebaseNotificationTemplate template = snapshot.toObject(FirebaseNotificationTemplate.class);
+      
+      if(template.getReceiverId().equals(myId) && template.getType().equals(itemType) && template.isItemTaken() == false)
+      {
+       Log.d(TAG, "onComplete: Template ==> " + template);
+       int count = 0;
+       if(hashMap.containsKey(template.getItemId()))
+       {
+        count = hashMap.get(template.getItemId());
+       }
+       hashMap.put(template.getItemId(), count + 1);
+      }
+     }
+     fetchReceivedItemImageAndSetToAdapter(hashMap, adapterRequestedItems, itemType);
+    }
+    else
+    {
+     Log.d(TAG, "onComplete: Error while receiving ==> " + task.getException());
+    }
+   }
+  });
+ }
+ 
+ 
+ private void fetchRequestByMe(AdapterRequestedItems adapterRequestedItems, String requestType, boolean requestedAccepted)
+ {
+  FirebaseFirestore.getInstance().collection(FragmentNotifications.NOTIFICATIONS_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<QuerySnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     for(DocumentSnapshot snapshot : task.getResult())
+     {
+      FirebaseNotificationTemplate template = snapshot.toObject(FirebaseNotificationTemplate.class);
+      
+      if(template.getReceiverId().equals(myId) && template.getType().equals(requestType) && template.isItemTaken() == false)
+      {
+       FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(template.getItemId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+       {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task)
+        {
+         ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
+         RequestedItemsTemplate requestedItemsTemplate = new RequestedItemsTemplate(
+          item.getImage(),
+          item.getTitle(),
+          1,
+          task.getResult().getId(),
+          requestType,
+          snapshot.getId(),
+          "");
+         adapterRequestedItems.insertItems(requestedItemsTemplate);
+        }
+       });
+      }
+     }
+    }
+    else
+    {
+     Log.d(TAG, "onComplete: Error while receiving ==> " + task.getException());
+    }
+   }
+  });
+ }
+ 
+ private void fetchReceivedItemImageAndSetToAdapter(HashMap<String, Integer> hashMap, AdapterRequestedItems adapter, String requestType)
+ {
+  for(Map.Entry<String, Integer> entry : hashMap.entrySet())
+  {
+   String itemId = entry.getKey();
+   
+   FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(itemId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+   {
+    @Override
+    public void onComplete(@NonNull Task<DocumentSnapshot> task)
+    {
+     if(task.isSuccessful())
+     {
+      ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
+      RequestedItemsTemplate template = new RequestedItemsTemplate(item.getImage(), item.getTitle(), entry.getValue(), task.getResult().getId(), requestType, "NA", task.getResult().getId());
+      adapter.insertItems(template);
+     }
+    }
+   });
+  }
  }
  
  
  private void setRandomTemplates(AdapterRequestedItems adapter)
  {
-  
   Random random = new Random();
-  
   for(RequestedItemsTemplate template : FragmentRequestList.getTemplates(random.nextInt(18)))
   {
    adapter.insertItems(template);
   }
   
  }
+ 
  
  private void setInitialToggle()
  {
@@ -202,7 +292,6 @@ public class FragmentNotifications2 extends Fragment
   
   toggledStatus2 = toggleView(linearLayout2, false, toggle2);
   toggledStatus3 = toggleView(linearLayout3, false, toggle3);
-  toggledStatus4 = toggleView(linearLayout4, false, toggle4);
  }
  
  private void setListeners()
@@ -237,14 +326,6 @@ public class FragmentNotifications2 extends Fragment
   });
   
   
-  toggle4.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    toggledStatus4 = toggleView(linearLayout4, toggledStatus4, toggle4);
-   }
-  });
  }
  
  

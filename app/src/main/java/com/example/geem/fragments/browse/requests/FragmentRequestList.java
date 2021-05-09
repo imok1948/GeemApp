@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.geem.R;
+import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.notifications.FragmentNotifications;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,7 +76,7 @@ public class FragmentRequestList extends Fragment
   
   for(int i = 0; i < n; i++)
   {
-   templateList.add(new RequestedItemsTemplate(urls[random.nextInt(urls.length)], names[random.nextInt(names.length)], random.nextInt(100), ""));
+   templateList.add(new RequestedItemsTemplate(urls[random.nextInt(urls.length)], names[random.nextInt(names.length)], random.nextInt(100), "", Variables.NOTIFICATION_TYPE_REQUEST, "", "NA"));
   }
   return templateList;
  }
