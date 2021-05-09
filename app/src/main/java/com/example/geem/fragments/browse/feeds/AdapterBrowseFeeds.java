@@ -82,7 +82,13 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
   templateList.add(template);
   notifyItemInserted(templateList.size() - 1);
  }
- 
+
+ public void clear() {
+  int size = templateList.size();
+  templateList.clear();
+  notifyItemRangeRemoved(0, size);
+ }
+
  
  class BrowseFeedsHolder extends RecyclerView.ViewHolder
  {
