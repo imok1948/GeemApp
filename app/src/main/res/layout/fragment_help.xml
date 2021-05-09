@@ -12,7 +12,7 @@
     android:layout_height="match_parent"
     android:foreground="@color/overlay_light_80"
     android:scaleType="centerCrop"
-    android:src="@drawable/profile_pic" />
+    android:src="@drawable/backlogo" />
 
   <LinearLayout
     android:layout_width="match_parent"
