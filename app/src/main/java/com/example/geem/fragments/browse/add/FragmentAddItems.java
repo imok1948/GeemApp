@@ -94,7 +94,7 @@ public class FragmentAddItems extends Fragment
   if(((MainActivity) getActivity()).checkLoggedIn())
   {
    userId = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
-   Toast.makeText(getContext(), "Welcome : " + userId, Toast.LENGTH_SHORT).show();
+   //Toast.makeText(getContext(), "Welcome : " + userId, Toast.LENGTH_SHORT).show();
    firebaseFireStore = FirebaseFirestore.getInstance();
    storageRef = FirebaseStorage.getInstance().getReference();
    

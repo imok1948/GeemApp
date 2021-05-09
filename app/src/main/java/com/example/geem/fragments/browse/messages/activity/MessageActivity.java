@@ -77,8 +77,8 @@ public class MessageActivity extends AppCompatActivity
   {
    MY_ID = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
    OTHER_ID = getIntent().getStringExtra(Variables.OTHER_ID);
-   Toast.makeText(getApplicationContext(), "Welcome : " + MY_ID, Toast.LENGTH_SHORT).show();
-   Toast.makeText(getApplicationContext(), "MyId : " + MY_ID + ", OtherId : " + OTHER_ID, Toast.LENGTH_SHORT).show();
+   //Toast.makeText(getApplicationContext(), "Welcome : " + MY_ID, Toast.LENGTH_SHORT).show();
+   //Toast.makeText(getApplicationContext(), "MyId : " + MY_ID + ", OtherId : " + OTHER_ID, Toast.LENGTH_SHORT).show();
    Log.d(TAG, "onCreate: MY_ID : " + MY_ID + ", OTHER_ID : " + OTHER_ID);
    initializeComponents();
    getSupportActionBar().hide();

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.geem.R;
+import com.example.geem.activities.ActivityShowUserProfile;
 import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageActivity;
@@ -160,6 +161,18 @@ public class ActivityViewItem extends AppCompatActivity
     DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
     Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
     user.setText(template.getName());
+    
+    findViewById(R.id.item_owner_layout).setOnClickListener(new View.OnClickListener()
+    {
+     @Override
+     public void onClick(View view)
+     {
+      Intent intent = new Intent(getApplicationContext(), ActivityShowUserProfile.class);
+      intent.putExtra(Variables.OTHER_ID, otherId);
+      startActivity(intent);
+     }
+    });
+    
    }
   });
  }
@@ -182,7 +195,8 @@ public class ActivityViewItem extends AppCompatActivity
      @Override
      public void onComplete(@NonNull Task<Void> task)
      {
-      Toast.makeText(getApplicationContext(), "Item requested ==> " + template, Toast.LENGTH_SHORT).show();
+      // Toast.makeText(getApplicationContext(), "Item requested ==> " + template, Toast.LENGTH_SHORT).show();
+      Toast.makeText(getApplicationContext(), "Item Requested successfully", Toast.LENGTH_SHORT).show();
       Log.d(TAG, "onComplete: Item requested ==> " + template);
      }
     });
@@ -201,16 +215,6 @@ public class ActivityViewItem extends AppCompatActivity
    }
   });
   
-  
-  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-  fab.setOnClickListener(new View.OnClickListener()
-  {
-   @Override
-   public void onClick(View view)
-   {
-    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-   }
-  });
  }
  
  private void init()
@@ -236,8 +240,6 @@ public class ActivityViewItem extends AppCompatActivity
   proximity = detailsTile.findViewById(R.id.item_proximity);
   description = detailsTile.findViewById(R.id.item_description);
   user = detailsTile.findViewById(R.id.item_owner);
-  
-  
  }
  
  

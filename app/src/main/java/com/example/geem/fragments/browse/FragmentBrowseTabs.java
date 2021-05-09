@@ -57,7 +57,7 @@ public class FragmentBrowseTabs extends Fragment
   
   try
   {
-   Toast.makeText(getContext(), "Welcome : " + FirebaseAuth.getInstance().getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+   //Toast.makeText(getContext(), "Welcome : " + FirebaseAuth.getInstance().getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
   }
   catch(Exception e)
   {
