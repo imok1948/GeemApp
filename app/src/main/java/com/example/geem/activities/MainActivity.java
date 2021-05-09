@@ -5,12 +5,22 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.geem.R;
+import com.example.geem.extra.Variables;
+import com.example.geem.fragments.browse.notifications.DummyTemplate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import androidx.core.app.ActivityCompat;
 import androidx.annotation.NonNull;
@@ -69,6 +79,48 @@ public class MainActivity extends AppCompatActivity
   NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
   NavigationUI.setupWithNavController(navigationView, navController);
   
+  if(FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().getUid() != null)
+  {
+  
+  }
+  else
+  {
+   navController.navigate(R.id.nav_profile);
+  }
+  
+  try
+  {
+   setInfoToNavBar();
+  }
+  catch(Exception e)
+  {
+   navController.navigate(R.id.nav_profile);
+  }
+ }
+ 
+ 
+ private void setInfoToNavBar() throws Exception
+ {
+  
+  View view = ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0);
+  
+  TextView name = view.findViewById(R.id.nav_header_full_name);
+  CircularImageView imageView = view.findViewById(R.id.nav_header_profile_pic);
+  
+  String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+  FirebaseFirestore.getInstance().collection(Variables.PROFILE_COLLECTION_NAME).document(myId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     DummyTemplate profileTemplate = task.getResult().toObject(DummyTemplate.class);
+     name.setText(profileTemplate.getName());
+     Glide.with(getApplicationContext()).load(profileTemplate.getProfilePictureUrl()).placeholder(R.drawable.rahul_profile).error(R.drawable.elon).into(imageView);
+    }
+   }
+  });
  }
  
  public boolean checkLoggedIn()

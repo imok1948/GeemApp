@@ -1,4 +1,4 @@
-package com.example.geem.activities;
+package com.example.geem.fragments.browse.add;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -39,7 +39,7 @@ public class VerticalStepperTestActivity extends AppCompatActivity implements St
  {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_vertical_form_stepper);
-  
+ 
   titleStep = new TitleStep("Title");
   descriptionStep = new DescriptionStep("Description");
   photoStep = new PhotoStep("Photos");

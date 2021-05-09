@@ -15,32 +15,35 @@
 
   <application
     android:allowBackup="true"
-    android:icon="@drawable/ic_app_launcher_ying_yang"
-    android:label="@string/app_name"
-    android:roundIcon="@drawable/ic_app_launcher_ying_yang"
+    android:icon="@drawable/logo"
+    android:label="GEEM"
+    android:roundIcon="@drawable/logo"
     android:supportsRtl="true"
     android:theme="@style/Theme.GEEM">
-    <activity android:name=".fragments.browse.requests.activity.ActivityRequesters"></activity>
-    <activity android:name=".activities.ActivityShowUserProfile"></activity>
+    <activity android:name=".fragments.browse.history.history.activity.ActivityViewDetailedHistory"></activity>
+    <activity android:name=".fragments.browse.requests.activity.ActivityRequesters" />
+    <activity android:name=".activities.ActivityShowUserProfile" />
     <activity android:name=".Onboarding" />
-    <activity android:name=".Splash" />
-    <activity
-      android:name=".fragments.browse.feeds.activity.ActivityViewItem"
-      android:label="@string/title_activity_scrolling"
-      android:theme="@style/Theme.GEEM.NoActionBar"></activity>
-    <activity android:name=".fragments.browse.messages.activity.MessageActivity" />
-    <activity
-      android:name=".activities.MainActivity"
-      android:label="@string/title_activity_navigation_drawer_temp"
-      android:theme="@style/Theme.GEEM.NoActionBar">
+    <activity android:name=".Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+      android:name=".fragments.browse.feeds.activity.ActivityViewItem"
+      android:label="@string/title_activity_scrolling"
+      android:theme="@style/Theme.GEEM.NoActionBar" />
+    <activity android:name=".fragments.browse.messages.activity.MessageActivity" />
+    <activity
+      android:name=".activities.MainActivity"
+      android:label="@string/title_activity_navigation_drawer_temp"
+      android:theme="@style/Theme.GEEM.NoActionBar">
+
+    </activity>
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
-    <activity android:name=".activities.VerticalStepperTestActivity"></activity>
+    <activity android:name=".fragments.browse.add.VerticalStepperTestActivity" />
 
     <meta-data
       android:name="com.google.android.geo.API_KEY"

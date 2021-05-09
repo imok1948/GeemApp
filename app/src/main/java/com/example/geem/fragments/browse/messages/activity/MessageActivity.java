@@ -20,7 +20,6 @@ import com.example.geem.R;
 import com.example.geem.activities.ActivityShowUserProfile;
 import com.example.geem.extra.TimeDetails;
 import com.example.geem.extra.Variables;
-import com.example.geem.fragments.browse.messages.ChatPeople;
 import com.example.geem.fragments.browse.notifications.DummyTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

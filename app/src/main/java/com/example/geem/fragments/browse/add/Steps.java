@@ -1,4 +1,4 @@
-package com.example.geem.activities;
+package com.example.geem.fragments.browse.add;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +31,7 @@ import ernestoyaquello.com.verticalstepperform.Step;
 
 class TitleStep extends Step<String>
 {
+ private static final String TAG = "TitleStep";
  
  EditText userNameView;
  
@@ -334,7 +335,6 @@ class PhotoStep extends Step<String>
  @Override
  protected View createStepContentLayout()
  {
-  
   recyclerViewList = new RecyclerView(getContext());
   recyclerViewList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
   

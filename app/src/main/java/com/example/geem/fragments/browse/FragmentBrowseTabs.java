@@ -6,18 +6,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.example.geem.activities.MainActivity;
+import com.example.geem.fragments.browse.notifications.DummyTemplate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 
 public class FragmentBrowseTabs extends Fragment
@@ -62,11 +71,10 @@ public class FragmentBrowseTabs extends Fragment
   }
   else
   {
-   tabLayout.selectTab(tabLayout.getTabAt(1));
+   tabLayout.selectTab(tabLayout.getTabAt(2));
   }
   return root;
  }
- 
  
  @Override
  public void onSaveInstanceState(@NonNull Bundle outState)

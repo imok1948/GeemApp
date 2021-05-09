@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginLeft="@dimen/spacing_middle"
+  android:layout_marginTop="@dimen/spacing_medium"
+  android:layout_marginRight="@dimen/spacing_middle"
+  android:layout_marginBottom="@dimen/spacing_medium"
+  android:visibility="visible"
+  app:cardCornerRadius="2dp"
+  app:cardElevation="2dp">
+
+
+  <LinearLayout
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/rahul_profile" />
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/spacing_large"
+      android:text="Watch"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+
+    <TextView
+      android:id="@+id/description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/spacing_large"
+      android:layout_marginRight="@dimen/spacing_large"
+      android:layout_marginBottom="5dp"
+      android:text="Watch in good condition"
+      android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+      android:textColor="@color/grey_60" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginLeft="@dimen/spacing_large"
+      android:background="@color/black" />
+  </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
