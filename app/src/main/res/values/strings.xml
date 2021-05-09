@@ -29,7 +29,28 @@
     <item>Accessories</item>
     <item>Other</item>
   </string-array>
-
+    <string-array name="category_items">
+        <item>All</item>
+        <item>Clothes</item>
+        <item>Furniture</item>
+        <item>Books or Stationary</item>
+        <item>Decorations</item>
+        <item>Household items</item>
+        <item>Groceries</item>
+        <item>Toys</item>
+        <item>Electronics</item>
+        <item>Accessories</item>
+        <item>Other</item>
+    </string-array>
+<string-array name="nearby_items">
+    <item>5 kms</item>
+    <item>10 kms</item>
+    <item>20 kms</item>
+    <item>50 kms</item>
+    <item>100 kms</item>
+    <item>500 kms</item>
+    <item>1000 kms</item>
+</string-array>
   <string-array name="str2">
     <item>Books</item>
     <item>Phone</item>

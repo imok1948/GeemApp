@@ -65,13 +65,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_anchor="@+id/relativeLayout"
+        android:gravity="center"
         app:layout_anchorGravity="center">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feeds_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="656dp"
-            android:layout_alignParentTop="true"
+
             android:layout_marginTop="75dp"
             android:scrollbars="none"
             android:scrollingCache="true" />

@@ -73,7 +73,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Keyword"
+                        android:text="Categories"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_80" />
 
@@ -84,13 +84,15 @@
                         android:background="@android:color/white"
                         android:orientation="vertical">
 
-                        <EditText
+                        <Spinner
+                            android:id = "@+id/category_filter"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/transparent"
                             android:paddingLeft="@dimen/spacing_middle"
                             android:paddingRight="@dimen/spacing_middle"
-                            android:text="Lorem Ipsum" />
+                             />
+
 
                     </LinearLayout>
 
@@ -101,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Variant"
+                        android:text="Nearby Items"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_80" />
 
@@ -113,12 +115,15 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+
+                        <Spinner
+                            android:id="@+id/distance_radius"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:layout_marginLeft="@dimen/spacing_large"
                             android:layout_marginRight="@dimen/spacing_large"
-                            android:text="Select variant" />
+                             />
 
                         <View
                             android:layout_width="0dp"
@@ -137,11 +142,11 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/spacing_large" />
-
+<!--
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Location, city &amp; area"
+                        android:text="City &amp; area"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_80" />
 
@@ -158,12 +163,13 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <EditText
+                                android:id="@+id/pin_code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_large"
                                 android:layout_marginRight="@dimen/spacing_large"
-                                android:text="Select location" />
+                                android:hint="Pin Code" />
 
                             <View
                                 android:layout_width="0dp"
@@ -245,7 +251,7 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </LinearLayout> -->
 
                     <View
                         android:layout_width="0dp"
@@ -254,7 +260,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Location, city &amp; area"
+                        android:text="Order By"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_80" />
 
@@ -276,7 +282,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_large"
                                 android:layout_marginRight="@dimen/spacing_large"
-                                android:text="Promo" />
+                                android:text="Time(Descending)" />
 
                             <View
                                 android:layout_width="0dp"
@@ -285,6 +291,7 @@
 
 
                             <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/time_descending"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/spacing_middle"
@@ -309,7 +316,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_large"
                                 android:layout_marginRight="@dimen/spacing_large"
-                                android:text="Agency" />
+                                android:text="User Ratings" />
 
                             <View
                                 android:layout_width="0dp"
