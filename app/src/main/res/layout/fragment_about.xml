@@ -73,9 +73,9 @@
           android:orientation="vertical">
 
           <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/rahul_profile"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
             app:civ_border_width="2dp"
@@ -103,9 +103,9 @@
           android:orientation="vertical">
 
           <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/shivank"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
             app:civ_border_width="2dp"
@@ -132,9 +132,9 @@
           android:orientation="vertical">
 
           <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/divisha"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
             app:civ_border_width="2dp"
@@ -172,9 +172,9 @@
           android:orientation="vertical">
 
           <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/rishabh"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
             app:civ_border_width="2dp"
@@ -201,9 +201,9 @@
           android:orientation="vertical">
 
           <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/arpit"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
             app:civ_border_width="2dp"
@@ -254,8 +254,8 @@
            android:typeface="serif"
             android:text="GEEM (Giveaway Extras Embracing Minimalism) app is based on the idea to give away extra items which one no longer needs in order to embrace a minimalist lifestyle. This app can henceforth prevent the wastage of items of various categories and can be a one set avenue for their reuse."
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/cyan_800_overlay"
-            android:textSize="20dp"
+            android:textColor="@color/grey_90"
+            android:textSize="15dp"
 
 
             android:textAlignment="center"
@@ -278,7 +278,7 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:text="Address"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:typeface="serif"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/grey_90"
@@ -295,7 +295,7 @@
             android:fontFamily="@font/syncopate"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:textColor="@color/cyan_800_overlay"
+            android:textColor="@color/grey_90"
           android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
           />
 
@@ -307,7 +307,7 @@
             android:fontFamily="@font/syncopate"
             android:textStyle="bold"
           android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/cyan_800_overlay" />
+            android:textColor="@color/grey_90"/>
 
 
 
