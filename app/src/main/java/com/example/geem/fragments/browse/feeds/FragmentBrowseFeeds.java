@@ -228,6 +228,7 @@ public class FragmentBrowseFeeds extends Fragment
          feed.setImage(template.getImage());
          feed.setUserid(template.getUserid());
          feed.setItemId(snapshot.getId());
+         feed.setCategory(template.getCategory());
          adapterBrowseFeeds.addItem(feed);
          filterPending = false;
         }
@@ -241,6 +242,7 @@ public class FragmentBrowseFeeds extends Fragment
         feed.setImage(template.getImage());
         feed.setUserid(template.getUserid());
         feed.setItemId(snapshot.getId());
+        feed.setCategory(template.getCategory());
         adapterBrowseFeeds.addItem(feed);
         filterPending = false;
        }
@@ -294,6 +296,7 @@ public class FragmentBrowseFeeds extends Fragment
          feed.setImage(template.getImage());
          feed.setUserid(template.getUserid());
          feed.setItemId(snapshot.getId());
+         feed.setCategory(template.getCategory());
          adapterBrowseFeeds.addItem(feed);
          filterPending = false;
         }
@@ -307,6 +310,7 @@ public class FragmentBrowseFeeds extends Fragment
         feed.setImage(template.getImage());
         feed.setUserid(template.getUserid());
         feed.setItemId(snapshot.getId());
+        feed.setCategory(template.getCategory());
         adapterBrowseFeeds.addItem(feed);
         filterPending = false;
        }

@@ -50,7 +50,9 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
  {
   FeedsTemplate template = templateList.get(position);
   holder.distance.setText(new DecimalFormat("##.#").format(template.getDistance()) + " kms away");
+  Log.i("DIST",new DecimalFormat("##.#").format(template.getDistance()) + " kms away");
   holder.itemTitle.setText(template.getTitle());
+  holder.category.setText("in "+ template.getCategory());
   Glide.with(holder.itemImage.getContext()).load(template.getImage()).into(holder.itemImage);
   
   
@@ -92,7 +94,7 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
  
  class BrowseFeedsHolder extends RecyclerView.ViewHolder
  {
-  TextView itemTitle, distance;
+  TextView itemTitle, distance,category;
   ImageView itemImage;
   
   View view;
@@ -104,6 +106,9 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
    itemTitle = view.findViewById(R.id.item_title);
    itemImage = view.findViewById(R.id.item_image);
    distance = view.findViewById(R.id.distance);
+   category = view.findViewById(R.id.item_category);
+
+
   }
  }
 }
