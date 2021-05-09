@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@android:color/white"
+  android:background="@drawable/one"
   android:fitsSystemWindows="true"
   android:orientation="vertical"
 
@@ -86,18 +86,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Adams G"
+            android:text="Rahul Meena"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_90"
             app:fontFamily="sans-serif-medium" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Executive Officer"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
+
 
         </LinearLayout>
 
@@ -122,18 +116,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Betty L"
+            android:text="Shivank Agrahari"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_90"
             app:fontFamily="sans-serif-medium" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Marketing"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
 
         </LinearLayout>
 
@@ -158,18 +145,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Roberts"
+            android:text="Divisha Bisht"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_90"
             app:fontFamily="sans-serif-medium" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Business Analyst"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
 
         </LinearLayout>
 
@@ -205,18 +185,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Miller W"
+            android:text="Rishabh Bafna"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_90"
             app:fontFamily="sans-serif-medium" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="UX Designer"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
 
         </LinearLayout>
 
@@ -241,56 +214,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Kevin John"
+            android:text="Arpit Saxena"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_90"
             app:fontFamily="sans-serif-medium" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Web Developer"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
+
 
         </LinearLayout>
 
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:orientation="vertical">
-
-          <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/profile_pic"
-            app:civ_border="true"
-            app:civ_border_color="@color/grey_10"
-            app:civ_border_width="2dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="0" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Laura M"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_90"
-            app:fontFamily="sans-serif-medium" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mobile Dev"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light" />
-
-        </LinearLayout>
 
       </LinearLayout>
 
@@ -308,19 +240,26 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center"
-          android:text="Mission"
+          android:text="Vision"
+            android:textSize="18dp"
+            android:typeface="serif"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/grey_90"
           app:fontFamily="sans-serif-medium" />
 
         <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/spacing_large"
-          android:text="@string/long_lorem_ipsum"
-          android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-          android:textColor="@color/grey_60"
-          app:fontFamily="sans-serif-light" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+           android:typeface="serif"
+            android:text="GEEM (Giveaway Extras Embracing Minimalism) app is based on the idea to give away extra items which one no longer needs in order to embrace a minimalist lifestyle. This app can henceforth prevent the wastage of items of various categories and can be a one set avenue for their reuse."
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/cyan_800_overlay"
+            android:textSize="20dp"
+
+
+            android:textAlignment="center"
+            app:fontFamily="sans-serif-light" />
 
       </LinearLayout>
 
@@ -339,38 +278,38 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:text="Address"
+            android:textSize="18dp"
+            android:typeface="serif"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/grey_90"
+
           app:fontFamily="sans-serif-medium" />
 
-        <fragment
-          android:id="@+id/map"
-          android:name="com.google.android.gms.maps.SupportMapFragment"
-          android:layout_width="match_parent"
-          android:layout_height="150dp"
-          android:layout_marginTop="@dimen/spacing_large" />
+
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/spacing_middle"
-          android:text="3265  Hinkle Deegan Lake Road, Dundee"
+          android:text="MOBILE COMPUTING 2021"
+            android:fontFamily="@font/syncopate"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/cyan_800_overlay"
           android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-          android:textColor="@color/grey_60" />
+          />
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="New York, United State"
+          android:text="IIIT Delhi"
+            android:textAlignment="center"
+            android:fontFamily="@font/syncopate"
+            android:textStyle="bold"
           android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-          android:textColor="@color/grey_60" />
+            android:textColor="@color/cyan_800_overlay" />
 
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="14837"
-          android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-          android:textColor="@color/grey_60" />
+
 
 
       </LinearLayout>
