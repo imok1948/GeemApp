@@ -29,9 +29,9 @@ public class FragmentHelp extends Fragment
  
  private ViewPager viewPager;
  private MyViewPagerAdapter myViewPagerAdapter;
- private String about_title_array[] = {"Ready to Travel", "Pick the Ticket", "Flight to Destination", "Enjoy Holiday"};
- private String about_description_array[] = {"Choose your destination, plan Your trip. Pick the best place for Your holiday", "Select the day, pick Your ticket. We give you the best prices. We guarantee!", "Safe and Comfort flight is our priority. Professional crew and services.", "Enjoy your holiday, Dont forget to feel the moment and take a photo!",};
- private int about_images_array[] = {R.drawable.fib, R.drawable.elon, R.drawable.common_google_signin_btn_icon_dark_normal, R.drawable.profile_pic};
+ private String about_title_array[] = {"Giveaway Items", "Browse Categories", "Thanks and Ratings", "Minimalist Lifestyle"};
+ private String about_description_array[] = {"A place to Giveaway items you no longer Need", "Browse items of various categories for Reuse", "Thanks on item GiveAway and User Ratings", "Journey of a Minimalist Lifestyle starts Here",};
+ private int about_images_array[] = {R.drawable.slide1, R.drawable.slide2,R.drawable.slide3, R.drawable.slide4};
  
  
  View root;
@@ -39,7 +39,7 @@ public class FragmentHelp extends Fragment
  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   root = inflater.inflate(R.layout.fragment_help, container, false);
-  Toast.makeText(getContext(), "Help & Feedback Fragment", Toast.LENGTH_SHORT).show();
+ // Toast.makeText(getContext(), "Help & Feedback Fragment", Toast.LENGTH_SHORT).show();
   
   
   viewPager = (ViewPager) root.findViewById(R.id.view_pager);
