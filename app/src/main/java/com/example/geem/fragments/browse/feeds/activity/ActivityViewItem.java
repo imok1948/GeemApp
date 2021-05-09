@@ -20,6 +20,8 @@ import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageActivity;
 import com.example.geem.fragments.browse.notifications.DummyTemplate;
+import com.example.geem.fragments.browse.notifications.FragmentNotifications;
+import com.example.geem.fragments.browse.notifications.NotificationTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
@@ -44,6 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
 public class ActivityViewItem extends AppCompatActivity
 {
@@ -93,6 +96,7 @@ public class ActivityViewItem extends AppCompatActivity
   {
    e.printStackTrace();
    Log.d(TAG, "onCreate: Unable to get user id" + otherId);
+   finish();
   }
   
   setContentView(R.layout.activity_view_item);
@@ -170,10 +174,20 @@ public class ActivityViewItem extends AppCompatActivity
    @Override
    public void onClick(View view)
    {
-    Toast.makeText(getApplicationContext(), "Requesting item, with other id : " + otherId + " Change logic at" + Thread.currentThread().getStackTrace()[2].getLineNumber(), Toast.LENGTH_SHORT).show();
+    //Toast.makeText(getApplicationContext(), "Requesting item, with other id : " + otherId + " Change logic at" + Thread.currentThread().getStackTrace()[2].getLineNumber(), Toast.LENGTH_SHORT).show();
     Log.d(TAG, "onClick: Requesting item, change with suitable logic at line number : " + Thread.currentThread().getStackTrace()[2].getLineNumber());
     
+    NotificationTemplate template = new NotificationTemplate(new Date().getTime(), Variables.NOTIFICATION_TYPE_REQUEST, myId, otherId, itemId);
     
+    FirebaseFirestore.getInstance().collection(Variables.NOTIFICATIONS_COLLECTION_NAME).document().set(template).addOnCompleteListener(new OnCompleteListener<Void>()
+    {
+     @Override
+     public void onComplete(@NonNull Task<Void> task)
+     {
+      Toast.makeText(getApplicationContext(), "Item requested ==> " + template, Toast.LENGTH_SHORT).show();
+      Log.d(TAG, "onComplete: Item requested ==> " + template);
+     }
+    });
    }
   });
   

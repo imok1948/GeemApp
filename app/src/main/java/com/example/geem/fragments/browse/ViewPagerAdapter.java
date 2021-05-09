@@ -10,6 +10,7 @@ import com.example.geem.fragments.browse.feeds.FragmentBrowseFeeds;
 import com.example.geem.fragments.browse.history.FragmentBrowseHistory;
 import com.example.geem.fragments.browse.messages.FragmentBrowseMessages;
 import com.example.geem.fragments.browse.notifications.FragmentNotifications;
+import com.example.geem.fragments.browse.notifications.FragmentNotifications2;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter
 {
@@ -33,7 +34,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
     fragment = new FragmentBrowseMessages();
     break;
    case 1:
-    fragment = new FragmentNotifications();
+    fragment = new FragmentNotifications2();
     break;
    case 2:
     fragment = new FragmentBrowseFeeds();

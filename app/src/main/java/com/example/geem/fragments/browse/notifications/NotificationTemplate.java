@@ -10,6 +10,11 @@ public class NotificationTemplate
  private boolean requestAccepted;
  private boolean itemTaken;
  
+ public NotificationTemplate()
+ {
+  //Required
+ }
+ 
  public NotificationTemplate(long timestamp, String type, String senderId, String receiverId, String itemId, boolean requestAccepted, boolean itemTaken)
  {
   this.timestamp = timestamp;

@@ -38,11 +38,11 @@ public class FragmentRequester extends Fragment
   recyclerView = view.findViewById(R.id.recycler_view);
   recyclerView.setAdapter(adapterRequester);
   recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-  adapterRequester.addItem(getTemplateList());
+  adapterRequester.addItem(getTemplateList(10));
  }
  
  
- private List<RequesterTemplate> getTemplateList()
+ static public List<RequesterTemplate> getTemplateList(int n)
  {
   Random random = new Random();
   String[] names = new String[]{"Kirti Sanon", "Ajay Devgon", "Rishabh Patil", "Jayamurity Desikanchan Chandra Mukha Vijay", "Vijay", "Ram"};
@@ -53,7 +53,7 @@ public class FragmentRequester extends Fragment
   
   
   List<RequesterTemplate> templates = new ArrayList<>();
-  for(int i = 0; i < 50; i++)
+  for(int i = 0; i < n; i++)
   {
    templates.add(new RequesterTemplate(profilePictureLinks[random.nextInt(profilePictureLinks.length)], names[random.nextInt(names.length)], addresses[random.nextInt(addresses.length)]));
   }

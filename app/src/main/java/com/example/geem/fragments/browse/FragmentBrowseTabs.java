@@ -62,7 +62,7 @@ public class FragmentBrowseTabs extends Fragment
   }
   else
   {
-   tabLayout.selectTab(tabLayout.getTabAt(0));
+   tabLayout.selectTab(tabLayout.getTabAt(1));
   }
   return root;
  }

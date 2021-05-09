@@ -2,18 +2,26 @@ package com.example.geem.fragments.browse.requests;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.geem.R;
+import com.example.geem.fragments.browse.notifications.FragmentNotifications;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -26,8 +34,8 @@ public class FragmentRequestList extends Fragment
  
  private RecyclerView recyclerView;
  private AdapterRequestedItems adapterRequestedItems;
- 
  private View view;
+ 
  
  @Override
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -46,14 +54,14 @@ public class FragmentRequestList extends Fragment
   recyclerView.setHasFixedSize(true);
   recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
   
-  for(RequestedItemsTemplate template : getTemplates())
+  for(RequestedItemsTemplate template : getTemplates(10))
   {
    adapterRequestedItems.insertItems(template);
   }
  }
  
  
- private List<RequestedItemsTemplate> getTemplates()
+ static public List<RequestedItemsTemplate> getTemplates(int n)
  {
   
   String[] names = new String[]{
@@ -65,9 +73,9 @@ public class FragmentRequestList extends Fragment
   Random random = new Random();
   List<RequestedItemsTemplate> templateList = new ArrayList<>();
   
-  for(int i = 0; i < 20; i++)
+  for(int i = 0; i < n; i++)
   {
-   templateList.add(new RequestedItemsTemplate(urls[random.nextInt(urls.length)], names[random.nextInt(names.length)], random.nextInt(100)));
+   templateList.add(new RequestedItemsTemplate(urls[random.nextInt(urls.length)], names[random.nextInt(names.length)], random.nextInt(100), ""));
   }
   return templateList;
  }

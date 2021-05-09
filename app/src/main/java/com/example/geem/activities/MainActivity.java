@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity
  public static final int GPS_REQUEST_CODE = 101;
  public static final int NET_REQUEST_CODE = 102;
  
+ 
+ //For passing data to fragments
+ public HashMap<String, String> dataHashMap = new HashMap<>();
+ 
  @Override
  protected void onCreate(Bundle savedInstanceState)
  {
@@ -42,15 +46,15 @@ public class MainActivity extends AppCompatActivity
   setContentView(R.layout.activity_main);
   if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
   {
-
+   
    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
   if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
   {
-
+   
    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
   }
-
+  
   Toolbar toolbar = findViewById(R.id.toolbar);
   setSupportActionBar(toolbar);
   

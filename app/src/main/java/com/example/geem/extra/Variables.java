@@ -1,6 +1,7 @@
 package com.example.geem.extra;
 
 import com.example.geem.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Variables
 {
@@ -20,6 +21,24 @@ public class Variables
  
  public static final String ITEM_ID = "ITEM_ID";
  public static final String OTHER_ID = "OTHER_ID";
- 
  public static final String OWNER_ID = "OWNER_ID";
+ 
+ 
+ public static final String MESSAGE_COLLECTION_NAME = "messages";
+ public static final String PROFILE_COLLECTION_NAME = "dummy_profiles_do_not_delete";
+ public static final String FEEDS_COLLECTION_NAME = "fetch_items_final";
+ public static final String NOTIFICATIONS_COLLECTION_NAME = "notifications";
+ public static final String NOTIFICATION_TYPE_REQUEST = "request";
+ public static final String NOTIFICATION_TYPE_RESPONSE = "response";
+ public static final String NEW_FEEDS_COLLECTION_NAME = "fetch_items_final";
+ 
+ public static final String getMyId() throws Exception
+ {
+  return FirebaseAuth.getInstance().getCurrentUser().getUid();
+ }
+ 
+ public static boolean isLoggedIn()
+ {
+  return FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().getUid() != null;
+ }
 }

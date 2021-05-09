@@ -19,14 +19,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.geem.R;
+import com.example.geem.activities.MainActivity;
+import com.example.geem.extra.FeildsNames;
 import com.example.geem.extra.ShivankUserItems;
+import com.example.geem.extra.Variables;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class FragmentBrowseFeeds extends Fragment
@@ -40,11 +43,9 @@ public class FragmentBrowseFeeds extends Fragment
  
  
  //Firebase
- private static final String FEEDS_COLLECTION_NAME = "fetch_items_final";
- 
+ private String myId;
  
  //GPS Things
- 
  private LocationManager locationManager;
  private Location currentLocation;
  public static final int GPS_REQUEST_CODE = 101;
@@ -62,11 +63,20 @@ public class FragmentBrowseFeeds extends Fragment
   
   dialog = new ProgressDialog(getContext());
   dialog.setMessage("Loading...");
-  dialog.show();
   
-  boolean loggedIn = true;
-  if(loggedIn)
+  if(Variables.isLoggedIn())
   {
+   try
+   {
+    myId = Variables.getMyId();
+    Log.d(TAG, "onCreateView: My id ==> " + myId);
+   }
+   catch(Exception e)
+   {
+    Log.d(TAG, "onCreateView: Error assigning user id ==> ");
+    e.printStackTrace();
+    ((MainActivity) getActivity()).navController.navigate(R.id.nav_profile);
+   }
    init();
    initializeComponents();
    getUserLocation();
@@ -81,7 +91,7 @@ public class FragmentBrowseFeeds extends Fragment
  
  private void initializeFirebase()
  {
-  FirebaseFirestore.getInstance().collection(FEEDS_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+  FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).orderBy(FeildsNames.TIME_STAMP, Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
    @Override
    public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -92,28 +102,32 @@ public class FragmentBrowseFeeds extends Fragment
      
      for(DocumentSnapshot snapshot : task.getResult())
      {
-      
       ShivankUserItems template = snapshot.toObject(ShivankUserItems.class);
       
-      Log.d(TAG, "onComplete: Snapshot : " + snapshot.toObject(ShivankUserItems.class));
       
-      double itemLatitude = template.getLatitude();
-      double itemLongitude = template.getLongitude();
-      
-      Location itemLocation = new Location("");
-      itemLocation.setLatitude(itemLatitude);
-      itemLocation.setLongitude(itemLongitude);
-      float distance = currentLocation.distanceTo(itemLocation) / 1000;
-      
-      FeedsTemplate feed = new FeedsTemplate();
-      feed.setDistance(distance);
-      feed.setTitle(template.getTitle());
-      feed.setImage(template.getImage());
-      
-      feed.setUserid(template.getUserid());
-      feed.setItemId(snapshot.getId());
-      
-      adapterBrowseFeeds.addItem(feed);
+      Log.d(TAG, "onComplete: Template Received ==> " + template);
+      if(!template.getUserid().equals(myId) && template.isIsavailable())
+      {
+       Log.d(TAG, "onComplete: Snapshot : " + template);
+       
+       double itemLatitude = template.getLatitude();
+       double itemLongitude = template.getLongitude();
+       
+       Location itemLocation = new Location("");
+       itemLocation.setLatitude(itemLatitude);
+       itemLocation.setLongitude(itemLongitude);
+       float distance = currentLocation.distanceTo(itemLocation) / 1000;
+       
+       FeedsTemplate feed = new FeedsTemplate();
+       feed.setDistance(distance);
+       feed.setTitle(template.getTitle());
+       feed.setImage(template.getImage());
+       
+       feed.setUserid(template.getUserid());
+       feed.setItemId(snapshot.getId());
+       
+       adapterBrowseFeeds.addItem(feed);
+      }
      }
     }
     else
@@ -163,6 +177,7 @@ public class FragmentBrowseFeeds extends Fragment
    currentLocation = location;
    Log.d(TAG, "onLocationChanged: Lat ==> " + location.getLatitude() + ", Long ==> " + location.getLongitude());
    initializeFirebase();
+   locationManager.removeUpdates(mLocationListener);
   }
   
   @Override

@@ -125,7 +125,6 @@ class TitleStep extends Step<String>
 
 class DescriptionStep extends Step<String>
 {
- 
  EditText userNameView;
  
  public DescriptionStep(String title)
@@ -221,7 +220,6 @@ class DescriptionStep extends Step<String>
 
 class AddressStep extends Step<String>
 {
- 
  EditText userNameView;
  
  public AddressStep(String title)
@@ -317,9 +315,7 @@ class AddressStep extends Step<String>
 
 class PhotoStep extends Step<String>
 {
- 
  EditText userNameView;
- 
  ImageView imageView;
  RecyclerView recyclerViewList;
  HorizontalImageShow recyclerAdapter;

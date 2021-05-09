@@ -13,7 +13,7 @@ public class ShivankUserItems implements Serializable
  private String title;
  private String userid;
  private String geohash;
- private boolean isAvailable;
+ private boolean isavailable;
  private double latitude;
  private double longitude;
  
@@ -22,7 +22,7 @@ public class ShivankUserItems implements Serializable
   //Do not delete
  }
  
- public ShivankUserItems(String address, String category, String description, String image, String title, String userid, String geoHash, boolean isAvailable, double latitude, double longitude)
+ public ShivankUserItems(String address, String category, String description, String image, String title, String userid, String geoHash, boolean isavailable, double latitude, double longitude)
  {
   this.address = address;
   this.category = category;
@@ -31,7 +31,7 @@ public class ShivankUserItems implements Serializable
   this.title = title;
   this.userid = userid;
   this.geohash = geoHash;
-  this.isAvailable = isAvailable;
+  this.isavailable = isavailable;
   this.latitude = latitude;
   this.longitude = longitude;
  }
@@ -39,7 +39,7 @@ public class ShivankUserItems implements Serializable
  @Override
  public String toString()
  {
-  return "ShivankUserItems{" + "address='" + address + "'\n" + ", category='" + category + "'\n" + ", description='" + description + "'\n" + ", image='" + image + "'\n" + ", timestamp=" + timestamp + ", title='" + title + "'\n" + ", userid='" + userid + "'\n" + ", geohash='" + geohash + "'\n" + ", isAvailable=" + isAvailable + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+  return "ShivankUserItems{" + "address='" + address + "'\n" + ", category='" + category + "'\n" + ", description='" + description + "'\n" + ", image='" + image + "'\n" + ", timestamp=" + timestamp + ", title='" + title + "'\n" + ", userid='" + userid + "'\n" + ", geohash='" + geohash + "'\n" + ", isAvailable=" + isavailable + ", latitude=" + latitude + ", longitude=" + longitude + '}';
  }
  
  public String getAddress()
@@ -122,14 +122,14 @@ public class ShivankUserItems implements Serializable
   this.geohash = geoHash;
  }
  
- public boolean isAvailable()
+ public boolean isIsavailable()
  {
-  return isAvailable;
+  return isavailable;
  }
  
- public void setAvailable(boolean available)
+ public void setIsavailable(boolean isavailable)
  {
-  isAvailable = available;
+  this.isavailable = isavailable;
  }
  
  public double getLatitude()

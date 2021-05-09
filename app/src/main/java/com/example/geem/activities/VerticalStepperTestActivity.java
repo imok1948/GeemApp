@@ -22,7 +22,6 @@ public class VerticalStepperTestActivity extends AppCompatActivity implements St
  
  private VerticalStepperFormView verticalStepperForm;
  
- 
  @Override
  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
  {
