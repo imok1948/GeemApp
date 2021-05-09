@@ -58,10 +58,9 @@ public class ActivityShowUserProfile extends AppCompatActivity
    myId = getIntent().getStringExtra(Variables.OTHER_ID);
   }
   
-  
-  this.myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
   initComponents();
-  initializeFirebase(myId);
+  setMyInfo();
+  
  }
  
  private void initComponents()
@@ -75,6 +74,7 @@ public class ActivityShowUserProfile extends AppCompatActivity
     {
      
      int[] ratings = new int[5];
+     Log.d(TAG, "onComplete: Size ==> " + task.getResult().size());
      
      for(DocumentSnapshot snapshot : task.getResult())
      {
@@ -103,6 +103,27 @@ public class ActivityShowUserProfile extends AppCompatActivity
       totalRaters += ratings[i];
      }
      
+     if(totalRaters == 0)
+     {
+      totalRaters = 99999;
+     }
+     
+     Log.d(TAG, "onComplete: Average ratings of " + myId + ", " + totalRaters + ", " + totalRatings);
+     
+     float averageRatings = totalRatings / (float) totalRaters;
+     averageRating.setText(String.format("%.2f", averageRatings));
+     
+     oneStarRating.setProgress((int) ((ratings[0] / totalRaters) * 100));
+     twoStarRating.setProgress((int) ((ratings[1] / totalRaters)) * 100);
+     threeStarRating.setProgress((int) ((ratings[2] / totalRaters)) * 100);
+     fourStarRating.setProgress((int) ((ratings[3] / totalRaters) * 100));
+     fiveStarRating.setProgress((int) (ratings[4] / totalRaters) * 100);
+     
+     oneStarCount.setText("" + ratings[0]);
+     twoStarCount.setText("" + ratings[1]);
+     threeStarCount.setText("" + ratings[2]);
+     fourStarCount.setText("" + ratings[3]);
+     fiveStarCount.setText("" + ratings[4]);
      
     }
    }
@@ -178,6 +199,7 @@ public class ActivityShowUserProfile extends AppCompatActivity
     }
     
     averageRating.setText(String.format("%.2f", averageRatingTemp));
+    
     oneStarRating.setProgress((int) ((template.getTakenRatings().get(0) / 5) * 100));
     twoStarRating.setProgress((int) ((template.getTakenRatings().get(1) / 5) * 100));
     threeStarRating.setProgress((int) ((template.getTakenRatings().get(2) / 5) * 100));

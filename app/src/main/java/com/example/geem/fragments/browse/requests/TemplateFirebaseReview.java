@@ -8,6 +8,11 @@ public class TemplateFirebaseReview
  private int rating;
  private String review;
  
+ public TemplateFirebaseReview()
+ {
+  //Required
+ }
+ 
  public TemplateFirebaseReview(String fromId, String toId, String itemId, int rating, String review)
  {
   this.fromId = fromId;

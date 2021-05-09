@@ -108,7 +108,7 @@ public class FragmentBrowseFeeds extends Fragment
   dialog = new ProgressDialog(getContext());
   
   dialog.setMessage("Loading...");
-  dialog.show();
+  //dialog.show();
   searchQuery = view.findViewById(R.id.search_text);
   searchButton = (ImageView) view.findViewById(R.id.filter_feeds);
   searchQuery.addTextChangedListener(new TextWatcher()
