@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class ActivityViewItem extends AppCompatActivity
@@ -58,14 +59,12 @@ public class ActivityViewItem extends AppCompatActivity
  TextView title, description, user, proximity, menu_title, category;
  public static final int GPS_REQUEST_CODE = 101;
  public static final int NET_REQUEST_CODE = 102;
- 
  LocationManager locationManager;
  Location currentLocation = new Location("");
  View detailsTile;
  Location itemLocation = new Location("");
  
- 
- private CircularImageView profilePicture;
+ private ImageView profilePicture;
  
  private String otherId = "";
  private String myId = "";
@@ -161,8 +160,8 @@ public class ActivityViewItem extends AppCompatActivity
     DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
     Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
     user.setText(template.getName());
-    
-    findViewById(R.id.item_owner_layout).setOnClickListener(new View.OnClickListener()
+
+    findViewById(R.id.owner_picture).setOnClickListener(new View.OnClickListener()
     {
      @Override
      public void onClick(View view)
@@ -172,7 +171,7 @@ public class ActivityViewItem extends AppCompatActivity
       startActivity(intent);
      }
     });
-    
+
    }
   });
  }
@@ -214,7 +213,7 @@ public class ActivityViewItem extends AppCompatActivity
     startActivity(intent);
    }
   });
-  
+
  }
  
  private void init()
@@ -240,6 +239,8 @@ public class ActivityViewItem extends AppCompatActivity
   proximity = detailsTile.findViewById(R.id.item_proximity);
   description = detailsTile.findViewById(R.id.item_description);
   user = detailsTile.findViewById(R.id.item_owner);
+  
+  
  }
  
  
@@ -284,7 +285,7 @@ public class ActivityViewItem extends AppCompatActivity
   {
    currentLocation = location;
    float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-   //proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
+   proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
   }
   
   @Override

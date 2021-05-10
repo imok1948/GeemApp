@@ -29,12 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.GEEM.PopupOverlay" />
+                app:popupTheme="@style/Theme.GEEM.PopupOverlay" >
+
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_scrolling"
+    <include layout="@layout/content_scrolling2"
         android:id="@+id/details_tile"/>
 
 
