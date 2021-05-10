@@ -17,6 +17,7 @@ import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -27,7 +28,7 @@ public class FragmentBrowseHistory2 extends Fragment
  
  private static final String TAG = "FragmentBrowseHistory2";
  private View view;
- 
+ private String myId;
  
  private RecyclerView recyclerView;
  private AdapterBrowseHistory adapterBrowseHistory;
@@ -36,6 +37,7 @@ public class FragmentBrowseHistory2 extends Fragment
  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
  {
   view = inflater.inflate(R.layout.fragment_browse_history2, container, false);
+  myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
   init();
   setup();
   fetchItems();
@@ -55,7 +57,7 @@ public class FragmentBrowseHistory2 extends Fragment
      {
       ShivankUserItems item = snapshot.toObject(ShivankUserItems.class);
       
-      if(true)
+      if(item.getUserid().equals(myId))
       {
        TemplateBrowseHistory template = new TemplateBrowseHistory(item.getTitle(), item.getDescription(), snapshot.getId(), item.getImage(), item.getTimestamp().getTime());
        adapterBrowseHistory.addItem(template);
