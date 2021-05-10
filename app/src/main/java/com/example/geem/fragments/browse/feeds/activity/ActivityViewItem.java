@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.geem.R;
+import com.example.geem.activities.ActivityShowUserProfile;
 import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageActivity;
@@ -44,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class ActivityViewItem extends AppCompatActivity
@@ -57,12 +59,10 @@ public class ActivityViewItem extends AppCompatActivity
  TextView title, description, user, proximity, menu_title, category;
  public static final int GPS_REQUEST_CODE = 101;
  public static final int NET_REQUEST_CODE = 102;
- 
  LocationManager locationManager;
  Location currentLocation = new Location("");
  View detailsTile;
  Location itemLocation = new Location("");
- 
  
  private ImageView profilePicture;
  
@@ -161,7 +161,7 @@ public class ActivityViewItem extends AppCompatActivity
     Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
     user.setText(template.getName());
 
-    findViewById(R.id.item_owner_layout).setOnClickListener(new View.OnClickListener()
+    findViewById(R.id.owner_picture).setOnClickListener(new View.OnClickListener()
     {
      @Override
      public void onClick(View view)
@@ -285,7 +285,7 @@ public class ActivityViewItem extends AppCompatActivity
   {
    currentLocation = location;
    float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
-   //proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
+   proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
   }
   
   @Override
