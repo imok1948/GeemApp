@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.geem.R;
-import com.example.geem.activities.ActivityShowUserProfile;
 import com.example.geem.extra.ShivankUserItems;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageActivity;
@@ -65,7 +64,7 @@ public class ActivityViewItem extends AppCompatActivity
  Location itemLocation = new Location("");
  
  
- private CircularImageView profilePicture;
+ private ImageView profilePicture;
  
  private String otherId = "";
  private String myId = "";
@@ -161,7 +160,7 @@ public class ActivityViewItem extends AppCompatActivity
     DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
     Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
     user.setText(template.getName());
-    
+
     findViewById(R.id.item_owner_layout).setOnClickListener(new View.OnClickListener()
     {
      @Override
@@ -172,7 +171,7 @@ public class ActivityViewItem extends AppCompatActivity
       startActivity(intent);
      }
     });
-    
+
    }
   });
  }
@@ -214,7 +213,7 @@ public class ActivityViewItem extends AppCompatActivity
     startActivity(intent);
    }
   });
-  
+
  }
  
  private void init()
@@ -240,6 +239,8 @@ public class ActivityViewItem extends AppCompatActivity
   proximity = detailsTile.findViewById(R.id.item_proximity);
   description = detailsTile.findViewById(R.id.item_description);
   user = detailsTile.findViewById(R.id.item_owner);
+  
+  
  }
  
  
