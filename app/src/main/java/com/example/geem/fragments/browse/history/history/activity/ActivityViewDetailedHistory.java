@@ -60,11 +60,11 @@ public class ActivityViewDetailedHistory extends AppCompatActivity
      if(item.isIsavailable())
      {
       availability.setText("Yes");
-      taker.setText("Ajay");
      }
      else
      {
       availability.setText("NO");
+      taker.setText("Ajay");
       layout.setVisibility(View.GONE);
      }
      

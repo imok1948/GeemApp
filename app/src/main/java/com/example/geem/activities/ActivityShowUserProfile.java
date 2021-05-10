@@ -2,6 +2,7 @@ package com.example.geem.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.util.Date;
 import java.util.List;
 
 public class ActivityShowUserProfile extends AppCompatActivity
@@ -38,7 +40,11 @@ public class ActivityShowUserProfile extends AppCompatActivity
  private ProgressBar oneStarRating, twoStarRating, threeStarRating, fourStarRating, fiveStarRating;
  private RecyclerView recyclerView;
  
+ private AdapterUserReviews adapterUserReviews;
+ 
+ 
  private String myId;
+ 
  
  //Firebase
  private static final String PROFILE_COLLECTION_NAME = "dummy_profiles_do_not_delete";
@@ -64,6 +70,8 @@ public class ActivityShowUserProfile extends AppCompatActivity
  
  private void initComponents()
  {
+  recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  recyclerView.setAdapter(adapterUserReviews);
   FirebaseFirestore.getInstance().collection(Variables.REVIEW_COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
    @Override
@@ -78,6 +86,7 @@ public class ActivityShowUserProfile extends AppCompatActivity
      for(DocumentSnapshot snapshot : task.getResult())
      {
       TemplateFirebaseReview reviewTemplate = snapshot.toObject(TemplateFirebaseReview.class);
+      Log.d(TAG, "onComplete: MyId ==> " + myId + ", Review Template ==> " + reviewTemplate);
       if(reviewTemplate.getToId().equals(myId))
       {
        try
@@ -112,6 +121,7 @@ public class ActivityShowUserProfile extends AppCompatActivity
      float averageRatings = totalRatings / (float) totalRaters;
      averageRating.setText(String.format("%.2f", averageRatings));
      
+     Log.d(TAG, "onComplete: One Star rate ==> " + (int) ((ratings[4] / totalRaters) * 100));
      oneStarRating.setProgress((int) ((ratings[0] / totalRaters) * 100));
      twoStarRating.setProgress((int) ((ratings[1] / totalRaters)) * 100);
      threeStarRating.setProgress((int) ((ratings[2] / totalRaters)) * 100);
@@ -131,7 +141,20 @@ public class ActivityShowUserProfile extends AppCompatActivity
  
  private void fetchProfilePictureAndAddToRecycleView(String fromId, int rating, String review)
  {
- 
+  FirebaseFirestore.getInstance().collection(Variables.PROFILE_COLLECTION_NAME).document(fromId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+  {
+   @Override
+   public void onComplete(@NonNull Task<DocumentSnapshot> task)
+   {
+    if(task.isSuccessful())
+    {
+     DummyTemplate profileTemplate = task.getResult().toObject(DummyTemplate.class);
+     // public TemplateUserReview(float rating, String name, String content, long timestamp, String image, String profileId)
+     TemplateUserReview userReviewTemplate = new TemplateUserReview(rating, profileTemplate.getName(), review, new Date().getTime(), profileTemplate.getProfilePictureUrl(), task.getResult().getId());
+     adapterUserReviews.addItem(userReviewTemplate);
+    }
+   }
+  });
  }
  
  
@@ -234,11 +257,11 @@ public class ActivityShowUserProfile extends AppCompatActivity
   name = findViewById(R.id.name);
   joiningDate = findViewById(R.id.joining_date);
   city = findViewById(R.id.city);
+  /*
   totalItemTaken = findViewById(R.id.total_item_taken);
   totalItemGiven = findViewById(R.id.total_item_given);
-  
+  */
   averageRating = findViewById(R.id.average_rating);
-  
   oneStarCount = findViewById(R.id.one_star_count);
   twoStarCount = findViewById(R.id.two_star_count);
   threeStarCount = findViewById(R.id.three_star_count);
@@ -253,5 +276,6 @@ public class ActivityShowUserProfile extends AppCompatActivity
   
   recyclerView = findViewById(R.id.recycler_view);
   
+  adapterUserReviews = new AdapterUserReviews(this);
  }
 }

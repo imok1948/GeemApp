@@ -50,11 +50,10 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
  {
   FeedsTemplate template = templateList.get(position);
   holder.distance.setText(new DecimalFormat("##.#").format(template.getDistance()) + " kms away");
-  Log.i("DIST",new DecimalFormat("##.#").format(template.getDistance()) + " kms away");
+  Log.i("DIST", new DecimalFormat("##.#").format(template.getDistance()) + " kms away");
   holder.itemTitle.setText(template.getTitle());
-  holder.category.setText("in "+ template.getCategory());
+  holder.category.setText("in " + template.getCategory());
   Glide.with(holder.itemImage.getContext()).load(template.getImage()).into(holder.itemImage);
-  
   
   holder.view.setOnClickListener(new View.OnClickListener()
   {
@@ -67,10 +66,8 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
     intent.putExtra(Variables.OWNER_ID, template.getUserid());
     intent.putExtra(Variables.ITEM_ID, template.getItemId());
     context.startActivity(intent);
-    
    }
   });
-  
  }
  
  @Override
@@ -84,17 +81,18 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
   templateList.add(template);
   notifyItemInserted(templateList.size() - 1);
  }
-
- public void clear() {
+ 
+ public void clear()
+ {
   int size = templateList.size();
   templateList.clear();
   notifyItemRangeRemoved(0, size);
  }
-
+ 
  
  class BrowseFeedsHolder extends RecyclerView.ViewHolder
  {
-  TextView itemTitle, distance,category;
+  TextView itemTitle, distance, category;
   ImageView itemImage;
   
   View view;
@@ -107,8 +105,8 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
    itemImage = view.findViewById(R.id.item_image);
    distance = view.findViewById(R.id.distance);
    category = view.findViewById(R.id.item_category);
-
-
+   
+   
   }
  }
 }

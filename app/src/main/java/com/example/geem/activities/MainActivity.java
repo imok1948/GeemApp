@@ -1,6 +1,7 @@
 package com.example.geem.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -108,6 +109,19 @@ public class MainActivity extends AppCompatActivity
   CircularImageView imageView = view.findViewById(R.id.nav_header_profile_pic);
   
   String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+  
+  imageView.setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    Intent intent = new Intent(getApplicationContext(), ActivityShowUserProfile.class);
+    intent.putExtra(Variables.OTHER_ID, myId);
+    startActivity(intent);
+   }
+  });
+  
+  
   FirebaseFirestore.getInstance().collection(Variables.PROFILE_COLLECTION_NAME).document(myId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
   {
    @Override

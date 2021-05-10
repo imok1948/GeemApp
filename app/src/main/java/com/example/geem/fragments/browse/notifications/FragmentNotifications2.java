@@ -229,14 +229,7 @@ public class FragmentNotifications2 extends Fragment
         public void onComplete(@NonNull Task<DocumentSnapshot> task)
         {
          ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
-         RequestedItemsTemplate requestedItemsTemplate = new RequestedItemsTemplate(
-          item.getImage(),
-          item.getTitle(),
-          1,
-          task.getResult().getId(),
-          requestType,
-          snapshot.getId(),
-          "");
+         RequestedItemsTemplate requestedItemsTemplate = new RequestedItemsTemplate(item.getImage(), item.getTitle(), 1, task.getResult().getId(), requestType, snapshot.getId(), "");
          adapterRequestedItems.insertItems(requestedItemsTemplate);
         }
        });
@@ -264,6 +257,7 @@ public class FragmentNotifications2 extends Fragment
     {
      if(task.isSuccessful())
      {
+      Log.d(TAG, "onComplete: Feed id ==> " + itemId);
       ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
       RequestedItemsTemplate template = new RequestedItemsTemplate(item.getImage(), item.getTitle(), entry.getValue(), task.getResult().getId(), requestType, "NA", task.getResult().getId());
       adapter.insertItems(template);
@@ -281,7 +275,6 @@ public class FragmentNotifications2 extends Fragment
   {
    adapter.insertItems(template);
   }
-  
  }
  
  
@@ -289,7 +282,6 @@ public class FragmentNotifications2 extends Fragment
  {
   //Button1 opened
   toggle1.setRotation(180);
-  
   toggledStatus2 = toggleView(linearLayout2, false, toggle2);
   toggledStatus3 = toggleView(linearLayout3, false, toggle3);
  }

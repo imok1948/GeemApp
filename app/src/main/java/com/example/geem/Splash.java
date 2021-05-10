@@ -19,7 +19,7 @@ public class Splash extends AppCompatActivity
  TextView txt;
  ImageView img;
  Animation leftAnime, downAnime;
- private static int TIMER = 4000;
+ private static int TIMER = 1;
  SharedPreferences sp;
  
  

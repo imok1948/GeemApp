@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class FeedsTemplate
 {
- 
  private String address;
  private String category;
  private String description;
