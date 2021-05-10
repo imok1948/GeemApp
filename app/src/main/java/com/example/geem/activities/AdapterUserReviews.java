@@ -1,24 +1,35 @@
 package com.example.geem.activities;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AdapterUserReviews extends RecyclerView.Adapter
+import java.util.ArrayList;
+import java.util.List;
+
+public class AdapterUserReviews extends RecyclerView.Adapter<AdapterUserReviews.HolderUserReviews>
 {
  
+ Context context;
+ List<TemplateUserReview> reviewList = new ArrayList<>();
+ 
+ public AdapterUserReviews(Context context)
+ {
+  this.context = context;
+ }
  
  @NonNull
  @Override
- public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+ public HolderUserReviews onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
  {
   return null;
  }
  
  @Override
- public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
+ public void onBindViewHolder(@NonNull HolderUserReviews holder, int position)
  {
  
  }
@@ -29,9 +40,15 @@ public class AdapterUserReviews extends RecyclerView.Adapter
   return 0;
  }
  
+ public void addItem(TemplateUserReview review)
+ {
+  reviewList.add(review);
+  notifyItemInserted(reviewList.size() - 1);
+ }
+ 
  class HolderUserReviews extends RecyclerView.ViewHolder
  {
- 
+  
   public HolderUserReviews(@NonNull View itemView)
   {
    super(itemView);

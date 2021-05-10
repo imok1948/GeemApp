@@ -30,7 +30,6 @@ public class ActivityShowUserProfile extends AppCompatActivity
  
  // [10, 20, 10, 50, 60]
  
- 
  private static final String TAG = "ActivityShowUserProfile";
  
  //Views
