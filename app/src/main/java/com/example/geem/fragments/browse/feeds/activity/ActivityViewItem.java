@@ -1,6 +1,7 @@
 package com.example.geem.fragments.browse.feeds.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,8 +27,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,11 +35,14 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +66,12 @@ public class ActivityViewItem extends AppCompatActivity
  View detailsTile;
  Location itemLocation = new Location("");
  
+ 
+ private TextView address;
  private ImageView profilePicture;
+ private DummyTemplate template;
+ private Dialog dialog;
+ 
  
  private String otherId = "";
  private String myId = "";
@@ -121,6 +128,7 @@ public class ActivityViewItem extends AppCompatActivity
      setNames();
      setClickListeners();
      setUserNamesAndProfilePicture();
+     address.setText(item.getAddress());
     }
    }
   });
@@ -157,21 +165,23 @@ public class ActivityViewItem extends AppCompatActivity
    public void onComplete(@NonNull Task<DocumentSnapshot> task)
    {
     //This thing can be replaced with better one, but due to lack of time and it's time for dinner, I am leaving with only this version :|
-    DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
-    Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
-    user.setText(template.getName());
-
-    findViewById(R.id.owner_picture).setOnClickListener(new View.OnClickListener()
+    if(task.isSuccessful())
     {
-     @Override
-     public void onClick(View view)
+     template = task.getResult().toObject(DummyTemplate.class);
+     Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
+     user.setText(template.getName());
+     
+     findViewById(R.id.owner_picture).setOnClickListener(new View.OnClickListener()
      {
-      Intent intent = new Intent(getApplicationContext(), ActivityShowUserProfile.class);
-      intent.putExtra(Variables.OTHER_ID, otherId);
-      startActivity(intent);
-     }
-    });
-
+      @Override
+      public void onClick(View view)
+      {
+       Intent intent = new Intent(getApplicationContext(), ActivityShowUserProfile.class);
+       intent.putExtra(Variables.OTHER_ID, otherId);
+       startActivity(intent);
+      }
+     });
+    }
    }
   });
  }
@@ -187,18 +197,15 @@ public class ActivityViewItem extends AppCompatActivity
     //Toast.makeText(getApplicationContext(), "Requesting item, with other id : " + otherId + " Change logic at" + Thread.currentThread().getStackTrace()[2].getLineNumber(), Toast.LENGTH_SHORT).show();
     Log.d(TAG, "onClick: Requesting item, change with suitable logic at line number : " + Thread.currentThread().getStackTrace()[2].getLineNumber());
     
-    FirebaseNotificationTemplate template = new FirebaseNotificationTemplate(new Date().getTime(), Variables.NOTIFICATION_TYPE_REQUEST, myId, otherId, itemId);
-    
-    FirebaseFirestore.getInstance().collection(Variables.NOTIFICATIONS_COLLECTION_NAME).document().set(template).addOnCompleteListener(new OnCompleteListener<Void>()
+    if(template != null)
     {
-     @Override
-     public void onComplete(@NonNull Task<Void> task)
-     {
-      // Toast.makeText(getApplicationContext(), "Item requested ==> " + template, Toast.LENGTH_SHORT).show();
-      Toast.makeText(getApplicationContext(), "Item Requested successfully", Toast.LENGTH_SHORT).show();
-      Log.d(TAG, "onComplete: Item requested ==> " + template);
-     }
-    });
+     Log.d(TAG, "onClick: Template ==> Null");
+     verifyAndRequest();
+    }
+    else
+    {
+     requestItem();
+    }
    }
   });
   
@@ -213,24 +220,76 @@ public class ActivityViewItem extends AppCompatActivity
     startActivity(intent);
    }
   });
-
+  
+ }
+ 
+ private void verifyAndRequest()
+ {
+  dialog = new Dialog(this);
+  dialog.setContentView(R.layout.dialog_confirm);
+  dialog.show();
+  dialog.setCancelable(true);
+  
+  Window window = dialog.getWindow();
+  window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+  
+  Log.d(TAG, "onComplete: Profile ==> " + template);
+  ((TextView) dialog.findViewById(R.id.name)).setText(template.getName());
+  ((TextView) dialog.findViewById(R.id.city)).setText(template.getCity());
+  ((TextView) dialog.findViewById(R.id.title)).setText("Request item ?");
+  
+  ((AppCompatButton) dialog.findViewById(R.id.button_yes)).setText("Yes");
+  ((AppCompatButton) dialog.findViewById(R.id.button_no)).setText("Cancel");
+  
+  Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.rahul_profile).error(R.drawable.elon).into((CircularImageView) dialog.findViewById(R.id.profile_picture));
+  
+  dialog.findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    requestItem();
+    dialog.cancel();
+   }
+  });
+  
+  dialog.findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener()
+  {
+   @Override
+   public void onClick(View view)
+   {
+    dialog.cancel();
+   }
+  });
+ }
+ 
+ private void requestItem()
+ {
+  FirebaseNotificationTemplate template = new FirebaseNotificationTemplate(new Date().getTime(), Variables.NOTIFICATION_TYPE_REQUEST, myId, otherId, itemId);
+  FirebaseFirestore.getInstance().collection(Variables.NOTIFICATIONS_COLLECTION_NAME).document().set(template).
+   addOnCompleteListener(new OnCompleteListener<Void>()
+   {
+    @Override
+    public void onComplete(@NonNull Task<Void> task)
+    {
+     Toast.makeText(getApplicationContext(), "Item Requested successfully", Toast.LENGTH_SHORT).show();
+     Log.d(TAG, "onComplete: Item requested ==> " + template);
+    }
+   });
  }
  
  private void init()
  {
-  
-  
   Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
   setSupportActionBar(toolbar);
   
   CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
   toolBarLayout.setTitle(getTitle());
   
-  
   request = findViewById(R.id.request);
   message = findViewById(R.id.message);
   profilePicture = findViewById(R.id.owner_picture);
-  
+  address = findViewById(R.id.item_address);
   
   appBar = findViewById(R.id.app_bar);
   detailsTile = findViewById(R.id.details_tile);
@@ -239,7 +298,6 @@ public class ActivityViewItem extends AppCompatActivity
   proximity = detailsTile.findViewById(R.id.item_proximity);
   description = detailsTile.findViewById(R.id.item_description);
   user = detailsTile.findViewById(R.id.item_owner);
-  
   
  }
  
@@ -274,18 +332,18 @@ public class ActivityViewItem extends AppCompatActivity
    
    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 50, mLocationListener);
  }
  
  private final LocationListener mLocationListener = new LocationListener()
  {
-  
   @Override
   public void onLocationChanged(@NonNull Location location)
   {
    currentLocation = location;
    float distanceInKM = currentLocation.distanceTo(itemLocation) / 1000;
    proximity.setText(new DecimalFormat("##.#").format(distanceInKM) + " kms away");
+   locationManager.removeUpdates(mLocationListener);
   }
   
   @Override

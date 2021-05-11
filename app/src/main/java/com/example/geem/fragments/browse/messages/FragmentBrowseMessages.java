@@ -3,6 +3,7 @@ package com.example.geem.fragments.browse.messages;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.geem.R;
 import com.example.geem.activities.MainActivity;
 import com.example.geem.extra.TimeDetails;
+import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.messages.activity.MessageTemplate;
 import com.example.geem.fragments.browse.notifications.DummyTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -70,6 +74,7 @@ public class FragmentBrowseMessages extends Fragment
    MY_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
    initializeComponents();
    initFirebase();
+   //addListener();
   }
   else
   {
@@ -78,10 +83,66 @@ public class FragmentBrowseMessages extends Fragment
   return root;
  }
  
+ private void addListener()
+ {
+  FirebaseFirestore.getInstance().collection(Variables.MESSAGE_COLLECTION_NAME).addSnapshotListener(new EventListener<QuerySnapshot>()
+  {
+   @Override
+   public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+   {
+    if(error != null)
+    {
+     Log.d(TAG, "onEvent: Error  occured while retrieving msgs" + error.getLocalizedMessage());
+    }
+    else
+    {
+     Log.d(TAG, "onEvent: Message receive at snapshot ==> ");
+     List<MessageTemplate> messageTemplates = value.toObjects(MessageTemplate.class);
+     
+     for(MessageTemplate template : messageTemplates)
+     {
+      boolean sentByMe = template.getMyId().equals(MY_ID);
+      boolean sentToMe = template.getOtherId().equals(MY_ID);
+      
+      boolean uniqueChat = false;
+      int type = 0;
+      if(sentByMe && !hashMap.containsKey(template.getOtherId()))
+      {
+       type = 0;
+       uniqueChat = true;
+       hashMap.put(template.getOtherId(), template.getTimestamp());
+      }
+      
+      if(sentToMe && !hashMap.containsKey(template.getMyId()))
+      {
+       type = 1;
+       uniqueChat = true;
+       hashMap.put(template.getMyId(), template.getTimestamp());
+      }
+      
+      if((sentByMe || sentToMe) && uniqueChat)
+      {
+       Log.d(TAG, "onComplete: Fetched Message : " + template);
+       
+       if((type == 0 && hashMap.get(template.getOtherId()) > template.getTimestamp()) || (type == 1 && hashMap.get(template.getMyId()) > template.getTimestamp()))
+       {
+       
+       }
+      }
+     }
+    }
+   }
+  });
+ }
+ 
+ private void updateChats(MessageTemplate template)
+ {
+ 
+ }
+ 
  
  private void initFirebase()
  {
-  
   messagesCollectionReference.orderBy(VariablesForFirebase.TIMESTAMP, Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
   {
    @Override
@@ -89,6 +150,7 @@ public class FragmentBrowseMessages extends Fragment
    {
     if(task.isSuccessful())
     {
+     int i = 0;
      for(DocumentSnapshot snapshot : task.getResult())
      {
       MessageTemplate template = snapshot.toObject(MessageTemplate.class);
@@ -112,7 +174,8 @@ public class FragmentBrowseMessages extends Fragment
       if((sentByMe || sentToMe) && uniqueChat)
       {
        Log.d(TAG, "onComplete: Fetched Message : " + template);
-       getProfileDetailsAndAddToAdapter(template);
+       getProfileDetailsAndAddToAdapter(template, i, false);
+       i++;
       }
      }
     }
@@ -124,7 +187,7 @@ public class FragmentBrowseMessages extends Fragment
   });
  }
  
- private void getProfileDetailsAndAddToAdapter(MessageTemplate template)
+ private void getProfileDetailsAndAddToAdapter(MessageTemplate template, int position, boolean update)
  {
   String otherId = "";
   if(template.getMyId().equals(MY_ID))
@@ -152,7 +215,14 @@ public class FragmentBrowseMessages extends Fragment
      otherId = template.getMyId();
     }
     DummyTemplate profileTemplate = task.getResult().toObject(DummyTemplate.class);
-    adapterListChatPeople.addItem(new ChatPeople(profileTemplate.getProfilePictureUrl(), profileTemplate.getName(), template.getContent(), new TimeDetails(template.getTimestamp()), otherId));
+    if(update)
+    {
+    
+    }
+    else
+    {
+     adapterListChatPeople.addItem(position, new ChatPeople(profileTemplate.getProfilePictureUrl(), profileTemplate.getName(), template.getContent(), new TimeDetails(template.getTimestamp()), otherId));
+    }
    }
   });
   

@@ -61,7 +61,6 @@ public class FragmentBrowseFeeds extends Fragment
  //Firebase
  private static final String FEEDS_COLLECTION_NAME = "fetch_items_final";
  
- 
  //GPS Things
  
  private LocationManager locationManager;

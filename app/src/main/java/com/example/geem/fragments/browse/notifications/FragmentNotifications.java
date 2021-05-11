@@ -50,22 +50,55 @@ public class FragmentNotifications extends Fragment
      feedsCollectionReference = FirebaseFirestore.getInstance().collection(DUMMY_PROFILE_COLLECTION_NAME);
      
      String[] documentIds = new String[]{
-      "Eaw3iPx39HUyNp1DlCsU7NLcUuL2",
       "Mi44ruQiwrYjRmxYtQzjf8NaqV52",
       "ZhdDwBYZrJfdAUFsIvoV2OHcWx53",
       "f3D2aHKaOlYB6caTCzLZyXspFXj2",
       "ixu8JucKuOUqN5LitJWSLD0eHuR2",
       "prdEd8kRjHWX3IRJr8ju36Fkf3C3",
-      "hjUntVW1PSZMDOJGfTPyt43YcB02",
       "rBlJNO9OSrbZYruMd7u7B4SNVPa2",
-     };
+      };
+     
+     
      List<DummyTemplate> dummyTemplateList = getTemplates();
      
-     
-     for(int i = 0; i < dummyTemplateList.size(); i++)
+     NewProfile[] profiles = new NewProfile[]{
+      
+      
+      new NewProfile(
+       "rishabh@iiitd.ac.in",
+       "Rishabh",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frishabh.jpg?alt=media&token=f00f8589-4c8a-4bf4-b339-341439143bfc"),
+
+      new NewProfile(
+       "rahul20117@iiitd.ac.in",
+       "Rahul Meena",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frahul_profile.png?alt=media&token=edf4691b-30ab-4334-81dc-a4609ec43e34"),
+
+      new NewProfile(
+       "rishabh@iiitd.ac.in",
+       "Rishabh",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frishabh.jpg?alt=media&token=f00f8589-4c8a-4bf4-b339-341439143bfc"),
+
+      new NewProfile(
+       "rahul20117@iiitd.ac.in",
+       "Rahul Meena",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frahul_profile.png?alt=media&token=edf4691b-30ab-4334-81dc-a4609ec43e34"),
+
+      new NewProfile(
+       "rahul20117@iiitd.ac.in",
+       "Rahul Meena",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frahul_profile.png?alt=media&token=edf4691b-30ab-4334-81dc-a4609ec43e34"),
+
+      new NewProfile(
+       "shivank@iiitd.ac.in",
+       "Shivank",
+       "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Fshivank.jpeg?alt=media&token=29004cf0-47df-4001-9eaf-5f9f17242216"),
+
+      
+      };
+     for(int i = 0; i < profiles.length; i++)
      {
-      DummyTemplate template = dummyTemplateList.get(i);
-      feedsCollectionReference.document(documentIds[i]).set(template).addOnCompleteListener(new OnCompleteListener<Void>()
+      FirebaseFirestore.getInstance().collection("new_profile").document(documentIds[i]).set(profiles[i]).addOnCompleteListener(new OnCompleteListener<Void>()
       {
        @Override
        public void onComplete(@NonNull Task<Void> task)
@@ -73,12 +106,12 @@ public class FragmentNotifications extends Fragment
         if(task.isSuccessful())
         {
          //         Toast.makeText(getContext(), "inserted template : " + template, Toast.LENGTH_SHORT).show();
-         Log.d(TAG, "onComplete: inserted template : " + template);
+         Log.d(TAG, "onComplete: inserted template : " );
         }
         else
         {
          //         Toast.makeText(getContext(), "Failed to insert template : " + template, Toast.LENGTH_SHORT).show();
-         Log.d(TAG, "onComplete: failed to insert template : " + template);
+         Log.d(TAG, "onComplete: failed to insert template : " );
         }
        }
       });
@@ -97,6 +130,22 @@ public class FragmentNotifications extends Fragment
  private List<DummyTemplate> getTemplates()
  {
   List<DummyTemplate> templateList = new ArrayList<>();
+  
+  String[] profileImg = new String[]{
+   "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frahul_profile.png?alt=media&token=edf4691b-30ab-4334-81dc-a4609ec43e34",
+   "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Frishabh.jpg?alt=media&token=f00f8589-4c8a-4bf4-b339-341439143bfc",
+   "https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures%2Fshivank.jpeg?alt=media&token=29004cf0-47df-4001-9eaf-5f9f17242216"
+  };
+  
+  List<NewProfile> newProfiles = new ArrayList<>();
+
+  newProfiles.add(new NewProfile("shivank@iiitd.ac.in",
+                                 "Shivank",profileImg[2]));
+
+  newProfiles.add(new NewProfile("shivank@iiitd.ac.in",
+                                 "Shivank",profileImg[2]));
+  
+  
   
   templateList.add(new DummyTemplate("https://firebasestorage.googleapis.com/v0/b/iiitd-geemapp.appspot.com/o/profile_pictures_in_1%3A1_aspect_ratio_do_not_delete%2FScreenshot%20from%202021-03-16%2011-56-22.png?alt=media&token=4118bb3d-d851-48d0-9038-6c0ad44a2d99", "Rishabh Praveen Kumar Bafna this long NAmE iS fOR ChecIng", "rishabh8798.908@gmail.com", "Pune"));
   
@@ -117,6 +166,55 @@ public class FragmentNotifications extends Fragment
   return templateList;
  }
  
+}
+
+
+class NewProfile
+{
+ String email;
+ String name;
+ String profileimg;
+ 
+ public NewProfile()
+ {
+ }
+ 
+ public NewProfile(String email, String name, String profileimg)
+ {
+  this.email = email;
+  this.name = name;
+  this.profileimg = profileimg;
+ }
+ 
+ public String getEmail()
+ {
+  return email;
+ }
+ 
+ public void setEmail(String email)
+ {
+  this.email = email;
+ }
+ 
+ public String getName()
+ {
+  return name;
+ }
+ 
+ public void setName(String name)
+ {
+  this.name = name;
+ }
+ 
+ public String getProfileimg()
+ {
+  return profileimg;
+ }
+ 
+ public void setProfileimg(String profileimg)
+ {
+  this.profileimg = profileimg;
+ }
 }
 
 

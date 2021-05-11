@@ -5,6 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
+  android:theme="@style/ThemeOverlay.AppCompat.Dark"
   tools:context=".fragments.browse.messages.activity.MessageActivity">
 
   <LinearLayout
@@ -25,6 +26,7 @@
       android:layout_width="50dp"
       android:layout_height="50dp"
       android:src="@drawable/profile_pic"
+      app:civ_border_color="@color/blue_600"
       app:civ_shadow="true"
       app:civ_shadow_radius="0" />
 
@@ -40,7 +42,7 @@
       android:layout_marginRight="10dp"
       android:fontFamily="sans-serif-condensed-light"
       android:text="Rahul Meena"
-      android:textColor="@color/blue_200"
+      android:textColor="@color/white"
       android:textSize="20sp" />
   </LinearLayout>
 

@@ -73,7 +73,7 @@ public class FragmentNotifications2 extends Fragment
   {
    try
    {
-    myId = Variables.getMyId();
+    myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     Log.d(TAG, "onCreateView: My id ==> " + myId);
    }
    catch(Exception e)
@@ -185,10 +185,10 @@ public class FragmentNotifications2 extends Fragment
      for(DocumentSnapshot snapshot : task.getResult())
      {
       FirebaseNotificationTemplate template = snapshot.toObject(FirebaseNotificationTemplate.class);
-      
+      Log.d(TAG, "onComplete: Notification ==> " + template);
       if(template.getReceiverId().equals(myId) && template.getType().equals(itemType) && template.isItemTaken() == false)
       {
-       Log.d(TAG, "onComplete: Template ==> " + template);
+       Log.d(TAG, "onComplete: Added ==> " + template);
        int count = 0;
        if(hashMap.containsKey(template.getItemId()))
        {
@@ -220,9 +220,10 @@ public class FragmentNotifications2 extends Fragment
      for(DocumentSnapshot snapshot : task.getResult())
      {
       FirebaseNotificationTemplate template = snapshot.toObject(FirebaseNotificationTemplate.class);
-      
+      Log.d(TAG, "onComplete: Notification ==> " + template);
       if(template.getReceiverId().equals(myId) && template.getType().equals(requestType) && template.isItemTaken() == false)
       {
+       Log.d(TAG, "onComplete: Added");
        FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(template.getItemId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
        {
         @Override

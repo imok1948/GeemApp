@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,9 @@ import com.bumptech.glide.Glide;
 import com.example.geem.R;
 import com.example.geem.extra.Variables;
 import com.example.geem.fragments.browse.feeds.activity.ActivityViewItem;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -66,6 +70,26 @@ public class AdapterBrowseFeeds extends RecyclerView.Adapter<AdapterBrowseFeeds.
     intent.putExtra(Variables.OWNER_ID, template.getUserid());
     intent.putExtra(Variables.ITEM_ID, template.getItemId());
     context.startActivity(intent);
+   }
+  });
+  
+  holder.view.setOnLongClickListener(new View.OnLongClickListener()
+  {
+   @Override
+   public boolean onLongClick(View view)
+   {
+    FirebaseFirestore.getInstance().collection(Variables.FEEDS_COLLECTION_NAME).document(template.getItemId()).delete().addOnCompleteListener(new OnCompleteListener<Void>()
+    {
+     @Override
+     public void onComplete(@NonNull Task<Void> task)
+     {
+      if(task.isSuccessful())
+      {
+       Toast.makeText(context, "Item deleted with id ==> " + template.getItemId(), Toast.LENGTH_SHORT).show();
+      }
+     }
+    });
+    return true;
    }
   });
  }

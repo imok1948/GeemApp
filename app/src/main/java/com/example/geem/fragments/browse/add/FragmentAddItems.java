@@ -34,6 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -94,41 +96,20 @@ public class FragmentAddItems extends Fragment
   if(((MainActivity) getActivity()).checkLoggedIn())
   {
    userId = "" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+   askPermissionAndAddLocation();
    //Toast.makeText(getContext(), "Welcome : " + userId, Toast.LENGTH_SHORT).show();
    firebaseFireStore = FirebaseFirestore.getInstance();
    storageRef = FirebaseStorage.getInstance().getReference();
+   imgView = view.findViewById(R.id.image);
+   saveBtn = view.findViewById(R.id.button_add);
+   mTitle = view.findViewById(R.id.title);
+   mAddress = view.findViewById(R.id.address);
+   mDescription = view.findViewById(R.id.description);
    
-   imgView = view.findViewById(R.id.imageView);
-   captureImgBtn = view.findViewById(R.id.capture_image);
-   saveBtn = view.findViewById(R.id.save_btn);
-   locationBtn = view.findViewById(R.id.usrLocation);
-   mTitle = view.findViewById(R.id.editTitle);
-   mAddress = view.findViewById(R.id.editAddress);
-   mDescription = view.findViewById(R.id.editDescription);
-   
-   spinnerMenu = view.findViewById(R.id.spinner);
+   spinnerMenu = view.findViewById(R.id.category);
    ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_items, android.R.layout.simple_spinner_item);
    mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
    spinnerMenu.setAdapter(mAdapter);
-   
-   
-   captureImgBtn.setOnClickListener(new View.OnClickListener()
-   {
-    @Override
-    public void onClick(View v)
-    {
-     //ask user for camera permission at runtime
-     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-     {
-      ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAM_REQUEST_CODE);
-     }
-     else
-     {
-      //launch the implicit intent
-      cameraImplicitIntent();
-     }
-    }
-   });
    
    
    saveBtn.setOnClickListener(new View.OnClickListener()
@@ -143,7 +124,6 @@ public class FragmentAddItems extends Fragment
      //checking for network
      if(netInfo != null && netInfo.isConnected())
      {
-      
       if(!TextUtils.isEmpty(mTitle.getText().toString()) && !TextUtils.isEmpty(mDescription.getText().toString()) && lat != 0 && lng != 0 && !TextUtils.isEmpty(mAddress.getText().toString()) && imageUri != null)
       {
        uploadData();
@@ -152,32 +132,23 @@ public class FragmentAddItems extends Fragment
       {
        Toast.makeText(getActivity(), "Please complete all the details first", Toast.LENGTH_SHORT).show();
       }
-      
      }
      else
      {
       Toast.makeText(getActivity(), "Network Connection is not Available", Toast.LENGTH_SHORT).show();
      }
     }
-    
    });
    
-   
-   locationBtn.setOnClickListener(new View.OnClickListener()
+   imgView.setOnClickListener(new View.OnClickListener()
    {
     @Override
-    public void onClick(View v)
+    public void onClick(View view)
     {
-     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-     {
-      ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
-     }
-     else
-     {
-      getUserLocation();
-     }
+     askPermissionAndAddPicture();
     }
    });
+   
   }
   else
   {
@@ -186,14 +157,36 @@ public class FragmentAddItems extends Fragment
   return view;
  }
  
+ private void askPermissionAndAddPicture()
+ {
+  if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+  {
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAM_REQUEST_CODE);
+  }
+  else
+  {
+   //launch the implicit intent
+   cameraImplicitIntent();
+  }
+ }
+ 
+ private void askPermissionAndAddLocation()
+ {
+  if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+  {
+   ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+  }
+  else
+  {
+   getUserLocation();
+  }
+ }
+ 
  private void getUserLocation()
  {
   locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-  
-  
   if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
   {
-   
    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
   }
   
@@ -210,10 +203,7 @@ public class FragmentAddItems extends Fragment
    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, NET_REQUEST_CODE);
   }
   locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
-  
-  
  }
- 
  
  // this code corresponds to getting result from the camera intent
  @Override
@@ -238,6 +228,9 @@ public class FragmentAddItems extends Fragment
     String exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
     imageUri = Uri.fromFile(newFile);
     imgView.setImageURI(imageUri);
+    imgView.getLayoutParams().height = 800;
+    imgView.getLayoutParams().width = 800;
+    imgView.requestLayout();
     
     File file = new File(currentPhotoPath);
     try
@@ -279,7 +272,6 @@ public class FragmentAddItems extends Fragment
   }
  }
  
- 
  //this code generates the image file for the clicked picture
  private File createImageFile() throws IOException
  {
@@ -288,7 +280,6 @@ public class FragmentAddItems extends Fragment
   currentPhotoPath = img.getAbsolutePath();
   return img;
  }
- 
  
  // this code launches the intent to take picture from camera and generate URI of that image
  private void cameraImplicitIntent()
@@ -316,7 +307,6 @@ public class FragmentAddItems extends Fragment
   }
  }
  
- 
  @Override
  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
  {
@@ -339,7 +329,6 @@ public class FragmentAddItems extends Fragment
  {
   if(downloadUri != null)
   {
-   
    StorageReference imgPath = storageRef.child("fetch_images").child(Timestamp.now().toString() + ".jpeg");
    //setting up progressDialog
    ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -391,7 +380,6 @@ public class FragmentAddItems extends Fragment
         if(task.isSuccessful())
         {
          progressDialog.cancel();
-         Toast.makeText(getActivity(), "Item uploaded successfully in feeds", Toast.LENGTH_LONG).show();
          
          Log.d(TAG, "onComplete: added new item : ");
          String temp = "";
@@ -400,14 +388,14 @@ public class FragmentAddItems extends Fragment
           temp += map.getKey() + " ==> " + map.getValue() + "\n";
          }
          Log.d(TAG, "Data : " + temp);
+         
+         Toast.makeText(getActivity(), "Item uploaded successfully in feeds", Toast.LENGTH_LONG).show();
+         
          if(((MainActivity) getActivity()).tabLayoutForBrowseFragments != null)
          {
           ((MainActivity) getActivity()).tabLayoutForBrowseFragments.selectTab(((MainActivity) getActivity()).tabLayoutForBrowseFragments.getTabAt(1));
          }
          
-         /*Intent i = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-         getActivity().startActivity(i);
-         */
          
         }
         else
@@ -424,20 +412,16 @@ public class FragmentAddItems extends Fragment
   }
  }
  
- 
  private final LocationListener mLocationListener = new LocationListener()
  {
-  
   @Override
   public void onLocationChanged(@NonNull Location location)
   {
    if(location != null)
    {
-    
     lat = location.getLatitude();
     lng = location.getLongitude();
-    
-    
+    locationManager.removeUpdates(mLocationListener);
    }
    
   }

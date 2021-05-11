@@ -82,10 +82,22 @@ public class AdapterListChatPeople extends RecyclerView.Adapter<AdapterListChatP
  }
  
  
- public void addItem(ChatPeople people)
+ public void addItem(int position, ChatPeople people)
  {
   this.chatPeopleList.add(people);
-  notifyItemInserted(this.chatPeopleList.size() - 1);
+  notifyItemInserted(position);
+ }
+ 
+ 
+ public void clearItems()
+ {/*
+  for(int i = chatPeopleList.size() - 1; i >= 0; i--)
+  {
+   chatPeopleList.remove(i);
+   notifyItemRemoved(i);
+  }*/
+  chatPeopleList = new ArrayList<>();
+  notifyDataSetChanged();
  }
  
  public void addItems(List<ChatPeople> peopleList)

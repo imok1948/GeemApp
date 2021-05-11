@@ -107,7 +107,7 @@ public class MessageActivity extends AppCompatActivity
    {
     //This thing can be replaced with better one, but due to lack of time and it's time for dinner, I am leaving with only this version :|
     DummyTemplate template = task.getResult().toObject(DummyTemplate.class);
-    Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.ic_tab_profile).error(R.drawable.profile_pic).into(profilePicture);
+    Glide.with(getApplicationContext()).load(template.getProfilePictureUrl()).placeholder(R.drawable.rahul_profile).error(R.drawable.profile_pic).into(profilePicture);
     name.setText(template.getName());
    }
   });
