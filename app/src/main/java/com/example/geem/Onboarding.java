@@ -44,10 +44,7 @@ public class Onboarding extends OnboarderActivity
   setActiveIndicatorColor(R.color.teal_200);
   shouldDarkenButtonsLayout(true);
   setDividerHeight(3);
-  
   setOnboardPagesReady(pages);
-  
-  
  }
  
  

@@ -260,8 +260,15 @@ public class FragmentNotifications2 extends Fragment
      {
       Log.d(TAG, "onComplete: Feed id ==> " + itemId);
       ShivankUserItems item = task.getResult().toObject(ShivankUserItems.class);
-      RequestedItemsTemplate template = new RequestedItemsTemplate(item.getImage(), item.getTitle(), entry.getValue(), task.getResult().getId(), requestType, "NA", task.getResult().getId());
-      adapter.insertItems(template);
+      Log.d(TAG, "onComplete: item ==> " + item);
+      
+      
+      if(item != null)
+      {
+       RequestedItemsTemplate template = new RequestedItemsTemplate(item.getImage(), item.getTitle(), entry.getValue(), task.getResult().getId(), requestType, "NA", task.getResult().getId());
+       adapter.insertItems(template);
+      }
+      
      }
     }
    });
