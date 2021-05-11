@@ -20,7 +20,8 @@
     android:roundIcon="@drawable/logo"
     android:supportsRtl="true"
     android:theme="@style/Theme.GEEM">
-    <activity android:name=".fragments.browse.history.history.activity.ActivityViewDetailedHistory"></activity>
+
+    <activity android:name=".fragments.browse.history.history.activity.ActivityViewDetailedHistory" />
     <activity android:name=".fragments.browse.requests.activity.ActivityRequesters" />
     <activity android:name=".activities.ActivityShowUserProfile" />
     <activity android:name=".Onboarding" />
@@ -39,9 +40,7 @@
     <activity
       android:name=".activities.MainActivity"
       android:label="@string/title_activity_navigation_drawer_temp"
-      android:theme="@style/Theme.GEEM.NoActionBar">
-
-    </activity>
+      android:theme="@style/Theme.GEEM.NoActionBar"></activity>
     <activity android:name=".fragments.browse.history.history.ActivityHistoryDetailStarter" />
     <activity android:name=".fragments.browse.add.VerticalStepperTestActivity" />
 

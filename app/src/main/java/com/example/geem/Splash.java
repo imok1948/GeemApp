@@ -19,7 +19,7 @@ public class Splash extends AppCompatActivity
  TextView txt;
  ImageView img;
  Animation leftAnime, downAnime;
- private static int TIMER = 1;
+ private static int TIMER = 4000;
  SharedPreferences sp;
  
  
@@ -49,7 +49,7 @@ public class Splash extends AppCompatActivity
     sp = getSharedPreferences("onboard", MODE_PRIVATE);
     boolean checkFirst = sp.getBoolean("first", true);
     
-    if(checkFirst)
+    if(true)
     {
      
      SharedPreferences.Editor edit = sp.edit();
@@ -58,7 +58,6 @@ public class Splash extends AppCompatActivity
      Intent i = new Intent(getApplicationContext(), Onboarding.class);
      startActivity(i);
      finish();
-     
     }
     else
     {

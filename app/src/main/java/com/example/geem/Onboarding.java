@@ -41,7 +41,6 @@ public class Onboarding extends OnboarderActivity
   }
   
   shouldUseFloatingActionButton(true);
-  
   setActiveIndicatorColor(R.color.teal_200);
   shouldDarkenButtonsLayout(true);
   setDividerHeight(3);
